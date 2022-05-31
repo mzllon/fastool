@@ -4,6 +4,7 @@ import tech.fastool.core.exceptions.ArrayEmptyException;
 import tech.fastool.core.exceptions.GenericRuntimeException;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * 数组工具类
@@ -1449,7 +1450,7 @@ public class ArrayUtil {
     // endregion
 
 
-    // region 常见其它方法
+    // region General
 
     /**
      * 获取数组的长度,如果参数为{@code null}则返回0
@@ -1465,8 +1466,462 @@ public class ArrayUtil {
         return Array.getLength(array);
     }
 
+    /**
+     * 新建一个空数组
+     *
+     * @param componentType 数组类型
+     * @param newSize       数组大小
+     * @param <T>           数组元素类型
+     * @return 空数组
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] newArray(Class<?> componentType, int newSize) {
+        return (T[]) Array.newInstance(componentType, newSize);
+    }
+
+    /**
+     * 获取数组对象的元素类型
+     *
+     * @param array 数组
+     * @return 元素类型
+     */
+    public static Class<?> getComponentType(Object array) {
+        return array == null ? null : array.getClass().getComponentType();
+    }
+
+    /**
+     * 获取数组的元素类型
+     *
+     * @param arrayClass 数组类
+     * @return 元素类型
+     */
+    public static Class<?> getComponentType(Class<?> arrayClass) {
+        return arrayClass == null ? null : arrayClass.getComponentType();
+    }
+
+    /**
+     * 数组转String
+     *
+     * @param obj 数组对象
+     * @return 数组字符串
+     */
+    public static String toString(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+
+        if (isArray(obj)) {
+            // check for primitive array types because they unfortunately cannot be cast to Object[]
+            if (obj instanceof boolean[]) {
+                return Arrays.toString((boolean[]) obj);
+            } else if (obj instanceof byte[]) {
+                return Arrays.toString((byte[]) obj);
+            } else if (obj instanceof char[]) {
+                return Arrays.toString((char[]) obj);
+            } else if (obj instanceof short[]) {
+                return Arrays.toString((short[]) obj);
+            } else if (obj instanceof int[]) {
+                return Arrays.toString((int[]) obj);
+            } else if (obj instanceof float[]) {
+                return Arrays.toString((float[]) obj);
+            } else if (obj instanceof double[]) {
+                return Arrays.toString((double[]) obj);
+            } else if (obj instanceof long[]) {
+                return Arrays.toString((long[]) obj);
+            } else {
+                return Arrays.deepToString((Object[]) obj);
+            }
+        }
+        return obj.toString();
+    }
+
     // endregion
 
+
+    // region indexOf
+
+
+    /**
+     * 返回数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
+     *
+     * @param <T>     数组类型
+     * @param array   数组
+     * @param element 被检查的元素
+     * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
+     */
+    public static <T> int indexOf(T[] array, Object element) {
+        if (null != array) {
+            for (int i = 0; i < array.length; i++) {
+                if (ObjectUtil.equals(element, array[i])) {
+                    return i;
+                }
+            }
+        }
+        return INDEX_NOT_FOUND;
+    }
+
+    /**
+     * 返回数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
+     *
+     * @param array   数组
+     * @param element 被检查的元素
+     * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
+     */
+    public static int indexOf(long[] array, long element) {
+        if (null != array) {
+            for (int i = 0; i < array.length; i++) {
+                if (element == array[i]) {
+                    return i;
+                }
+            }
+        }
+        return INDEX_NOT_FOUND;
+    }
+
+    // endregion
+
+
+    // region reverse
+
+    /**
+     * 反转数组
+     *
+     * @param array 原数组
+     * @param <T>   数组元素类型
+     * @return 反转后的数组
+     */
+    public static <T> T[] reverse(final T[] array) {
+        if (isEmpty(array)) {
+            return array;
+        }
+        return reverse(array, 0, array.length);
+    }
+
+    /**
+     * 反转数组
+     *
+     * @param array               原数组
+     * @param <T>                 数组元素类型
+     * @param startIndexInclusive 开始位置（包含）
+     * @param endIndexExclusive   结束位置（不包含）
+     * @return 反转后的数组
+     */
+    public static <T> T[] reverse(final T[] array, int startIndexInclusive, int endIndexExclusive) {
+        if (isEmpty(array)) {
+            return array;
+        }
+        int start = max(startIndexInclusive, 0), end = min(endIndexExclusive, array.length);
+        T[] result = newArray(getComponentType(array), end - start);
+
+        for (int j = 0, i = end - 1; i >= start; i--) {
+            result[j++] = array[i];
+        }
+        return result;
+    }
+
+    // endregion
+
+
+    // region contains
+    /**
+     * 数组中是否包含元素
+     *
+     * @param array 数组
+     * @param value 被检查的元素
+     * @return 存在返回{@code true}，否则均为{@code false}
+     */
+    public static boolean contains(final char[] array, char value) {
+        if (isEmpty(array)) {
+            return false;
+        }
+        for (char ch : array) {
+            if (ch == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 数组中是否包含元素
+     *
+     * @param array 数组
+     * @param value 被检查的元素
+     * @return 存在返回{@code true}，否则均为{@code false}
+     */
+    public static boolean contains(final int[] array, int value) {
+        if (isEmpty(array)) {
+            return false;
+        }
+        for (int ele : array) {
+            if (ele == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * <p>判断数组中是否包含了指定的元素</p>
+     * <pre class="code">
+     * ArrayUtil.containsElement(new String[]{"aaaa","bbb","cc",null},null); //--- true
+     * ArrayUtil.containsElement(new String[]{"aaaa","bbb","cc"},"cc"); //--- true
+     * ArrayUtil.containsElement(new String[]{"aaaa","bbb","cc",null},"xx"); //--- false
+     * </pre>
+     *
+     * @param array   数组
+     * @param element 检查的元素对象
+     * @param <T>     泛型类型声明
+     * @return 如果数组中存在则返回{@code true},否则返回{@code false}
+     * @see ObjectUtil#nullSafeEquals(Object, Object)
+     */
+    public static <T> boolean contains(final T[] array, T element) {
+        if (isEmpty(array)) {
+            return false;
+        }
+        for (Object arrayEle : array) {
+            if (ObjectUtil.nullSafeEquals(arrayEle, element)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // endregion
+
+
+    // region min
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static long min(long... array) {
+        long min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static int min(int... array) {
+        int min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static short min(short... array) {
+        short min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static char min(char... array) {
+        char min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static byte min(byte... array) {
+        byte min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static double min(double... array) {
+        double min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最小值
+     *
+     * @param array 数组
+     * @return 最小值
+     */
+    public static float min(float... array) {
+        float min = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static long max(long... array) {
+        long max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    // endregion
+
+
+    // region max
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static int max(int... array) {
+        int max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static short max(short... array) {
+        short max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static char max(char... array) {
+        char max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static byte max(byte... array) {
+        byte max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static double max(double... array) {
+        double max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param array 数组
+     * @return 最大值
+     */
+    public static float max(float... array) {
+        float max = requireNotEmpty(array)[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    // endregion
 
 
 }
