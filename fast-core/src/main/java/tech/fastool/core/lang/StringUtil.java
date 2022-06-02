@@ -1,5 +1,6 @@
 package tech.fastool.core.lang;
 
+import java.nio.charset.Charset;
 import java.util.Collection;
 
 /**
@@ -459,6 +460,24 @@ public class StringUtil {
         return containsBlank(cse);
     }
 
+    // endregion
+
+    // region General
+
+    /**
+     * 构建字符串
+     * 如果编码为{@code  null}则采用系统编码
+     *
+     * @param data     字节数组
+     * @param encoding 编码，可以为空
+     * @return 字符串
+     */
+    public static String str(byte[] data, Charset encoding) {
+        if (data == null) {
+            return null;
+        }
+        return (encoding == null) ? new String(data) : new String(data, encoding);
+    }
     // endregion
 
 }
