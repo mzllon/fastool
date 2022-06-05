@@ -137,6 +137,7 @@ public class CollectionUtil {
      * @param <E>      元的类型
      * @return 如果集合有变化则返回{@code true}
      */
+    @SafeVarargs
     public static <E> boolean addAll(Collection<? super E> coll, E... elements) {
         if (coll == null) {
             return false;
@@ -160,7 +161,8 @@ public class CollectionUtil {
      * @param <E>      元素类型
      * @return 新集合
      */
-    public static <E> Collection<? extends E> mergeToColl(Collection<? extends E> coll, E... elements) {
+    @SafeVarargs
+    public static <E> Collection<? extends E> merge(Collection<? extends E> coll, E... elements) {
         if (isEmpty(coll) && ArrayUtil.isEmpty(elements)) {
             return (coll == null) ? ListUtil.emptyList() : coll;
         }

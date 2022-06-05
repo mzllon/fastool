@@ -73,21 +73,17 @@ public class ObjectUtilTest {
     }
 
     @Test
-    public void isNoneNull() {
-        Object[] array = null;
-        assertTrue(ObjectUtil.isNoneNull(array));
-        array = new Object[]{};
-        assertTrue(ObjectUtil.isNoneNull(array));
-        array = new Object[2];
-        assertTrue(ObjectUtil.isNoneNull(array));
-        array = new Object[]{null, null, null};
-        assertTrue(ObjectUtil.isNoneNull(array));
-        array = new Object[]{"", null};
-        assertFalse(ObjectUtil.isNoneNull(array));
-    }
-
-    @Test
     public void nonNull() {
+        Object[] array = null;
+        assertTrue(ObjectUtil.nonNull(array));
+        array = new Object[]{};
+        assertTrue(ObjectUtil.nonNull(array));
+        array = new Object[2];
+        assertTrue(ObjectUtil.nonNull(array));
+        array = new Object[]{null, null, null};
+        assertTrue(ObjectUtil.nonNull(array));
+        array = new Object[]{"", null};
+        assertFalse(ObjectUtil.nonNull(array));
     }
 
     @Test
@@ -103,24 +99,24 @@ public class ObjectUtilTest {
     @Test
     public void nullSafeEquals() {
         Object a = null, b = null;
-        assertTrue(ObjectUtil.nullSafeEquals(a, b));
+        assertTrue(ObjectUtil.safeEquals(a, b));
         a = 1;
-        assertFalse(ObjectUtil.nullSafeEquals(a, b));
+        assertFalse(ObjectUtil.safeEquals(a, b));
         b = 2;
-        assertFalse(ObjectUtil.nullSafeEquals(a, b));
+        assertFalse(ObjectUtil.safeEquals(a, b));
         b = 1;
-        assertTrue(ObjectUtil.nullSafeEquals(a, b));
+        assertTrue(ObjectUtil.safeEquals(a, b));
         a = "";
-        assertFalse(ObjectUtil.nullSafeEquals(a, b));
+        assertFalse(ObjectUtil.safeEquals(a, b));
         a = new Object[]{1, 2};
         b = new Object[]{1, 2};
-        assertTrue(ObjectUtil.nullSafeEquals(a, b));
+        assertTrue(ObjectUtil.safeEquals(a, b));
         a = new int[]{0, 1};
         b = new int[]{0, 1};
-        assertTrue(ObjectUtil.nullSafeEquals(a, b));
+        assertTrue(ObjectUtil.safeEquals(a, b));
         a = new String[]{"a", "b"};
         b = new String[]{"a", "b"};
-        assertTrue(ObjectUtil.nullSafeEquals(a, b));
+        assertTrue(ObjectUtil.safeEquals(a, b));
 
     }
 

@@ -1,5 +1,6 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
 import tech.fastool.core.exceptions.ArrayEmptyException;
 import tech.fastool.core.exceptions.GenericRuntimeException;
 
@@ -13,14 +14,8 @@ import java.util.Arrays;
  * @version 0.0.1
  * @date 2022-05-30
  */
+@UtilityClass
 public class ArrayUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private ArrayUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     //region 数组相关的常量
 
@@ -1549,7 +1544,7 @@ public class ArrayUtil {
      * @param element 被检查的元素
      * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
      */
-    public static <T> int indexOf(T[] array, Object element) {
+    public static <T> int indexOf(T[] array, T element) {
         if (null != array) {
             for (int i = 0; i < array.length; i++) {
                 if (ObjectUtil.equals(element, array[i])) {
@@ -1673,14 +1668,14 @@ public class ArrayUtil {
      * @param element 检查的元素对象
      * @param <T>     泛型类型声明
      * @return 如果数组中存在则返回{@code true},否则返回{@code false}
-     * @see ObjectUtil#nullSafeEquals(Object, Object)
+     * @see ObjectUtil#safeEquals(Object, Object)
      */
     public static <T> boolean contains(final T[] array, T element) {
         if (isEmpty(array)) {
             return false;
         }
         for (Object arrayEle : array) {
-            if (ObjectUtil.nullSafeEquals(arrayEle, element)) {
+            if (ObjectUtil.safeEquals(arrayEle, element)) {
                 return true;
             }
         }

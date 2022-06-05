@@ -96,7 +96,7 @@ public class CollectionUtilTest {
         String[] elements = {"A", "B"};
 
         Collection<String> expected = Arrays.asList("A", "B", "C", "A", "B");
-        assertEquals(expected, CollectionUtil.mergeToColl(list, elements));
+        assertEquals(expected, CollectionUtil.merge(list, elements));
 
         Set<String> set = new HashSet<>();
         set.add("A");

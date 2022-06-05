@@ -1,5 +1,7 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * 字符工具类
  *
@@ -7,14 +9,8 @@ package tech.fastool.core.lang;
  * @version 0.0.1
  * @date 2022-05-30
  */
+@UtilityClass
 public final class CharUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private CharUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     //region 定义的公共的字符相关的常量
 

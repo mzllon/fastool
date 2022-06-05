@@ -1,5 +1,7 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,6 +14,7 @@ import java.util.List;
  * @version 0.0.1
  * @date 2022-03-23
  */
+@UtilityClass
 public class ListUtil extends CollectionUtil {
 
     /**

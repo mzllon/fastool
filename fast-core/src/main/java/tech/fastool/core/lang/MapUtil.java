@@ -1,5 +1,7 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,14 +13,8 @@ import java.util.Map;
  * @version 0.0.1
  * @date 2022-05-31
  */
+@UtilityClass
 final public class MapUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private MapUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     /**
      * Default load factor for {@link HashMap}/{@link LinkedHashMap} variants.

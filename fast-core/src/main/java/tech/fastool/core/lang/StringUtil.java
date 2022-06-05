@@ -1,7 +1,12 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 字符串工具类
@@ -10,14 +15,8 @@ import java.util.Collection;
  * @version 0.0.1
  * @date 2022-05-30
  */
+@UtilityClass
 public class StringUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private StringUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     // region 定义的公共的字符串相关的常量
 
@@ -462,6 +461,7 @@ public class StringUtil {
 
     // endregion
 
+
     // region General
 
     /**
@@ -478,6 +478,188 @@ public class StringUtil {
         }
         return (encoding == null) ? new String(data) : new String(data, encoding);
     }
+
+    /**
+     * {@link CharSequence} 转为字符串
+     *
+     * @param cse {@link CharSequence}
+     * @return 字符串
+     */
+    public static String str(CharSequence cse) {
+        return null == cse ? null : cse.toString();
+    }
+
+    // endregion
+
+
+    // region 去除字符串头尾部的空白部分
+
+    /**
+     * 去除字符串左右两侧的空白符
+     * <pre>
+     *     StringUtil.trim(null);               = null
+     *     StringUtil.trim("");              = ""
+     *     StringUtil.trim("    ")           = ""
+     *     StringUtil.trim("  a b  ");       = "a b"
+     * </pre>
+     *
+     * @param cse 字符串
+     * @return 返回已经去除左右两边的空白的字符串
+     * @see Character#isWhitespace(char)
+     */
+    public static String trim(CharSequence cse) {
+        return trim(cse, 0);
+    }
+
+    /**
+     * 去除字符串左侧的空白字符
+     * <pre>
+     *     StringUtil.ltrim(null);            = null
+     *     StringUtil.ltrim("ab");            = "ab"
+     *     StringUtil.ltrim("  ab c");        = "ab c"
+     *     StringUtil.ltrim("  ab c ");       = "ab c "
+     * </pre>
+     *
+     * @param cse 字符串
+     * @return 返回去除后的字符串
+     */
+    public static String trimLeft(CharSequence cse) {
+        return trim(cse, -1);
+    }
+
+    /**
+     * 去除字符串右侧的空白字符
+     * <pre>
+     *     StringUtil.rtrim(null);            = null
+     *     StringUtil.rtrim("ab");            = "ab"
+     *     StringUtil.rtrim(" ab c");         = " ab c"
+     *     StringUtil.rtrim(" ab c ");        = " ab c"
+     * </pre>
+     *
+     * @param cse 字符串
+     * @return 返回去除后的字符串
+     */
+    public static String trimRight(CharSequence cse) {
+        return trim(cse, 1);
+    }
+
+    /**
+     * 去除字符串头尾部空白部分
+     * <ul>
+     * <li>当{@code mode}=-1去除字符串左侧部分空白</li>
+     * <li>当{@code mode}=0去除字符串左右两侧部分空白</li>
+     * <li>当{@code mode}=1去除字符串右侧部分空白</li>
+     * </ul>
+     *
+     * @param cse  字符串
+     * @param mode 去除模式
+     * @return 去除空白后的字符串
+     */
+    public static String trim(CharSequence cse, int mode) {
+        if (cse == null) {
+            return null;
+        }
+
+        int length = cse.length(), start = 0, end = length;
+
+        if (mode <= 0) {
+            //trim by left
+            while (start < end && CharUtil.isBlankChar(cse.charAt(start))) {
+                start++;
+            }
+        }
+
+        if (mode >= 0) {
+            //trim by right
+            while (start < end && CharUtil.isBlankChar(cse.charAt(end - 1))) {
+                end--;
+            }
+        }
+
+        if (start > 0 || end < length) {
+            return cse.toString().substring(start, end);
+        }
+        return cse.toString();
+    }
+
+    /**
+     * 去除字符串数组中的每个元素左右两侧空白部分
+     *
+     * @param array 原数组
+     * @return 新数组，不为{@code null}
+     */
+    public static String[] trim(CharSequence... array) {
+        if (array == null || array.length == 0) {
+            return ArrayUtil.EMPTY_STRING_ARRAY;
+        }
+        return trimToList(array).toArray(ArrayUtil.EMPTY_STRING_ARRAY);
+    }
+
+    /**
+     * 去除字符串数组中的每个元素左右两侧空白部分
+     *
+     * @param array 原数组
+     * @return 新集合，不为{@code null}
+     */
+    public static List<String> trimToList(CharSequence... array) {
+        if (ArrayUtil.isEmpty(array)) {
+            return ListUtil.emptyList();
+        }
+        return Arrays.stream(array).map(StringUtil::trim).collect(Collectors.toList());
+    }
+
+    /**
+     * 去除字符串集合中的每个元素左右两侧空白部分
+     *
+     * @param array 原数组，不为{@code null}
+     */
+    public static List<String> trim(List<CharSequence> array) {
+        if (ListUtil.isEmpty(array)) {
+            return ListUtil.emptyList();
+        }
+        return array.stream().map(StringUtil::trim).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 去除字符串中所有的空白字符
+     * <pre>
+     *     StringUtil.trimAllBlank(null);            = null
+     *     StringUtil.trimAllBlank(" a ");           = "a"
+     *     StringUtil.trimAllBlank(" a b c ");       = "abc"
+     * </pre>
+     *
+     * @param cse 字符串
+     * @return 返回去除后的字符串
+     * @see Character#isWhitespace(char)
+     */
+    public static String trimAllBlank(CharSequence cse) {
+        if (isEmpty(cse)) {
+            return str(cse);
+        }
+        StringBuilder sb = new StringBuilder(cse);
+        int index = 0;
+        while (sb.length() > index) {
+            if (Character.isWhitespace(sb.charAt(index))) {
+                sb.deleteCharAt(index);
+            } else {
+                index++;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 去除字符串中所有的空白字符
+     *
+     * @param cse 字符串
+     * @return 去除空白字符的字符串
+     * @see #trimAllBlank(CharSequence)
+     */
+    public static String trimAllWhitespace(CharSequence cse) {
+        return trimAllBlank(cse);
+    }
+
     // endregion
 
 }

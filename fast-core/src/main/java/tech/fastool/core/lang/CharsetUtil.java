@@ -1,5 +1,7 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
@@ -11,14 +13,8 @@ import java.nio.charset.UnsupportedCharsetException;
  * @version 0.0.1
  * @date 2022-05-31
  */
+@UtilityClass
 public final class CharsetUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private CharsetUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     /**
      * ISO-8859-1编码名

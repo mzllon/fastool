@@ -1,5 +1,7 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 import java.nio.Buffer;
 import java.util.*;
 import java.util.function.Supplier;
@@ -11,14 +13,8 @@ import java.util.function.Supplier;
  * @version 0.0.1
  * @date 2022-05-31
  */
+@UtilityClass
 public class ObjectUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private ObjectUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     // region null/nonNull
 
@@ -36,7 +32,7 @@ public class ObjectUtil {
      * 判断数组的任意一个元素是否为{@code null}
      *
      * @param array 数组
-     * @return 如果数组任意一个元素为{@code null}则返回{@code true}，否则返回{@code false
+     * @return 如果数组任意一个元素为{@code null}则返回{@code true}，否则返回{@code false}
      */
     public static boolean isAnyNull(final Object... array) {
         if (array == null || array.length == 0) {
@@ -53,30 +49,19 @@ public class ObjectUtil {
     /**
      * 判断数组的元素都为{@code null}
      *
-     * @param objArray 数组
+     * @param array 数组
      * @return 如果数组所有元素都为{@code null}则返回{@code true}，否则返回{@code false}
      */
-    public static boolean isAllNull(final Object... objArray) {
-        if (objArray == null || objArray.length == 0) {
+    public static boolean isAllNull(final Object... array) {
+        if (array == null || array.length == 0) {
             return true;
         }
-        for (Object obj : objArray) {
+        for (Object obj : array) {
             if (!isNull(obj)) {
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * 判断数组的元素都为{@code null}
-     *
-     * @param objArray 数组
-     * @return 如果数组所有元素都为{@code null}则返回{@code true}，否则返回{@code false}
-     * @see #isAllNull(Object...)
-     */
-    public static boolean isNoneNull(final Object... objArray) {
-        return isAllNull(objArray);
     }
 
     /**
@@ -102,7 +87,7 @@ public class ObjectUtil {
     // endregion
 
 
-    // region assert empty/notEmpty
+    // region empty/notEmpty
 
     /**
      * <p>判断对象是否为空或{@code null}</p>
@@ -111,7 +96,7 @@ public class ObjectUtil {
      *     <li>{@linkplain CharSequence}长度是否为0</li>
      *     <li>{@code Array}数组长度是否为0</li>
      *     <li>{@linkplain Collection}集合是否为空</li>
-     *     <li>{@linkplain Map >是否为空</li>
+     *     <li>{@linkplain Map} 是否为空</li>
      * </ul>
      *
      * @param obj 被判断的对象
@@ -142,7 +127,7 @@ public class ObjectUtil {
      *     <li>{@linkplain CharSequence}长度是否为0</li>
      *     <li>{@code Array}数组长度是否为0</li>
      *     <li>{@linkplain Collection}集合是否为空</li>
-     *     <li>{@linkplain Map>是否为空</li>
+     *     <li>{@linkplain Map}是否为空</li>
      * </ul>
      *
      * @param obj 被判断的对象
@@ -159,11 +144,11 @@ public class ObjectUtil {
      *     <li>{@linkplain CharSequence}长度是否为0</li>
      *     <li>{@code Array}数组长度是否为0</li>
      *     <li>{@linkplain Collection}集合是否为空</li>
-     *     <li>{@linkplain Map>是否为空</li>
+     *     <li>{@linkplain Map}是否为空</li>
      * </ul>
      *
      * @param objArray 数组
-     * @return
+     * @return 是否任意为空
      */
     public static boolean isAnyEmpty(Object... objArray) {
         if (ArrayUtil.isEmpty(objArray)) {
@@ -183,10 +168,10 @@ public class ObjectUtil {
      * 如果两个对象都是{@code null}则返回{@code true}.如果传入的参数类型是数组,则比较的数组里的对象内容,而不是数组引用比较.
      * </p>
      * <pre class="code">
-     * ObjectUtils.nullSafeEquals("hello","hello"); //--- true
-     * ObjectUtils.nullSafeEquals("hello","hell"); //--- false;
-     * ObjectUtils.nullSafeEquals(4,4); //--- true
-     * ObjectUtils.nullSafeEquals(new String[]{"aaaa","bbb"},new String[]{"aaaa","bbb"}); //--- true
+     * ObjectUtil.nullSafeEquals("hello","hello"); //--- true
+     * ObjectUtil.nullSafeEquals("hello","hell"); //--- false;
+     * ObjectUtil.nullSafeEquals(4,4); //--- true
+     * ObjectUtil.nullSafeEquals(new String[]{"aaaa","bbb"},new String[]{"aaaa","bbb"}); //--- true
      * </pre>
      *
      * @param a 第一个比较对象
@@ -194,7 +179,7 @@ public class ObjectUtil {
      * @return 判断两个对象内容是否相等
      * @see Arrays#equals(Object[], Object[])
      */
-    public static boolean nullSafeEquals(final Object a, final Object b) {
+    public static boolean safeEquals(final Object a, final Object b) {
         if (a == b) {
             return true;
         }
@@ -316,7 +301,6 @@ public class ObjectUtil {
     // endregion
 
 
-
     // region get null safety
 
     /**
@@ -356,7 +340,10 @@ public class ObjectUtil {
      * @return 被检查对象为{@code null}返回默认值，否则返回原值
      */
     public static <T> T getIfNull(final T obj, Supplier<T> supplier) {
-        return (obj == null) ? (supplier == null ? null : supplier.get()) : obj;
+        if (obj != null) {
+            return obj;
+        }
+        return requireNonNull(supplier, "The supplier must not be null").get();
     }
 
     // endregion

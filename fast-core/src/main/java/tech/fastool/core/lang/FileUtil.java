@@ -1,5 +1,7 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
+
 import java.io.File;
 
 /**
@@ -9,6 +11,7 @@ import java.io.File;
  * @version 0.0.1
  * @date 2022-05-31
  */
+@UtilityClass
 public class FileUtil {
 
     /**
