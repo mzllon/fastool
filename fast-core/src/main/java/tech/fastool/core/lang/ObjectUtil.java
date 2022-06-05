@@ -1,7 +1,11 @@
 package tech.fastool.core.lang;
 
 import lombok.experimental.UtilityClass;
+import tech.fastool.core.exceptions.ClassNotFoundRuntimeException;
+import tech.fastool.core.exceptions.IoRuntimeException;
+import tech.fastool.core.io.FastByteArrayOutputStream;
 
+import java.io.*;
 import java.nio.Buffer;
 import java.util.*;
 import java.util.function.Supplier;
@@ -404,5 +408,53 @@ public class ObjectUtil {
         }
         return reference;
     }
+
+
+    // region serialization
+
+    /**
+     * 序列化对象为字节码
+     *
+     * @param obj 待序列化的对象
+     * @throws IoRuntimeException 当序列化失败抛出该异常
+     */
+    public static byte[] serialize(Serializable obj) throws IoRuntimeException {
+        if (obj == null) {
+            return null;
+        }
+        FastByteArrayOutputStream out = new FastByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
+            oos.writeObject(obj);
+            oos.flush();
+            return out.toByteArray();
+        } catch (IOException e) {
+            throw new IoRuntimeException(e);
+        }
+    }
+
+    /**
+     * 将字节码反序列化为对象
+     *
+     * @param data 字节码
+     * @param <T>  对象类型
+     * @return 反序列化的对象
+     * @throws IoRuntimeException            反序列化失败时抛出该异常
+     * @throws ClassNotFoundRuntimeException 对象类型找不到时抛出该异常
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T deserialize(byte[] data) throws IoRuntimeException, ClassNotFoundRuntimeException {
+        if (ArrayUtil.isEmpty(data)) {
+            return null;
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data))) {
+            return (T) ois.readObject();
+        } catch (IOException e) {
+            throw new IoRuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new ClassNotFoundRuntimeException(e);
+        }
+    }
+
+    // endregion
 
 }
