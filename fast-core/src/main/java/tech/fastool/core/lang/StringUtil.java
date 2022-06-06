@@ -692,5 +692,28 @@ public class StringUtil {
     // endregion
 
 
+    /**
+     * 去除字符串中指定的多个字符，如有多个则全部去除
+     *
+     * @param cse   字符串
+     * @param chars 字符列表
+     * @return 去除后的字符
+     */
+    public static String removeAll(CharSequence cse, char... chars) {
+        if (isEmpty(cse) || ArrayUtil.isEmpty(chars)) {
+            return str(cse);
+        }
+        final int length = cse.length();
+        final StringBuilder sb = new StringBuilder(length);
+        char ch;
+        for (int i = 0; i < length; i++) {
+            ch = cse.charAt(i);
+            if (!ArrayUtil.contains(chars, ch)) {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
 
 }
