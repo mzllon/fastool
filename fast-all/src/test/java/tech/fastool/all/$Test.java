@@ -1,6 +1,8 @@
 package tech.fastool.all;
 
 import org.junit.jupiter.api.Test;
+import tech.fastool.all.dto.EmployeeDto;
+import tech.fastool.core.lang.ListUtil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -247,4 +249,22 @@ public class $Test {
     @Test
     void testCopyProperties() {
     }
+
+    @Test
+    public void toJson() {
+        EmployeeDto dto = EmployeeDto.builder()
+                .no("11")
+                .name("张三")
+                .positions(ListUtil.newArrayList("开发", "运维"))
+                .build();
+        System.out.println($.toJson(dto));
+    }
+
+    @Test
+    public void fromJson() {
+        String json = "{\"no\":\"11\",\"name\":\"张三\",\"positions\":[\"开发\",\"运维\"],\"salary\": 2000}";
+        EmployeeDto dto = $.fromJson(json, EmployeeDto.class);
+        System.out.println("dto = " + dto);
+    }
+
 }

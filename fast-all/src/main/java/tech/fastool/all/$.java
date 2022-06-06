@@ -4,6 +4,8 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.*;
+import tech.fastool.json.api.BaseTypeRef;
+import tech.fastool.json.api.JsonUtil;
 
 import java.nio.charset.Charset;
 import java.util.*;
@@ -893,7 +895,7 @@ public class $ {
      * @return JSON字符串
      */
     public static String toJson(@Nullable Object obj) {
-        return null;
+        return JsonUtil.toJson(obj);
     }
 
     /**
@@ -905,7 +907,19 @@ public class $ {
      * @return Java对象
      */
     public static <T> T fromJson(@Nullable String json, @NotNull Class<T> clazz) {
-        return null;
+        return JsonUtil.fromJson(json, clazz);
+    }
+
+    /**
+     * JSON字符串转为Java对象
+     *
+     * @param json    JSON字符串
+     * @param typeRef 泛型类型的包装
+     * @param <T>     泛型标记
+     * @return Java对象
+     */
+    public static <T> T fromJson(@Nullable String json, @NotNull BaseTypeRef<T> typeRef) {
+        return JsonUtil.fromJson(json, typeRef);
     }
 
     // endregion

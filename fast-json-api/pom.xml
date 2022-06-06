@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>fast-all</artifactId>
+    <artifactId>fast-json-api</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -23,17 +23,13 @@
         </dependency>
 
         <dependency>
-            <groupId>tech.fastool</groupId>
-            <artifactId>fast-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>tech.fastool</groupId>
-            <artifactId>fast-json-jackson</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <groupId>tech.fastool</groupId>
+            <artifactId>fast-core</artifactId>
         </dependency>
 
     </dependencies>
