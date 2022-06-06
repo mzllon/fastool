@@ -654,4 +654,66 @@ public final class IoUtil {
         return (in instanceof BufferedInputStream) ? (BufferedInputStream) in : new BufferedInputStream(in);
     }
 
+    /**
+     * 将输入流转为字节输入流
+     *
+     * @param in 原始输入流
+     * @return 字节输入流
+     */
+    public static ByteArrayInputStream toByteArrayInputStream(InputStream in) {
+        if (in == null) {
+            return null;
+        } else if (in instanceof ByteArrayInputStream) {
+            return (ByteArrayInputStream) in;
+        } else {
+            byte[] data = readBytes(in);
+            return new ByteArrayInputStream(data);
+        }
+    }
+
+
+    //region ================ Copy InputStream to Writer ================
+
+    /**
+     * 将输入流的字节数组转换为<code>Writer</code>字符内容，使用系统默认编码。
+     *
+     * @param in            字节输入流
+     * @param writer        字符输出流
+     * @param inputEncoding 输入流的字符编码，如果为空则使用平台默认编码
+     * @return 拷贝成功则返回{@code true},否则返回{@code false}
+     */
+    public static boolean copy(final InputStream in, final Writer writer, final Charset inputEncoding) {
+        if (in == null) {
+            return false;
+        }
+        InputStreamReader reader = new InputStreamReader(in, inputEncoding == null ? Charset.defaultCharset() : inputEncoding);
+        return copy(reader, writer) > 0;
+    }
+
+    /**
+     * 将输入流的字节数组转换为<code>Writer</code>字符内容，使用系统默认编码。
+     *
+     * @param in            字节输入流
+     * @param writer        字符输出流
+     * @param inputEncoding 字符编码，如果为空则使用平台默认编码
+     * @return 拷贝成功则返回{@code true},否则返回{@code false}
+     */
+    public static boolean copy(InputStream in, Writer writer, final String inputEncoding) {
+        return copy(in, writer, StringUtil.isEmpty(inputEncoding) ? Charset.defaultCharset() : Charset.forName(inputEncoding));
+    }
+
+    /**
+     * 将输入流的字节数组转换为<code>Writer</code>字符内容，使用系统默认编码。
+     *
+     * @param in     字节输入流
+     * @param writer 字符输出流
+     * @return 拷贝成功则返回{@code true},否则返回{@code false}
+     */
+    public static boolean copy(final InputStream in, final Writer writer) {
+        return copy(in, writer, Charset.defaultCharset());
+    }
+
+    //endregion
+
+
 }
