@@ -1,14 +1,24 @@
 package tech.fastool.json.provider.jackson;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.*;
+import com.fasterxml.jackson.datatype.jsr310.ser.*;
+import tech.fastool.core.date.DatePattern;
+import tech.fastool.json.provider.jackson.deser.OffsetDateTimeDeserializer;
+import tech.fastool.json.provider.jackson.deser.ZonedDateTimeDeserializer;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 内部的JSON工具类
@@ -17,101 +27,114 @@ import java.util.Map;
  * @version 0.0.1
  * @date 2022-06-06
  */
-class JacksonUtil {
+public class JacksonUtil {
 
+    /**
+     * 创建默认的{@linkplain JavaTimeModule}
+     *
+     * @return {@linkplain JavaTimeModule}
+     */
+    public static JavaTimeModule createJavaTimeModule() {
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DatePattern.NORMAL_DATE_FORMATTER));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DatePattern.NORMAL_DATE_FORMATTER));
+
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DatePattern.NORMAL_DATETIME_FORMATTER));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DatePattern.NORMAL_DATETIME_FORMATTER));
+
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DatePattern.NORMAL_TIME_FORMATTER));
+        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DatePattern.NORMAL_TIME_FORMATTER));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        javaTimeModule.addSerializer(Year.class, new YearSerializer(formatter));
+        javaTimeModule.addDeserializer(Year.class, new YearDeserializer(formatter));
+
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        javaTimeModule.addSerializer(YearMonth.class, new YearMonthSerializer(formatter));
+        javaTimeModule.addDeserializer(YearMonth.class, new YearMonthDeserializer(formatter));
+
+        formatter = DateTimeFormatter.ofPattern("MM-dd");
+        javaTimeModule.addSerializer(MonthDay.class, new MonthDaySerializer(formatter));
+        javaTimeModule.addDeserializer(MonthDay.class, new MonthDayDeserializer(formatter));
+
+        javaTimeModule.addSerializer(OffsetDateTime.class, new OffsetDateTimeSerializer(
+                OffsetDateTimeSerializer.INSTANCE, false, DatePattern.UTC_MS_WITH_ZONE_OFFSET_FORMATTER) {
+        });
+//        javaTimeModule.addDeserializer(OffsetDateTime.class, new InstantDeserializer<OffsetDateTime>(
+//                InstantDeserializer.OFFSET_DATE_TIME, DatePattern.UTC_MS_WITH_ZONE_OFFSET_FORMATTER) {
+//        });
+        javaTimeModule.addDeserializer(OffsetDateTime.class, new OffsetDateTimeDeserializer());
+
+        javaTimeModule.addSerializer(ZonedDateTime.class, new ZonedDateTimeSerializer(DatePattern.UTC_MS_WITH_ZONE_OFFSET_FORMATTER));
+//        javaTimeModule.addDeserializer(ZonedDateTime.class,
+//                new InstantDeserializer<ZonedDateTime>(InstantDeserializer.ZONED_DATE_TIME, DatePattern.UTC_MS_WITH_ZONE_OFFSET_FORMATTER) {
+//                });
+        javaTimeModule.addDeserializer(ZonedDateTime.class, new ZonedDateTimeDeserializer());
+
+        return javaTimeModule;
+    }
+
+    /**
+     * 创建默认的{@linkplain  ObjectMapper}
+     *
+     * @return {@linkplain  ObjectMapper}
+     */
+    public static ObjectMapper createObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(createJavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        // 过滤transient
+        objectMapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+            @Override
+            public boolean hasIgnoreMarker(AnnotatedMember annotatedMember) {
+                return Modifier.isTransient(annotatedMember.getMember().getModifiers()) || super.hasIgnoreMarker(annotatedMember);
+            }
+        });
+        return objectMapper;
+    }
+
+    /**
+     * 判断类型是否为Jackson类型
+     *
+     * @param type 被检测的类型
+     * @return 是否
+     */
     public static boolean isJacksonJavaType(Type type) {
         return type instanceof JavaType;
     }
 
+    /**
+     * 将{@linkplain Type}转为{@linkplain JavaType}
+     *
+     * @param type Java类型
+     * @return Jackson类型
+     */
     public static JavaType toJavaType(Type type) {
         return (JavaType) type;
     }
 
-
+    /**
+     * 是否为类
+     *
+     * @param type 被检测的类型
+     * @return 是否
+     */
     public static boolean isClass(Type type) {
         return type instanceof Class;
     }
 
-    public static Class<?> toClass(Type type) {
-        if (type instanceof GenericArrayType) {
-            return Array.newInstance(toClass(((GenericArrayType) type).getGenericComponentType()), 0).getClass();
-        }
-        if (isPrimitive(type)) {
-            return getPrimitiveWrapClass(type);
-        }
-        if (isClass(type)) {
-            return (Class<?>) type;
-        }
-        if (isParameterizedType(type)) {
-            ParameterizedType o = (ParameterizedType) type;
-            return getParameterizedTypeWithOwnerType(o.getOwnerType(), o.getRawType(), o.getActualTypeArguments()).getClass();
-        }
-        throw new IllegalArgumentException();
-    }
-
-    /**
-     * Returns true if this type is a primitive.
-     */
-    public static boolean isPrimitive(Type type) {
-        return PRIMITIVE_TO_WRAPPER_TYPE.containsKey(type);
-    }
-
-
-    /**
-     * A map from primitive types to their corresponding wrapper types.
-     */
-    private static final Map<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_TYPE;
-
-    /**
-     * A map from wrapper types to their corresponding primitive types.
-     */
-    private static final Map<Class<?>, Class<?>> WRAPPER_TO_PRIMITIVE_TYPE;
-
-    // Sad that we can't use a BiMap. :(
-
-    static {
-        Map<Class<?>, Class<?>> primToWrap = new HashMap<Class<?>, Class<?>>(16);
-        Map<Class<?>, Class<?>> wrapToPrim = new HashMap<Class<?>, Class<?>>(16);
-
-        add(primToWrap, wrapToPrim, boolean.class, Boolean.class);
-        add(primToWrap, wrapToPrim, byte.class, Byte.class);
-        add(primToWrap, wrapToPrim, char.class, Character.class);
-        add(primToWrap, wrapToPrim, double.class, Double.class);
-        add(primToWrap, wrapToPrim, float.class, Float.class);
-        add(primToWrap, wrapToPrim, int.class, Integer.class);
-        add(primToWrap, wrapToPrim, long.class, Long.class);
-        add(primToWrap, wrapToPrim, short.class, Short.class);
-        add(primToWrap, wrapToPrim, void.class, Void.class);
-
-        PRIMITIVE_TO_WRAPPER_TYPE = Collections.unmodifiableMap(primToWrap);
-        WRAPPER_TO_PRIMITIVE_TYPE = Collections.unmodifiableMap(wrapToPrim);
-    }
-
-    private static void add(Map<Class<?>, Class<?>> forward,
-                            Map<Class<?>, Class<?>> backward, Class<?> key, Class<?> value) {
-        forward.put(key, value);
-        backward.put(value, key);
-    }
-
-    /**
-     * wrap a primitive type to warped class
-     */
-    public static Class<?> getPrimitiveWrapClass(Type type) {
-        if (isPrimitive(type)) {
-            return PRIMITIVE_TO_WRAPPER_TYPE.get(type);
-        }
-        return (Class<?>) type;
-    }
-
     /**
      * judge a type is a ParameterizedType
+     *
+     * @param type 被检测的类型
+     * @return 是否
      */
     public static boolean isParameterizedType(Type type) {
         return (type instanceof ParameterizedType);
-    }
-
-    public static ParameterizedType getParameterizedTypeWithOwnerType(Type ownerType, Type rawType, Type... typeArguments) {
-        return new ParameterizedTypeImpl(ownerType, rawType, typeArguments);
     }
 
 }

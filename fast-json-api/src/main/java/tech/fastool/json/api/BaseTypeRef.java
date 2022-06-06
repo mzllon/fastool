@@ -27,8 +27,9 @@ public abstract class BaseTypeRef<T> implements Comparator<T> {
     @SuppressWarnings("unchecked")
     protected BaseTypeRef() {
         Type superClass = getClass().getGenericSuperclass();
-        if (superClass instanceof Class<?>)
+        if (superClass instanceof Class<?>) {
             throw new IllegalArgumentException("Internal error: TypeReference constructed without actual type information");
+        }
         type = ((ParameterizedType) superClass).getActualTypeArguments()[0];
         this.rawType = (Class<? super T>) TypeUtil.getRawType(type);
     }

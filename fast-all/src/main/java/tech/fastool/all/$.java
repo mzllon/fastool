@@ -4,6 +4,8 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.*;
+import tech.fastool.core.lang.reflect.ReflectUtil;
+import tech.fastool.http.api.convenient.*;
 import tech.fastool.json.api.BaseTypeRef;
 import tech.fastool.json.api.JsonUtil;
 
@@ -844,7 +846,12 @@ public class $ {
     // region Bean Converter
 
     public static Map<String, Object> toMap(@Nullable Object bean) {
-        return null;
+        if (ObjectUtil.isAnyNull(bean)) {
+            return null;
+        }
+        Map<String, Object> target = new HashMap<>();
+        BeanUtil.copyProperties(bean, target);
+        return target;
     }
 
     /**
@@ -855,8 +862,14 @@ public class $ {
      * @param <T>       泛型标记
      * @return {T}
      */
-    public static <T> T toBean(@Nullable Map<String, ?> map, Class<T> beanClass) {
-        return null;
+    @Nullable
+    public static <T> T toBean(@Nullable Map<String, Object> map, Class<T> beanClass) {
+        if (ObjectUtil.isAnyNull(map, beanClass)) {
+            return null;
+        }
+        T target = ReflectUtil.newInstance(beanClass);
+        BeanUtil.mapToBean(map, target, null);
+        return target;
     }
 
     /**
@@ -867,8 +880,16 @@ public class $ {
      * @param <E>泛型标记
      * @return 目标集合
      */
+    @Nullable
     public static <E> List<E> copyProperties(@Nullable Collection<?> src, Class<E> targetClass) {
-        return null;
+        if (ObjectUtil.isAnyNull(src, targetClass)) {
+            return null;
+        }
+        List<E> list = ListUtil.newArrayList();
+        for (Object obj : src) {
+            list.add(copyProperties(obj, targetClass));
+        }
+        return list;
     }
 
     /**
@@ -879,8 +900,14 @@ public class $ {
      * @param <E>         泛型标记
      * @return 目标bean对象
      */
+    @Nullable
     public static <E> E copyProperties(@Nullable Object src, Class<E> targetClass) {
-        return null;
+        if (ObjectUtil.isAnyNull(src, targetClass)) {
+            return null;
+        }
+        E target = ReflectUtil.newInstance(targetClass);
+        BeanUtil.copyProperties(src, target);
+        return target;
     }
 
     // endregion
@@ -924,5 +951,49 @@ public class $ {
 
     // endregion
 
+
+    // region HTTP
+
+    /**
+     * Get请求
+     *
+     * @param url 请求地址
+     * @return {@link GetRequest}
+     */
+    public static GetRequest get(@NotNull String url) {
+        return HttpClients.get(url);
+    }
+
+    /**
+     * FORM/POST表单提交
+     *
+     * @param url 提交地址
+     * @return {@link PostRequest}
+     */
+    public static PostRequest post(String url) {
+        return HttpClients.post(url);
+    }
+
+    /**
+     * DELETE 请求
+     *
+     * @param url 请求地址
+     * @return {@linkplain DeleteRequest}
+     */
+    public static DeleteRequest delete(@NotNull String url) {
+        return HttpClients.delete(url);
+    }
+
+    /**
+     * PUT 请求
+     *
+     * @param url 请求地址
+     * @return {@linkplain PutRequest}
+     */
+    public static PutRequest put(@NotNull String url) {
+        return HttpClients.put(url);
+    }
+
+    // endregion
 
 }

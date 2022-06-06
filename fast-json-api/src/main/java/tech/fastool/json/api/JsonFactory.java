@@ -1,10 +1,11 @@
 package tech.fastool.json.api;
 
 import lombok.extern.slf4j.Slf4j;
+import tech.fastool.core.lang.StringUtil;
 import tech.fastool.json.api.annotation.JsonProviderName;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ServiceLoader;
 
 /**
@@ -17,9 +18,9 @@ import java.util.ServiceLoader;
 @Slf4j
 public class JsonFactory {
 
-    private static Class<? extends BaseJsonBuilder> defaultJsonBuilderClass;
+    private static JsonAdapter defaultJsonAdapter;
 
-    private static final Map<String, Class<? extends BaseJsonBuilder>> ALL_REGISTRY_JSON_BUILDER = new HashMap<>();
+    private static final List<JsonBuilderWrapper> ALL_REGISTRY_JSON_BUILDER = new ArrayList<>();
 
 
     static {
@@ -30,50 +31,32 @@ public class JsonFactory {
         ServiceLoader<BaseJsonBuilder> loader = ServiceLoader.load(BaseJsonBuilder.class);
         loader.forEach(jsonBuilder -> {
             Class<? extends BaseJsonBuilder> jsonBuilderClass = jsonBuilder.getClass();
-            String name = parseName(jsonBuilderClass);
+            JsonProviderName jsonProviderName = jsonBuilderClass.getAnnotation(JsonProviderName.class);
+            if (jsonProviderName == null) {
+                log.warn("JSON Builder " + jsonBuilderClass.getName() + " JsonProviderName annotation is missing");
+                return;
+            }
+            String name = jsonProviderName.value();
+            if (StringUtil.isEmpty(name)) {
+                name = jsonBuilderClass.getName();
+            }
+
             log.info("Registry a json builder {} for {}", jsonBuilderClass.getCanonicalName(), name);
-            ALL_REGISTRY_JSON_BUILDER.put(name, jsonBuilderClass);
-            if (defaultJsonBuilderClass == null) {
-                // 多个注册的区匹配的第一个
-                defaultJsonBuilderClass = jsonBuilderClass;
-            }
+            ALL_REGISTRY_JSON_BUILDER.add(new JsonBuilderWrapper(jsonProviderName.index(), name, jsonBuilder));
         });
-    }
-
-    private static String parseName(Class<? extends BaseJsonBuilder> clazz) {
-        JsonProviderName jsonProviderNameAnnotation = clazz.getAnnotation(JsonProviderName.class);
-        if (jsonProviderNameAnnotation != null) {
-            String name = jsonProviderNameAnnotation.value();
-            name = name.trim();
-            if (!name.isEmpty()) {
-                return name;
-            }
-        }
-        return clazz.getName();
-    }
-
-    public static BaseJsonBuilder create() {
-        return create(defaultJsonBuilderClass);
-    }
-
-    public static BaseJsonBuilder create(String jsonProvider) {
-        if (jsonProvider == null) {
-            return create();
-        }
-        Class<? extends BaseJsonBuilder> clazz = ALL_REGISTRY_JSON_BUILDER.get(jsonProvider);
-        return create(clazz);
-    }
-
-    private static BaseJsonBuilder create(Class<? extends BaseJsonBuilder> jsonBuilderClass) {
-        if (jsonBuilderClass != null) {
+        for (JsonBuilderWrapper wrapper : ALL_REGISTRY_JSON_BUILDER) {
             try {
-                return jsonBuilderClass.newInstance();
+                defaultJsonAdapter = wrapper.getJsonBuilder().build();
+                break;
             } catch (Exception e) {
-                log.error("Can't create a default json builder, " + defaultJsonBuilderClass.getCanonicalName(), e);
+                log.info("Cannot build JsonAdapter " + wrapper.getProviderName());
             }
         }
-//        throw new RuntimeException("Can't find any supported JSON libraries : [gson, jackson, fastjson], check you classpath has one of these jar pairs: [fastjson, easyjson-fastjson], [gson, easyjson-gson], [jackson, easyjson-jackson]");
-        return new NonJsonBuilder();
+    }
+
+
+    public static JsonAdapter get() {
+        return defaultJsonAdapter;
     }
 
 }

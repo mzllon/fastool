@@ -1,13 +1,18 @@
 package tech.fastool.json.provider.gson;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
+import tech.fastool.json.provider.gson.deser.*;
+import tech.fastool.json.provider.gson.ser.*;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.time.*;
 
 /**
  * 基于{@code Gson}的JSON处理器
@@ -18,7 +23,15 @@ import java.lang.reflect.Type;
  */
 public class GsonJsonHandler implements JsonHandler {
 
-    private Gson gson;
+    private final Gson gson;
+
+    public GsonJsonHandler() {
+        this(createJson());
+    }
+
+    public GsonJsonHandler(Gson gson) {
+        this.gson = ObjectUtil.requireNonNull(gson, "gson == null");
+    }
 
     /**
      * 将Java对象序列化为JSON字符串
@@ -51,8 +64,42 @@ public class GsonJsonHandler implements JsonHandler {
         return null;
     }
 
-    public void setGson(Gson gson) {
-        this.gson = gson;
+    /**
+     * 创建支持JSR310的gson处理
+     *
+     * @return
+     */
+    public static Gson createJson() {
+        GsonBuilder builder = new GsonBuilder();
+
+        // 序列化
+        builder.registerTypeAdapter(Instant.class, InstantSerializer.INSTANCE);
+
+        builder.registerTypeAdapter(LocalDate.class, LocalDateSerializer.INSTANCE);
+        builder.registerTypeAdapter(LocalDateTime.class, LocalDateTimeSerializer.INSTANCE);
+        builder.registerTypeAdapter(LocalTime.class, LocalTimeSerializer.INSTANCE);
+        builder.registerTypeAdapter(Year.class, YearSerializer.INSTANCE);
+        builder.registerTypeAdapter(YearMonth.class, YearMonthSerializer.INSTANCE);
+        builder.registerTypeAdapter(MonthDay.class, MonthDaySerializer.INSTANCE);
+
+        builder.registerTypeAdapter(OffsetDateTime.class, OffsetDateTimeSerializer.INSTANCE);
+        builder.registerTypeAdapter(OffsetTime.class, OffsetTimeSerializer.INSTANCE);
+
+        builder.registerTypeAdapter(ZonedDateTime.class, ZonedDateTimeSerializer.INSTANCE);
+
+        // 反序列化
+        builder.registerTypeAdapter(LocalDate.class, LocalDateDeserializer.INSTANCE);
+        builder.registerTypeAdapter(LocalDateTime.class, LocalDateTimeDeserializer.INSTANCE);
+        builder.registerTypeAdapter(LocalTime.class, LocalTimeDeserializer.INSTANCE);
+
+        builder.registerTypeAdapter(Year.class, YearDeserializer.INSTANCE);
+        builder.registerTypeAdapter(YearMonth.class, YearMonthDeserializer.INSTANCE);
+        builder.registerTypeAdapter(MonthDay.class, MonthDayDeserializer.INSTANCE);
+
+        builder.registerTypeAdapter(OffsetTime.class, OffsetTimeDeserializer.INSTANCE);
+        builder.registerTypeAdapter(ZonedDateTime.class, ZonedDateTimeDeserializer.INSTANCE);
+
+        return builder.create();
     }
 
 }

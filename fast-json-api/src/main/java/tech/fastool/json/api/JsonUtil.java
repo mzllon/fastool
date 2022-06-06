@@ -18,11 +18,6 @@ import java.lang.reflect.Type;
 public class JsonUtil {
 
     /**
-     * 默认JSON引擎
-     */
-    private static final JsonAdapter DEFAULT__JSON = JsonFactory.create().build();
-
-    /**
      * 自定义的JSON引擎
      */
     private static JsonAdapter customJson = null;
@@ -175,7 +170,7 @@ public class JsonUtil {
      * @return JSON引擎
      */
     private static JsonAdapter getJSON(JsonAdapter json) {
-        JsonAdapter result = json != null ? json : DEFAULT__JSON;
+        JsonAdapter result = json != null ? json : JsonFactory.get();
         return ObjectUtil.requireNonNull(result, "JSON Provider Cannot find!");
     }
 

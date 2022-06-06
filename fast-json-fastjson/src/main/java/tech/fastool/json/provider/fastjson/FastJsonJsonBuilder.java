@@ -11,7 +11,7 @@ import tech.fastool.json.api.annotation.JsonProviderName;
  * @version 0.0.1
  * @date 2022-06-06
  */
-@JsonProviderName("fastjson")
+@JsonProviderName(value = "fastjson",index = 30)
 public class FastJsonJsonBuilder extends BaseJsonBuilder {
 
     public FastJsonJsonBuilder() {

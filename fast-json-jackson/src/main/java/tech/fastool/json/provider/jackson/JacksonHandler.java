@@ -1,15 +1,16 @@
 package tech.fastool.json.provider.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
@@ -21,7 +22,16 @@ import java.lang.reflect.Type;
  */
 public class JacksonHandler implements JsonHandler {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public JacksonHandler() {
+        this(JacksonUtil.createObjectMapper());
+    }
+
+    public JacksonHandler(ObjectMapper objectMapper) {
+        this.objectMapper = ObjectUtil.requireNonNull(objectMapper, "objectMapper == null");
+    }
+
 
     /**
      * 将Java对象序列化为JSON字符串
@@ -48,6 +58,7 @@ public class JacksonHandler implements JsonHandler {
      * @return Java对象
      * @throws JsonRuntimeException 反序列化出现异常
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T deserialize(@NotNull String json, @NotNull Type typeOfT) throws JsonRuntimeException {
         try {
@@ -57,18 +68,16 @@ public class JacksonHandler implements JsonHandler {
             // is primitive ?
 
             if (JacksonUtil.isClass(typeOfT)) {
-                return objectMapper.readValue(json, objectMapper.getTypeFactory().constructType(JacksonUtil.toClass(typeOfT)));
+                return objectMapper.readValue(json, (Class<T>) typeOfT);
             }
 
             if (JacksonUtil.isParameterizedType(typeOfT)) {
-                ParameterizedType pType = (ParameterizedType) typeOfT;
-                Class<?> parametrized = JacksonUtil.toClass(pType.getRawType());
-                Type[] parameterTypes = pType.getActualTypeArguments();
-                Class<?>[] parameterClasses = new Class[parameterTypes.length];
-                for (int i = 0; i < parameterTypes.length; i++) {
-                    parameterClasses[i] = JacksonUtil.toClass(parameterTypes[i]);
-                }
-                return objectMapper.readValue(json, objectMapper.getTypeFactory().constructParametricType(parametrized, parameterClasses));
+                return objectMapper.readValue(json, new TypeReference<T>() {
+                    @Override
+                    public Type getType() {
+                        return typeOfT;
+                    }
+                });
             }
             return null;
         } catch (IOException e) {
@@ -79,10 +88,6 @@ public class JacksonHandler implements JsonHandler {
     @Override
     public <T> T deserialize(@NotNull Reader reader, @NotNull Type typeOfT) throws JsonRuntimeException {
         return null;
-    }
-
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
     }
 
 }

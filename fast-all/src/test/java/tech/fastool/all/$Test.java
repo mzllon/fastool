@@ -3,6 +3,10 @@ package tech.fastool.all;
 import org.junit.jupiter.api.Test;
 import tech.fastool.all.dto.EmployeeDto;
 import tech.fastool.core.lang.ListUtil;
+import tech.fastool.json.api.BaseTypeRef;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -265,6 +269,14 @@ public class $Test {
         String json = "{\"no\":\"11\",\"name\":\"张三\",\"positions\":[\"开发\",\"运维\"],\"salary\": 2000}";
         EmployeeDto dto = $.fromJson(json, EmployeeDto.class);
         System.out.println("dto = " + dto);
+    }
+
+    @Test
+    public void get() {
+        List<Map<String, Object>> list = $.get("https://gitee.com/api/v5/search/repositories?q=fastool&page=1&per_page=20&order=desc")
+                .bean(new BaseTypeRef<List<Map<String, Object>>>() {
+                });
+        System.out.println("list = " + list);
     }
 
 }

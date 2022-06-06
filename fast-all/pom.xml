@@ -28,12 +28,26 @@
         </dependency>
         <dependency>
             <groupId>tech.fastool</groupId>
-            <artifactId>fast-json-jackson</artifactId>
+            <artifactId>fast-json-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.fastool</groupId>
+            <artifactId>fast-http-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.fastool</groupId>
+            <artifactId>fast-json-jackson</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>tech.fastool</groupId>
+            <artifactId>fast-http-okhttp</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
