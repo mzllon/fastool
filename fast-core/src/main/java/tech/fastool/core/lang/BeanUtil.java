@@ -1,5 +1,6 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
 import tech.fastool.core.bean.BeanIntrospectCache;
 import tech.fastool.core.bean.CopyOption;
 import tech.fastool.core.exceptions.BeanException;
@@ -14,8 +15,11 @@ import java.util.*;
 /**
  * Java Bean工具类
  *
- * @author miles.tang at 2022-01-28
+ * @author miles.tang
+ * @version 0.0.1
+ * @date 2022-06-06
  */
+@UtilityClass
 public class BeanUtil {
 
     /**

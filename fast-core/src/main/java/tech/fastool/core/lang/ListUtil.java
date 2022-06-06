@@ -2,10 +2,7 @@ package tech.fastool.core.lang;
 
 import lombok.experimental.UtilityClass;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * List集合工具类
@@ -76,6 +73,60 @@ public class ListUtil extends CollectionUtil {
      */
     public static <T> List<T> list(boolean isLinked) {
         return isLinked ? new LinkedList<>() : new ArrayList<>();
+    }
+
+    /**
+     * 新建一个List<br>
+     * 提供的参数为null时返回空{@link ArrayList}
+     *
+     * @param <T>      集合元素类型
+     * @param isLinked 是否新建LinkedList
+     * @param iterator {@link CombineIterator}
+     * @return ArrayList对象
+     */
+    public static <T> List<T> list(boolean isLinked, CombineIterator<T> iterator) {
+        final List<T> list = list(isLinked);
+        if (null != iterator) {
+            while (iterator.hasNext()) {
+                list.add(iterator.next());
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 新建一个List<br>
+     * 提供的参数为null时返回空{@link ArrayList}
+     *
+     * @param <T>         集合元素类型
+     * @param isLinked    是否新建LinkedList
+     * @param enumeration {@link Enumeration}
+     * @return ArrayList对象
+     */
+    public static <T> List<T> list(boolean isLinked, Enumeration<T> enumeration) {
+        final List<T> list = list(isLinked);
+        if (null != enumeration) {
+            while (enumeration.hasMoreElements()) {
+                list.add(enumeration.nextElement());
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 反转集合
+     *
+     * @param list 原集合
+     * @param <T>  集合元素类型
+     * @return 新集合
+     */
+    public static <T> List<T> reverse(List<T> list) {
+        if (isEmpty(list)) {
+            return list;
+        }
+        List<T> reversedList = new ArrayList<>(list);
+        Collections.reverse(reversedList);
+        return reversedList;
     }
 
 
