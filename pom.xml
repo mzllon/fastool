@@ -16,6 +16,7 @@
 
     <modules>
         <module>fast-core</module>
+        <module>fast-all</module>
     </modules>
 
     <properties>
