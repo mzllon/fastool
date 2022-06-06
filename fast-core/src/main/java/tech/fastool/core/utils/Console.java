@@ -1,18 +1,17 @@
-package tech.eboxes.core.lang;
+package tech.fastool.core.utils;
+
+import lombok.experimental.UtilityClass;
+import tech.fastool.core.lang.StringUtil;
 
 /**
  * Console Utilities
  *
- * @author miles.tang at 2022-01-27
+ * @author miles.tang
+ * @version 0.0.1
+ * @date 2022-06-06
  */
+@UtilityClass
 public class Console {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private Console() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     //region ================ Standard Print ================
 
