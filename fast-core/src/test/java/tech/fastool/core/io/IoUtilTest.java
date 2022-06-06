@@ -132,7 +132,7 @@ public class IoUtilTest {
         OutputStreamWriter osw = new OutputStreamWriter(out);
 
         long charCount = IoUtil.copy(br, osw);
-         assertEquals(14, charCount);
+        assertEquals(14, charCount);
         assertArrayEquals("年龄越大，月学会了顺其自然。".getBytes(), out.toByteArray());
     }
 
@@ -156,12 +156,8 @@ public class IoUtilTest {
     }
 
     @Test
-    public void testCopy111() {
+    public void testCopy4() {
 
-    }
-
-    @Test
-    void testCopy13() {
     }
 
 }
