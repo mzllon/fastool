@@ -273,7 +273,7 @@ public class ClassScanner {
                 addIfAccept(loadClass(className));
             }
         } else if (classLength > packageLength) {
-            //检查类名是否以指定包名为前缀，包名后加.（避免类似于com.ijiagoushi.chillies.A和com.ijiagoushi.chilies.ATest这类类名引起的歧义）
+            //检查类名是否以指定包名为前缀，包名后加.（避免类似于 tech.fastool.core.A 和 tech.fastool.core.ATest这类类名引起的歧义）
             if (className.startsWith(packageNameWithDot)) {
                 addIfAccept(loadClass(className));
             }
