@@ -20,6 +20,6 @@ public interface Converter<R> {
      * @return 转换后的值
      * @throws ConverterRuntimeException 转换异常
      */
-    R handleQuietly(Object src, R defaultValue) throws ConverterRuntimeException;
+    R handle(Object src, R defaultValue) throws ConverterRuntimeException;
 
 }

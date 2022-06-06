@@ -26,7 +26,7 @@ public abstract class AbstractConverter<R> implements Converter<R>, Serializable
      * {@inheritDoc}
      */
     @Override
-    public R handleQuietly(Object src, R defaultValue) throws ConverterRuntimeException {
+    public R handle(Object src, R defaultValue) throws ConverterRuntimeException {
         Class<R> targetClass = getTargetClass();
         if (targetClass == null && defaultValue == null) {
             throw new ConverterRuntimeException("[type] and [defaultValue] are both null for Converter");
@@ -51,7 +51,7 @@ public abstract class AbstractConverter<R> implements Converter<R>, Serializable
     }
 
     /**
-     * 内部转换器，被 {@link AbstractConverter#handleQuietly(Object, Object)} 调用，实现基本转换逻辑<br>
+     * 内部转换器，被 {@link AbstractConverter#handle(Object, Object)} 调用，实现基本转换逻辑<br>
      * 内部转换器转换后如果转换失败可以做如下操作，处理结果都为返回默认值：
      *
      * <pre>
