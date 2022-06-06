@@ -353,6 +353,33 @@ public class ObjectUtil {
     // endregion
 
 
+    // required
+
+    /**
+     * 判断表达式是否为{@code true}
+     *
+     * @param expression 表达式
+     */
+    public static void isTrue(boolean expression) {
+        isTrue(expression, null);
+    }
+
+    /**
+     * 判断表达式是否为{@code true}
+     *
+     * @param expression 表达式
+     * @param message    异常提示消息
+     */
+    public static void isTrue(boolean expression, String message) {
+        if (!expression) {
+            if (message == null) {
+                throw new IllegalArgumentException();
+            } else {
+                throw new IllegalArgumentException(message);
+            }
+        }
+    }
+
     /**
      * 确认参数非空w
      *
@@ -408,6 +435,8 @@ public class ObjectUtil {
         }
         return reference;
     }
+
+    // endregion
 
 
     // region serialization
