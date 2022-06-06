@@ -24,6 +24,7 @@
         <module>fast-http-api</module>
         <module>fast-http-okhttp</module>
         <module>fast-http-apachehttpclient</module>
+        <module>fast-web-servlet3</module>
     </modules>
 
     <properties>
@@ -169,6 +170,13 @@
                 <artifactId>httpmime</artifactId>
                 <version>${apache-httpclient.version}</version>
             </dependency> <!-- httpmime -->
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
