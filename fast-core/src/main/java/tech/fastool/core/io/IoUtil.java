@@ -3,12 +3,15 @@ package tech.fastool.core.io;
 import tech.fastool.core.exceptions.IoRuntimeException;
 import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.CharsetUtil;
+import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.core.lang.StringUtil;
 
 import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * IO工具类
@@ -146,6 +149,7 @@ public final class IoUtil {
 
     // endregion
 
+
     // region read string
 
     /**
@@ -219,6 +223,93 @@ public final class IoUtil {
             }
         }
         return sb.toString();
+    }
+
+    // endregion
+
+
+    //region ================ Read all lines ================
+
+    /**
+     * 从输入流中读取，采用平台默认编码
+     *
+     * @param in 待读取的流
+     * @return 读取的内容
+     */
+    public static List<String> readLines(final InputStream in) {
+        return readLines(in, false);
+    }
+
+    /**
+     * 从输入流中读取，采用平台默认编码
+     *
+     * @param in 待读取的流
+     * @return 读取的内容
+     */
+    public static List<String> readLines(final InputStream in, final boolean autoClose) {
+        return readLines(in, null, autoClose);
+    }
+
+    /**
+     * 从输入流中读取
+     *
+     * @param in      待读取的流
+     * @param charset 字符编码
+     * @return 读取的内容
+     */
+    public static List<String> readLines(InputStream in, final Charset charset) {
+        return readLines(in, charset, false);
+    }
+
+    /**
+     * 从输入流中读取
+     *
+     * @param in      待读取的流
+     * @param charset 字符编码
+     * @return 读取的内容
+     */
+    public static List<String> readLines(InputStream in, final Charset charset, final boolean autoClose) {
+        if (in == null) {
+            return null;
+        }
+        InputStreamReader reader = new InputStreamReader(in, CharsetUtil.getCharset(charset));
+        return readLines(reader, autoClose);
+    }
+
+    /**
+     * 从流中读取内容，读取完毕后会关闭流
+     *
+     * @param reader 待读取的流
+     * @return 读取的内容
+     */
+    public static List<String> readLines(Reader reader) {
+        return readLines(reader, false);
+    }
+
+    /**
+     * 从流中读取内容，读取完毕后会关闭流
+     *
+     * @param reader 待读取的流
+     * @return 读取的内容
+     */
+    public static List<String> readLines(final Reader reader, final boolean autoClose) {
+        BufferedReader bufferedReader = getBufferedReader(reader);
+        List<String> lines = new ArrayList<>();
+        try {
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                lines.add(line);
+                line = bufferedReader.readLine();
+            }
+            return lines;
+        } catch (IOException e) {
+            throw new IoRuntimeException(e);
+        } finally {
+            if (autoClose) {
+                closeQuietly(bufferedReader);
+                closeQuietly(reader);
+            }
+        }
     }
 
     // endregion
@@ -449,6 +540,17 @@ public final class IoUtil {
     // region Reader
 
     /**
+     * 返回 BufferReader
+     * 如果是{@link BufferedReader}强转返回，否则新建。如果提供的Reader为null返回null
+     *
+     * @param reader 普通Reader，如果为null返回null
+     * @return {@linkplain BufferedReader} or {@code null}
+     */
+    public static BufferedReader getBufferedReader(Reader reader) {
+        return reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader);
+    }
+
+    /**
      * 将输入流转换为{@linkplain  BufferedReader}
      *
      * @param in       输入流
@@ -497,5 +599,59 @@ public final class IoUtil {
 
     // endregion
 
+
+    /**
+     * 获得二进制文件的真实文件后缀，不会关闭流
+     *
+     * @param in 输入流
+     * @return 文件后缀
+     */
+    public static String getRealBinExt(InputStream in) {
+        ObjectUtil.requireNonNull(in, "in == null");
+        //https://filesignatures.net/index.php?page=all&order=EXT&alpha=M
+        //https://my.oschina.net/ososchina/blog/1610685?nocache=1541639315254
+
+        byte[] topByte = readBytes(in, 8);
+        if (in.markSupported()) {
+            in.mark(0);
+        }
+        if (topByte != null && topByte.length == 10) {
+            if ((topByte[0] & 0xFF) == 0x23 && (topByte[1] & 0xFF) == 0x21 && (topByte[2] & 0xFF) == 0x41 &&
+                    (topByte[3] & 0xFF) == 0x4D && (topByte[4] & 0xFF) == 0x52) {
+                return "amr";
+            } else if ((topByte[0] & 0xFF) == 0x49 && (topByte[1] & 0xFF) == 0x44 && (topByte[2] & 0xFF) == 0x33) {
+                return "mp3";
+            } else if ((topByte[0] & 0xFF) == 0x47 && (topByte[1] & 0xFF) == 0x49 && (topByte[2] & 0xFF) == 0x46 &&
+                    (topByte[3] & 0xFF) == 0x38) {
+                return "gif";
+            } else if ((topByte[0] & 0xFF) == 0x89 && (topByte[1] & 0xFF) == 0x50 && (topByte[2] & 0xFF) == 0x4E &&
+                    (topByte[3] & 0xFF) == 0x47 && (topByte[4] & 0xFF) == 0x0D && (topByte[5] & 0xFF) == 0x0A &&
+                    (topByte[6] & 0xFF) == 0x1A && (topByte[7] & 0xFF) == 0x0A) {
+                return "png";
+            } else if ((topByte[0] & 0xFF) == 0xFF && (topByte[1] & 0xFF) == 0xD8 && (topByte[2] & 0xFF) == 0xFF &&
+                    ((topByte[3] & 0xFF) == 0xE0 || (topByte[3] & 0xFF) == 0xE1 || (topByte[3] & 0xFF) == 0xE8)) {
+                return "jpg";
+            } else if ((topByte[0] & 0xFF) == 0xFF && (topByte[1] & 0xFF) == 0xD8 && (topByte[2] & 0xFF) == 0xFF &&
+                    ((topByte[3] & 0xFF) == 0xE2 || (topByte[3] & 0xFF) == 0xE3)) {
+                return "jpeg";
+            } else if ((topByte[0] & 0xFF) == 0x42 && (topByte[1] & 0xFF) == 0x4D) {
+                return "bmp";
+            } else if ((topByte[0] & 0xFF) == 0x25 && (topByte[1] & 0xFF) == 0x50 && (topByte[2] & 0xFF) == 0x44 &&
+                    (topByte[3] & 0xFF) == 0x46) {
+                return "pdf";
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 通过输入流获取缓冲输入流
+     *
+     * @param in 输入流
+     * @return {@linkplain BufferedInputStream}
+     */
+    public static BufferedInputStream getBufferedInputStream(InputStream in) {
+        return (in instanceof BufferedInputStream) ? (BufferedInputStream) in : new BufferedInputStream(in);
+    }
 
 }
