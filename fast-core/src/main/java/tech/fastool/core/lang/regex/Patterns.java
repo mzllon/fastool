@@ -17,90 +17,176 @@ public class Patterns {
     /**
      * 英文字母 、数字和下划线
      */
-    public final static Pattern GENERAL = Pattern.compile("^\\w+$");
+    public static final String GENERAL_STR = "^\\w+$";
+
+    /**
+     * 英文字母 、数字和下划线
+     */
+    public final static Pattern GENERAL = Pattern.compile(GENERAL_STR);
 
     /**
      * 数字:正整数,0和负整数
      */
-    public final static Pattern NUMBERS = Pattern.compile("^[-+]?\\d+$");
+    public static final String NUMBERS_STR = "^[-+]?\\d+$";
+
+    /**
+     * 数字:正整数,0和负整数
+     */
+    public final static Pattern NUMBERS = Pattern.compile(NUMBERS_STR);
 
     /**
      * 纯数字
      */
-    public static final Pattern DIGITS = Pattern.compile("^\\d+$");
+    public static final String DIGITS_STR = "^\\d+$";
+
+    /**
+     * 纯数字
+     */
+    public static final Pattern DIGITS = Pattern.compile(DIGITS_STR);
 
     /**
      * 金额,2位小数点
      */
-    public static final Pattern MONEY = Pattern.compile("\\d+(.\\d{2})?");
+    public static final String MONEY_STR = "\\d+(.\\d{2})?";
+
+    /**
+     * 金额,2位小数点
+     */
+    public static final Pattern MONEY = Pattern.compile(MONEY_STR);
 
     /**
      * 任意一个中文/汉字
      */
-    public static final Pattern CHINESE_ANY = Pattern.compile("[\u4E00-\u9FFF！|，。（）《》“”？：；【】]");
+    public static final String CHINESE_ANY_STR = "[\u4E00-\u9FFF！|，。（）《》“”？：；【】]";
+
+    /**
+     * 任意一个中文/汉字
+     */
+    public static final Pattern CHINESE_ANY = Pattern.compile(CHINESE_ANY_STR);
 
     /**
      * 多个中文
      */
-    public static final Pattern CHINESES = Pattern.compile("[\u4E00-\u9FFF！|，。（）《》“”？：；【】]+");
+    public static final String CHINESES_STR = ("[\u4E00-\u9FFF！|，。（）《》“”？：；【】]+");
+
+    /**
+     * 多个中文
+     */
+    public static final Pattern CHINESES = Pattern.compile(CHINESES_STR);
 
     /**
      * Http(s) Or SFT(s)
      */
-    public final static Pattern URL_HTTP_OR_FTP = Pattern.compile("^(((ht|f)tps?)://)?[\\w-]+(\\.[\\w-]+)+([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?$");
+    public final static String URL_HTTP_OR_FTP_STR = ("^(((ht|f)tps?)://)?[\\w-]+(\\.[\\w-]+)+([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?$");
+
+    /**
+     * Http(s) Or SFT(s)
+     */
+    public final static Pattern URL_HTTP_OR_FTP = Pattern.compile(URL_HTTP_OR_FTP_STR);
 
     /**
      * IP v4
      */
-    public final static Pattern IPV4 = Pattern.compile("^((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]).){3}(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])(?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$");
+    public final static String IPV4_STR = ("^((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]).){3}(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])(?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$");
+
+    /**
+     * IP v4
+     */
+    public final static Pattern IPV4 = Pattern.compile(IPV4_STR);
 
     /**
      * IP v6
      */
-    public final static Pattern IPV6 = Pattern.compile("^(?:(?:(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))|\\[(?:(?:(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))\\](?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$", Pattern.CASE_INSENSITIVE);
+    public final static String IPV6_STR = ("^(?:(?:(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))|\\[(?:(?:(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))\\](?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$");
+
+    /**
+     * IP v6
+     */
+    public final static Pattern IPV6 = Pattern.compile(IPV6_STR, Pattern.CASE_INSENSITIVE);
 
     /**
      * 火车车次
      */
-    public static final Pattern TRAIN_CODE = Pattern.compile("^[GCDZTSPKXLY1-9]\\d{1,4}$");
+    public static final String TRAIN_CODE_STR = ("^[GCDZTSPKXLY1-9]\\d{1,4}$");
+
+    /**
+     * 火车车次
+     */
+    public static final Pattern TRAIN_CODE = Pattern.compile(TRAIN_CODE_STR);
 
     /**
      * 手机机身码(IMEI)
      */
-    public static final Pattern IMEI = Pattern.compile("^\\d{15,17}$");
+    public static final String IMEI_STR = ("^\\d{15,17}$");
+
+    /**
+     * 手机机身码(IMEI)
+     */
+    public static final Pattern IMEI = Pattern.compile(IMEI_STR);
 
     /**
      * 车牌号(新能源+非新能源)
      */
-    public static final Pattern PLATE_CODE = Pattern.compile("^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[ABCDEFGHJK])|([ABCDEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4})))|" +
+    public static final String PLATE_CODE_STR = ("^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[ABCDEFGHJK])|([ABCDEFGHJK]([A-HJ-NP-Z0-9])[0-9]{4})))|" +
             "([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]\\d{3}\\d{1,3}[领])|" +
             "([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$");
 
     /**
+     * 车牌号(新能源+非新能源)
+     */
+    public static final Pattern PLATE_CODE = Pattern.compile(PLATE_CODE_STR);
+
+    /**
      * 手机号(mobile phone)中国(严谨), 根据工信部2019年最新公布的手机号段
      */
-    public static final Pattern MOBILE_PHONE_STRICT = Pattern.compile("^(?:(?:\\+|00)86)?1(?:(?:3[\\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\\d])|(?:9[189]))\\d{8}$");
+    public static final String MOBILE_PHONE_STRICT_STR = ("^(?:(?:\\+|00)86)?1(?:(?:3[\\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\\d])|(?:9[189]))\\d{8}$");
+
+    /**
+     * 手机号(mobile phone)中国(严谨), 根据工信部2019年最新公布的手机号段
+     */
+    public static final Pattern MOBILE_PHONE_STRICT = Pattern.compile(MOBILE_PHONE_STRICT_STR);
 
     /**
      * 手机号(mobile phone)中国(宽松), 只要是13,14,15,16,17,18,19开头即可
      */
-    public static final Pattern MOBILE_PHONE_COMPATIBLE = Pattern.compile("^(?:(?:\\+|00)86)?1[3-9]\\d{9}$");
+    public static final String MOBILE_PHONE_COMPATIBLE_STR = ("^(?:(?:\\+|00)86)?1[3-9]\\d{9}$");
+
+    /**
+     * 手机号(mobile phone)中国(宽松), 只要是13,14,15,16,17,18,19开头即可
+     */
+    public static final Pattern MOBILE_PHONE_COMPATIBLE = Pattern.compile(MOBILE_PHONE_COMPATIBLE_STR);
 
     /**
      * 手机号(mobile phone)中国(最宽松), 只要是1开头即可, 如果你的手机号是用来接收短信, 优先建议选择这一条
      */
-    public static final Pattern MOBILE_PHONE = Pattern.compile("^(?:(?:\\+|00)86)?1\\d{10}$");
+    public static final String MOBILE_PHONE_STR = ("^(?:(?:\\+|00)86)?1\\d{10}$");
+
+    /**
+     * 手机号(mobile phone)中国(最宽松), 只要是1开头即可, 如果你的手机号是用来接收短信, 优先建议选择这一条
+     */
+    public static final Pattern MOBILE_PHONE = Pattern.compile(MOBILE_PHONE_STR);
 
     /**
      * date(日期)
      */
-    public static final Pattern DATE = Pattern.compile("^\\d{4}(-)(1[0-2]|0?\\d)\\1([0-2]\\d|\\d|30|31)$");
+    public static final String DATE_STR = ("^\\d{4}(-)(1[0-2]|0?\\d)\\1([0-2]\\d|\\d|30|31)$");
+
+    /**
+     * date(日期)
+     */
+    public static final Pattern DATE = Pattern.compile(DATE_STR);
 
     /**
      * email(邮箱)
      * 正则来自：http://emailregex.com/
      */
-    public static final Pattern EMAIL = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])", Pattern.CASE_INSENSITIVE);
+    public static final String EMAIL_STR = ("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)])");
+
+    /**
+     * email(邮箱)
+     * 正则来自：http://emailregex.com/
+     */
+    public static final Pattern EMAIL = Pattern.compile(EMAIL_STR, Pattern.CASE_INSENSITIVE);
 
     /**
      * 社会统一信用代码
@@ -122,17 +208,32 @@ public class Patterns {
     /**
      * 身份证号(2代,18位数字),最后一位是校验位,可能为数字或字符X
      */
-    public static final Pattern ID_CARD_NUMBER_18 = Pattern.compile("^[1-9]\\d{5}(?:18|19|20|21)\\d{2}(?:0[1-9]|10|11|12)(?:0[1-9]|[1-2]\\d|30|31)\\d{3}[\\dXx]$");
+    public static final String ID_CARD_NUMBER_18_STR = ("^[1-9]\\d{5}(?:18|19|20|21)\\d{2}(?:0[1-9]|10|11|12)(?:0[1-9]|[1-2]\\d|30|31)\\d{3}[\\dXx]$");
+
+    /**
+     * 身份证号(2代,18位数字),最后一位是校验位,可能为数字或字符X
+     */
+    public static final Pattern ID_CARD_NUMBER_18 = Pattern.compile(ID_CARD_NUMBER_18_STR);
 
     /**
      * 身份证号, 支持1/2代(15位/18位数字)
      */
-    public static final Pattern ID_CARD_NUMBER = Pattern.compile("(^\\d{8}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}$)|(^\\d{6}(18|19|20)\\d{2}(0[1-9]|10|11|12)([0-2]\\d|30|31)\\d{3}(\\d|X|x)$)");
+    public static final String ID_CARD_NUMBER_STR = ("(^\\d{8}(0\\d|10|11|12)([0-2]\\d|30|31)\\d{3}$)|(^\\d{6}(18|19|20)\\d{2}(0[1-9]|10|11|12)([0-2]\\d|30|31)\\d{3}(\\d|X|x)$)");
+
+    /**
+     * 身份证号, 支持1/2代(15位/18位数字)
+     */
+    public static final Pattern ID_CARD_NUMBER = Pattern.compile(ID_CARD_NUMBER_STR);
 
     /**
      * 中国的邮箱编码
      */
-    public static final Pattern ZIPCODE = Pattern.compile("^(0[1-7]|1[0-356]|2[0-7]|3[0-6]|4[0-7]|5[1-7]|6[1-7]|7[0-5]|8[013-6])\\d{4}$");
+    public static final String ZIPCODE_STR = ("^(0[1-7]|1[0-356]|2[0-7]|3[0-6]|4[0-7]|5[1-7]|6[1-7]|7[0-5]|8[013-6])\\d{4}$");
+
+    /**
+     * 中国的邮箱编码
+     */
+    public static final Pattern ZIPCODE = Pattern.compile(ZIPCODE_STR);
 
     /**
      * mac地址
@@ -145,7 +246,15 @@ public class Patterns {
      * 12:00:00
      * 9:3
      */
-    public static final Pattern TIME = Pattern.compile("^\\d{1,2}:\\d{1,2}(:\\d{1,2})?$");
+    public static final String TIME_STR = ("^\\d{1,2}:\\d{1,2}(:\\d{1,2})?$");
+
+    /**
+     * 时间正则，如
+     * 12:00
+     * 12:00:00
+     * 9:3
+     */
+    public static final Pattern TIME = Pattern.compile(TIME_STR);
 
     /**
      * 生日,支持形如
@@ -154,7 +263,16 @@ public class Patterns {
      * 2022年1月2日
      * 2022.1.2
      */
-    public static final Pattern BIRTHDAY = Pattern.compile("^(\\d{2,4})([/\\-.年]?)(\\d{1,2})([/\\-.月]?)(\\d{1,2})日?$");
+    public static final String BIRTHDAY_STR = ("^(\\d{2,4})([/\\-.年]?)(\\d{1,2})([/\\-.月]?)(\\d{1,2})日?$");
+
+    /**
+     * 生日,支持形如
+     * 2022-1-2
+     * 2022/1/2
+     * 2022年1月2日
+     * 2022.1.2
+     */
+    public static final Pattern BIRTHDAY = Pattern.compile(BIRTHDAY_STR);
 
     // ---
 
