@@ -222,6 +222,20 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>user-snapshot</id>
+            <name>Snapshot Modules</name>
+            <url>https://plus.console.mored.tech/nexus/repository/maven-snapshots/</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>user-release</id>
+            <name>Release Modules</name>
+            <url>https://plus.console.mored.tech/nexus/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
+
     <profiles>
         <profile>
             <id>dev</id>
