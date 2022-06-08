@@ -1026,4 +1026,75 @@ public class $ {
 
     // endregion
 
+
+    // region 金额转换
+
+    /**
+     * 人民币金额分转元，保留2位小数
+     *
+     * @param fen 金额，单位分
+     * @return 金额元
+     * @see NumberUtil#fen2YuanString(String)
+     */
+    public static String fen2YuanString(String fen) {
+        return NumberUtil.fen2YuanString(fen);
+    }
+
+    /**
+     * 人民币金额分转元，保留2位小数
+     *
+     * @param fen 金额，单位分
+     * @return 金额元
+     * @see NumberUtil#fen2YuanString(long)
+     */
+    public static String fen2YuanString(long fen) {
+        return NumberUtil.fen2YuanString(fen);
+    }
+
+    /**
+     * 人民币金额分转元，保留2位小数
+     *
+     * @param fen 金额，单位分
+     * @return 金额元
+     * @see NumberUtil#fen2YuanString(long)
+     */
+    public static String fen2YuanString(Long fen) {
+        return NumberUtil.fen2YuanString(fen);
+    }
+
+    /**
+     * 人民币金额转为分
+     * <p>Note: 默认保留2位小数,超过则四舍五入</p>
+     *
+     * @param yuan 金额,单位为元
+     * @return 金额分
+     */
+    public static long yuan2Fen(double yuan) {
+        return yuan2Fen(Double.toString(yuan));
+    }
+
+    /**
+     * 人民币金额转为分
+     * <p>Note: 默认保留2位小数,超过则四舍五入</p>
+     *
+     * @param yuan 金额,单位为元
+     * @return 金额分
+     */
+    public static long yuan2Fen(String yuan) {
+        return yuan2Fen(yuan, true);
+    }
+
+    /**
+     * 人民币金额转为分,保留小数位位数
+     *
+     * @param yuan  金额,单位为元
+     * @param round 如果值{@code true}则超出部分四舍五入，否则直接忽略
+     * @return 金额分
+     */
+    public static long yuan2Fen(String yuan, boolean round) {
+        return NumberUtil.yuan2Fen(yuan, round);
+    }
+
+    // endregion
+
 }

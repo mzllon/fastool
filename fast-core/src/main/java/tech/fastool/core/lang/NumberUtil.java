@@ -226,6 +226,27 @@ public final class NumberUtil {
                 .getResultStr();
     }
 
+    /**
+     * 人民币金额分转元，保留2位小数
+     *
+     * @param fen 金额，单位分
+     * @return 金额元
+     */
+    public static String fen2YuanString(long fen) {
+        return BigDecimalOperator.of(fen)
+                .divide(DEFAULT_SCALE, RoundingMode.HALF_UP, 100)
+                .getResultStr();
+    }
+
+    /**
+     * 人民币金额分转元，保留2位小数
+     *
+     * @param fen 金额，单位分
+     * @return 金额元
+     */
+    public static String fen2YuanString(Long fen) {
+        return ObjectUtil.isNull(fen) ? null : fen2YuanString(fen.longValue());
+    }
 
     // region min & max
 
