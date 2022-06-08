@@ -17,6 +17,11 @@ import java.util.stream.Collectors;
 final public class MapUtil {
 
     /**
+     * Default initial capacity for {@linkplain HashMap}
+     */
+    public static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
+
+    /**
      * Default load factor for {@link HashMap}/{@link LinkedHashMap} variants.
      *
      * @see #newHashMap(int)

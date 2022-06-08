@@ -849,7 +849,7 @@ public class $ {
         if (ObjectUtil.isAnyNull(bean)) {
             return null;
         }
-        Map<String, Object> target = new HashMap<>();
+        Map<String, Object> target = new HashMap<>(MapUtil.DEFAULT_INITIAL_CAPACITY);
         BeanUtil.copyProperties(bean, target);
         return target;
     }
@@ -882,12 +882,27 @@ public class $ {
      */
     @Nullable
     public static <E> List<E> copyProperties(@Nullable Collection<?> src, Class<E> targetClass) {
+        return copyProperties(src, targetClass, ArrayUtil.EMPTY_STRING_ARRAY);
+    }
+
+    /**
+     * 拷贝集合中的对象
+     *
+     * @param src         源集合
+     * @param targetClass 模板bean类型
+     * @param <E>泛型标记
+     * @return 目标集合
+     */
+    @SuppressWarnings("all")
+    @Nullable
+    public static <E> List<E> copyProperties(@Nullable Collection<?> src, Class<E> targetClass,
+                                             @Nullable String... ignoreProperties) {
         if (ObjectUtil.isAnyNull(src, targetClass)) {
             return null;
         }
         List<E> list = ListUtil.newArrayList();
         for (Object obj : src) {
-            list.add(copyProperties(obj, targetClass));
+            list.add(copyProperties(obj, targetClass, ignoreProperties));
         }
         return list;
     }
@@ -902,11 +917,26 @@ public class $ {
      */
     @Nullable
     public static <E> E copyProperties(@Nullable Object src, Class<E> targetClass) {
+        return copyProperties(src, targetClass, ArrayUtil.EMPTY_STRING_ARRAY);
+    }
+
+    /**
+     * 拷贝对象
+     *
+     * @param src              源bean对象
+     * @param targetClass      目标bean类型
+     * @param ignoreProperties 忽略的属性
+     * @param <E>              泛型标记
+     * @return 目标bean对象
+     */
+    @Nullable
+    public static <E> E copyProperties(@Nullable Object src, Class<E> targetClass,
+                                       @Nullable String... ignoreProperties) {
         if (ObjectUtil.isAnyNull(src, targetClass)) {
             return null;
         }
         E target = ReflectUtil.newInstance(targetClass);
-        BeanUtil.copyProperties(src, target);
+        BeanUtil.copyProperties(src, target, ignoreProperties);
         return target;
     }
 
