@@ -47,7 +47,7 @@ public class Patterns {
     /**
      * 金额,2位小数点
      */
-    public static final String MONEY_STR = "\\d+(.\\d{2})?";
+    public static final String MONEY_STR = "\\d+(.\\d{1,2})?";
 
     /**
      * 金额,2位小数点
