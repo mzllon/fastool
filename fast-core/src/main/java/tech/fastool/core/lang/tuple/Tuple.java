@@ -1,4 +1,4 @@
-package tech.fastool.core.utils;
+package tech.fastool.core.lang.tuple;
 
 import tech.fastool.core.lang.ArrayIterator;
 import tech.fastool.core.lang.CloneSupport;

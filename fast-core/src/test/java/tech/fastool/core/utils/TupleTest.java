@@ -1,6 +1,7 @@
 package tech.fastool.core.utils;
 
 import org.junit.jupiter.api.Test;
+import tech.fastool.core.lang.tuple.Tuple;
 
 import static org.junit.jupiter.api.Assertions.*;
 
