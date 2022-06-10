@@ -1,5 +1,6 @@
 package tech.fastool.core.lang;
 
+import lombok.experimental.UtilityClass;
 import tech.fastool.core.id.Base64IdGenerator;
 import tech.fastool.core.id.DateIdGenerator;
 import tech.fastool.core.id.SecureUuidGenerator;
@@ -12,14 +13,8 @@ import tech.fastool.core.id.UuidGenerator;
  * @version 0.0.1
  * @date 2022-06-06
  */
+@UtilityClass
 public final class IdUtil {
-
-    /**
-     * Don't let anyone instantiate this class
-     */
-    private IdUtil() {
-        throw new AssertionError("Cannot create instance!");
-    }
 
     /**
      * 返回UUID
@@ -74,6 +69,5 @@ public final class IdUtil {
     public static String base64Id() {
         return Base64IdGenerator.getInstance().get();
     }
-
 
 }

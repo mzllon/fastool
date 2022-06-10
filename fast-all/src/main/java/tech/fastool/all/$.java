@@ -1338,4 +1338,70 @@ public class $ {
     // endregion
 
 
+    // region Id Generate
+
+    /**
+     * 返回UUID
+     *
+     * @return UUID
+     * @see IdUtil#uuid()
+     */
+    public static String uuid() {
+        return IdUtil.uuid();
+    }
+
+    /**
+     * 返回不带-的UUID
+     *
+     * @return UUID No Dash
+     * @see IdUtil#uuidNoDash()
+     */
+    public static String uuidNoDash() {
+        return IdUtil.uuidNoDash();
+    }
+
+    /**
+     * 返回UUID
+     *
+     * @return UUID
+     * @see IdUtil#secureUuid()
+     */
+    public static String secureUuid() {
+        return IdUtil.secureUuid();
+    }
+
+    /**
+     * 返回不带-的UUID
+     *
+     * @return UUID No Dash
+     * @see IdUtil#secureUuidNoDash()
+     */
+    public static String secureUuidNoDash() {
+        return IdUtil.secureUuidNoDash();
+    }
+
+    /**
+     * 返回带有日期标识的随机ID
+     *
+     * @return id contains date
+     * @see IdUtil#dateId()
+     */
+    public static String dateId() {
+        return IdUtil.dateId();
+    }
+
+    /**
+     * 返回一个BASE64的ID
+     *
+     * @return id With BASE64
+     * @see IdUtil#base64Id()
+     */
+    public static String base64Id() {
+        return IdUtil.base64Id();
+    }
+
+
+
+    // endregion
+
 }
