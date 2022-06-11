@@ -13,18 +13,7 @@ import java.util.Random;
  * @version 0.0.1
  * @date 2022-06-06
  */
-public class Base64IdGenerator implements IdGenerator<Object> {
-
-    /**
-     * 返回ID
-     *
-     * @param obj 参数
-     * @return ID
-     */
-    @Override
-    public String get(Object obj) {
-        return getBase64Uuid(Singletons.get(SecureRandom.class));
-    }
+public class Base64IdGenerator implements IdGenerator<String> {
 
     /**
      * 返回ID
@@ -33,7 +22,7 @@ public class Base64IdGenerator implements IdGenerator<Object> {
      */
     @Override
     public String get() {
-        return get(null);
+        return getBase64Uuid(Singletons.get(SecureRandom.class));
     }
 
     /**

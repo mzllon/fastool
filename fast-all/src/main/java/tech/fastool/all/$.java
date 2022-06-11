@@ -1400,6 +1400,24 @@ public class $ {
         return IdUtil.base64Id();
     }
 
+    /**
+     * 返回一个雪花算法生成的ID
+     *
+     * @return id with snowflake
+     * @see IdUtil#snowflakeId()
+     */
+    public static long snowflakeId() {
+        return IdUtil.snowflakeId();
+    }
+
+    /**
+     * 返回一个雪花算法生成的ID
+     *
+     * @return id with snowflake
+     */
+    public static String snowflakeIdStr() {
+        return String.valueOf(snowflakeId());
+    }
 
 
     // endregion

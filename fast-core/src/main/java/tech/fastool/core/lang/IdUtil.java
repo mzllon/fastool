@@ -5,6 +5,7 @@ import tech.fastool.core.id.Base64IdGenerator;
 import tech.fastool.core.id.DateIdGenerator;
 import tech.fastool.core.id.SecureUuidGenerator;
 import tech.fastool.core.id.UuidGenerator;
+import tech.fastool.core.id.snowflake.FastSnowflake;
 
 /**
  * ID生成器工具类
@@ -68,6 +69,24 @@ public final class IdUtil {
      */
     public static String base64Id() {
         return Base64IdGenerator.getInstance().get();
+    }
+
+    /**
+     * 返回一个雪花算法生成的ID
+     *
+     * @return id with snowflake
+     */
+    public static long snowflakeId() {
+        return Singletons.get(FastSnowflake.class).nextId();
+    }
+
+    /**
+     * 返回一个雪花算法生成的ID
+     *
+     * @return id with snowflake
+     */
+    public static String snowflakeIdStr() {
+        return String.valueOf(snowflakeId());
     }
 
 }

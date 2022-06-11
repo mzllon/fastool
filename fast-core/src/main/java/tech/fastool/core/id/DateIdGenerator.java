@@ -17,19 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 0.0.1
  * @date 2022-06-06
  */
-public class DateIdGenerator implements IdGenerator<Object> {
-
-    /**
-     * 返回ID
-     *
-     * @param obj 参数
-     * @return ID
-     */
-    @Override
-    public String get(Object obj) {
-        String datetimePrefix = Jdk8DateUtil.format(DatePattern.PURE_DATETIME_MS_FORMATTER);
-        return datetimePrefix + StringUtil.DASH + getSeqId() + getRandomString(8);
-    }
+public class DateIdGenerator implements IdGenerator<String> {
 
     /**
      * 返回ID
@@ -38,7 +26,8 @@ public class DateIdGenerator implements IdGenerator<Object> {
      */
     @Override
     public String get() {
-        return get(null);
+        String datetimePrefix = Jdk8DateUtil.format(DatePattern.PURE_DATETIME_MS_FORMATTER);
+        return datetimePrefix + StringUtil.DASH + getSeqId() + getRandomString(8);
     }
 
     private static final int maxId = 999999;

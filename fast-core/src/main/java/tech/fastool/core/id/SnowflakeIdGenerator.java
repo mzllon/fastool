@@ -1,5 +1,8 @@
 package tech.fastool.core.id;
 
+import tech.fastool.core.id.snowflake.FastSnowflake;
+import tech.fastool.core.lang.Singletons;
+
 /**
  * witter的Snowflake 算法 分布式系统中，有一些需要使用全局唯一ID的场景，有些时候我们希望能使用一种简单一些的ID，并且希望ID能够按照时间有序生成。
  * snowflake的结构如下(每部分用-分开):
@@ -12,17 +15,7 @@ package tech.fastool.core.id;
  * @version 0.0.1
  * @date 2022-06-06
  */
-public class SnowflakeIdGenerator implements IdGenerator<Object> {
-    /**
-     * 返回ID
-     *
-     * @param obj 参数
-     * @return ID
-     */
-    @Override
-    public String get(Object obj) {
-        throw new UnsupportedOperationException();
-    }
+public class SnowflakeIdGenerator implements IdGenerator<Long> {
 
     /**
      * 返回ID
@@ -30,7 +23,8 @@ public class SnowflakeIdGenerator implements IdGenerator<Object> {
      * @return ID
      */
     @Override
-    public String get() {
-        throw new UnsupportedOperationException();
+    public Long get() {
+        return Singletons.get(FastSnowflake.class).nextId();
     }
+
 }

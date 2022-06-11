@@ -23,8 +23,13 @@ public class SecureUuidGenerator extends UuidGenerator {
         super(ignoreDash);
     }
 
+    /**
+     * 返回ID
+     *
+     * @return ID
+     */
     @Override
-    public String get(Object ignoreObj) {
+    public String get() {
         final byte[] randomBytes = new byte[16];
         Singletons.get(SecureRandom.class).nextBytes(randomBytes);
         String id = UUID.nameUUIDFromBytes(randomBytes).toString();

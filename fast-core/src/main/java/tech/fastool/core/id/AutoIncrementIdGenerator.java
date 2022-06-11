@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @version 0.0.1
  * @date 2022-06-06
  */
-public class AutoIncrementIdGenerator implements IdGenerator<Object> {
+public class AutoIncrementIdGenerator implements IdGenerator<Long> {
 
     private final AtomicLong val;
 
@@ -26,40 +26,29 @@ public class AutoIncrementIdGenerator implements IdGenerator<Object> {
     /**
      * 返回ID
      *
-     * @param obj 参数
      * @return ID
      */
     @Override
-    public String get(Object obj) {
-        return Long.toString(val.getAndIncrement());
-    }
-
-    /**
-     * 返回ID
-     *
-     * @return ID
-     */
-    @Override
-    public String get() {
-        return get(null);
+    public Long get() {
+        return val.getAndIncrement();
     }
 
     /**
      * 返回指定位数的ID，如果不够则左补零
      * 生成ID长度超出给定的长度，则返回{@code null}
      *
-     * @param size ID长度
+     * @param formatSize ID长度
      * @return 固定长度的ID
      */
-    public String get(int size) {
-        long next = val.getAndIncrement();
+    public String get(int formatSize) {
+        long next = get();
         String id = Long.toString(next);
-        if (size == id.length()) {
+        if (formatSize == id.length()) {
             return id;
-        } else if (size < id.length()) {
+        } else if (formatSize < id.length()) {
             return StringUtil.EMPTY_STRING;
         }
-        return String.format("%0" + size + "d", next);
+        return String.format("%0" + formatSize + "d", next);
     }
 
 }
