@@ -4,7 +4,8 @@ import tech.fastool.core.exceptions.IdGeneratorException;
 import tech.fastool.core.lang.StringUtil;
 
 /**
- * Twitter提供的雪花算法
+ * Twitter提供的雪花算法，该实现算法性能很一般
+ * 后续研读考虑改造下面的https://www.cnblogs.com/xiaotian0422/p/15896510.html
  *
  * @author miles.tang
  * @version 0.0.1

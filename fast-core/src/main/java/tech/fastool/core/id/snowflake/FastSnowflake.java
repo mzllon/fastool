@@ -3,7 +3,7 @@ package tech.fastool.core.id.snowflake;
 import tech.fastool.core.exceptions.IdGeneratorException;
 
 /**
- * 优化的雪花算法（雪花漂移）
+ * 优化的雪花算法（雪花漂移），性能一般，但是长度较短，前端不会出现JavaScript Number溢出的问题
  * <p>
  * 生成的ID更短，速度更快，算法来源于https://github.com/yitter/IdGenerator
  * 这里仅仅做了一些编码修改，符合Java风格
