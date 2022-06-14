@@ -3,6 +3,7 @@ package tech.fastool.all;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.digest.Md5Util;
 import tech.fastool.core.lang.*;
 import tech.fastool.core.lang.reflect.ReflectUtil;
 import tech.fastool.http.api.convenient.*;
@@ -1419,6 +1420,44 @@ public class $ {
         return String.valueOf(snowflakeId());
     }
 
+
+    // endregion
+
+
+    // region MD5
+
+    /**
+     * 计算字符串的md5值，结果转为16进制的小写字符串返回
+     *
+     * @param data 待计算的数据
+     * @return 16进制的字符串
+     * @see Md5Util#digestHex(String)
+     */
+    public static String md5Hex(final String data) {
+        return Md5Util.digestHex(data);
+    }
+
+    /**
+     * 计算字符串的md5值，结果转为16进制的大写字符串返回
+     *
+     * @param data 待计算的数据
+     * @return 16进制的字符串
+     * @see Md5Util#digestUpperHex(String)
+     */
+    public static String md5UpperHex(final String data) {
+        return Md5Util.digestUpperHex(data, null);
+    }
+
+    /**
+     * 计算字符串(默认UTF8)的MD5值，将结果转为BASE64输出
+     *
+     * @param data 待计算的数据
+     * @return BASE64的字符串
+     * @see Md5Util#digestBase64(String)
+     */
+    public static String md5Base64(final String data) {
+        return Md5Util.digestBase64(data, null);
+    }
 
     // endregion
 
