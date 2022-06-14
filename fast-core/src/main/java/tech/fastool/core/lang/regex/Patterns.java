@@ -15,6 +15,16 @@ import java.util.regex.Pattern;
 public class Patterns {
 
     /**
+     * 十六进制
+     */
+    public static final String HEX_STR = "^[\\da-fA-F]+$";
+
+    /**
+     * 十六进制
+     */
+    public static final Pattern HEX = Pattern.compile(HEX_STR);
+
+    /**
      * 英文字母 、数字和下划线
      */
     public static final String GENERAL_STR = "^\\w+$";
