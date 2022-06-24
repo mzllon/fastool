@@ -1,7 +1,5 @@
 package tech.fastool.json.api.annotation;
 
-import tech.fastool.core.lang.StringUtil;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,7 +21,7 @@ public @interface JsonProviderName {
      *
      * @return 厂商名
      */
-    String value() default StringUtil.EMPTY_STRING;
+    String value();
 
     /**
      * 加载的顺序，值越小越先加载

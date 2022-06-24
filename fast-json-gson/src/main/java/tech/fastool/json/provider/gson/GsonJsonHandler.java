@@ -1,9 +1,12 @@
 package tech.fastool.json.provider.gson;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
@@ -36,6 +39,36 @@ public class GsonJsonHandler implements JsonHandler {
     /**
      * 将Java对象序列化为JSON字符串
      *
+     * @param src                 Java对象
+     * @param ignorePropertyNames 忽略的属性名
+     * @return JSON字符串
+     * @throws JsonRuntimeException 序列化出现异常
+     */
+    @Override
+    public String serialize(@NotNull Object src, @Nullable String... ignorePropertyNames) throws JsonRuntimeException {
+        if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
+            Gson customGson = this.gson.newBuilder()
+                    .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                        @Override
+                        public boolean shouldSkipField(FieldAttributes fa) {
+                            return ArrayUtil.contains(ignorePropertyNames, fa.getName());
+                        }
+
+                        @Override
+                        public boolean shouldSkipClass(Class<?> aClass) {
+                            return false;
+                        }
+                    })
+                    .create();
+            return customGson.toJson(src);
+        } else {
+            return serialize(src, (Type) null);
+        }
+    }
+
+    /**
+     * 将Java对象序列化为JSON字符串
+     *
      * @param src     Java对象
      * @param typeOfT 类型
      * @return JSON字符串
@@ -61,13 +94,13 @@ public class GsonJsonHandler implements JsonHandler {
 
     @Override
     public <T> T deserialize(@NotNull Reader reader, @NotNull Type typeOfT) throws JsonRuntimeException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     /**
      * 创建支持JSR310的gson处理
      *
-     * @return
+     * @return {@linkplain Gson}
      */
     public static Gson createJson() {
         GsonBuilder builder = new GsonBuilder();

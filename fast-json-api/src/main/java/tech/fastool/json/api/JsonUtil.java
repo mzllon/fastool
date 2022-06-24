@@ -18,20 +18,6 @@ import java.lang.reflect.Type;
 public class JsonUtil {
 
     /**
-     * 自定义的JSON引擎
-     */
-    private static JsonAdapter customJson = null;
-
-    /**
-     * 设置自定义的JSON引擎
-     *
-     * @param customJson 自定义的JSON引擎
-     */
-    public static void setCustomJson(@Nullable JsonAdapter customJson) {
-        JsonUtil.customJson = customJson;
-    }
-
-    /**
      * 将对象转为JSON字符串
      *
      * @param src 对象
@@ -58,7 +44,51 @@ public class JsonUtil {
         if (src == null) {
             return null;
         }
-        return getJSON(customJson).toJson(src, typeOfSrc);
+        return toJson(src, typeOfSrc, null);
+    }
+
+    /**
+     * 将对象转为JSON字符串
+     *
+     * @param src    对象
+     * @param custom 指定JSON引擎
+     * @return JSON字符串或空字符串
+     */
+    public static String toJson(@Nullable Object src, @Nullable JsonHandler custom) {
+        if (src == null) {
+            return null;
+        }
+        return toJson(src, src.getClass(), custom);
+    }
+
+    /**
+     * 将对象转为JSON字符串
+     *
+     * @param src       对象
+     * @param typeOfSrc 类型
+     * @param custom    指定JSON引擎
+     * @return JSON字符串或空字符串
+     */
+    public static String toJson(@Nullable Object src, @Nullable Type typeOfSrc, @Nullable JsonHandler custom) {
+        if (src == null) {
+            return null;
+        }
+        return getJsonHandler(custom).serialize(src, typeOfSrc);
+    }
+
+    /**
+     * Java对象转为JSON字符串
+     *
+     * @param src                 Java对象
+     * @param ignorePropertyNames 忽略的属性
+     * @return JSON字符串
+     */
+    @Nullable
+    public static String toJson(Object src, String... ignorePropertyNames) {
+        if (src == null) {
+            return null;
+        }
+        return getJsonHandler(null).serialize(src, ignorePropertyNames);
     }
 
     /**
@@ -70,7 +100,7 @@ public class JsonUtil {
      * @return 对象
      */
     public static <T> T fromJson(@Nullable String json, Class<T> clazz) {
-        return getJSON(customJson).fromJson(json, clazz);
+        return fromJson(json, clazz, null);
     }
 
     /**
@@ -82,60 +112,31 @@ public class JsonUtil {
      * @return 对象
      */
     public static <T> T fromJson(@Nullable String json, Type typeOfT) {
-        return getJSON(customJson).fromJson(json, typeOfT);
-    }
-
-    /**
-     * 将对象转为JSON字符串
-     *
-     * @param src  对象
-     * @param json 指定JSON引擎
-     * @return JSON字符串或空字符串
-     */
-    public static String toJson(@Nullable Object src, @Nullable JsonAdapter json) {
-        if (src == null) {
-            return null;
-        }
-        return toJson(src, src.getClass(), json);
-    }
-
-    /**
-     * 将对象转为JSON字符串
-     *
-     * @param src       对象
-     * @param typeOfSrc 类型
-     * @param json      指定JSON引擎
-     * @return JSON字符串或空字符串
-     */
-    public static String toJson(@Nullable Object src, @Nullable Type typeOfSrc, @Nullable JsonAdapter json) {
-        if (src == null) {
-            return null;
-        }
-        return getJSON(json).toJson(src, typeOfSrc);
+        return fromJson(json, typeOfT, null);
     }
 
     /**
      * 将JSON字符串转为Java对象
      *
-     * @param json  字符串，可以为空
-     * @param clazz 类型
-     * @param <T>   泛型
+     * @param custom 字符串，可以为空
+     * @param clazz  类型
+     * @param <T>    泛型
      * @return 对象
      */
-    public static <T> T fromJson(String text, Class<T> clazz, @Nullable JsonAdapter json) {
-        return getJSON(json).fromJson(text, clazz);
+    public static <T> T fromJson(String text, Class<T> clazz, @Nullable JsonHandler custom) {
+        return getJsonHandler(custom).deserialize(text, clazz);
     }
 
     /**
      * 将JSON字符串转为Java对象
      *
-     * @param json    字符串，可以为空
+     * @param custom  字符串，可以为空
      * @param typeOfT 类型
      * @param <T>     泛型
      * @return 对象
      */
-    public static <T> T fromJson(String text, Type typeOfT, @Nullable JsonAdapter json) {
-        return getJSON(json).fromJson(text, typeOfT);
+    public static <T> T fromJson(String text, Type typeOfT, @Nullable JsonHandler custom) {
+        return getJsonHandler(custom).deserialize(text, typeOfT);
     }
 
     /**
@@ -147,7 +148,7 @@ public class JsonUtil {
      * @return 对象
      */
     public static <T> T fromJson(String text, @NotNull BaseTypeRef<T> typeRef) {
-        return getJSON(null).fromJson(text, ObjectUtil.requireNonNull(typeRef).getType());
+        return getJsonHandler(null).deserialize(text, ObjectUtil.requireNonNull(typeRef).getType());
     }
 
     /**
@@ -155,12 +156,12 @@ public class JsonUtil {
      *
      * @param text    字符串，可为空
      * @param typeRef 类型
-     * @param jsonObj 指定JSON引擎
+     * @param custom  指定JSON引擎
      * @param <T>     泛型
      * @return 对象
      */
-    public static <T> T fromJson(String text, @NotNull BaseTypeRef<T> typeRef, JsonAdapter jsonObj) {
-        return getJSON(jsonObj).fromJson(text, ObjectUtil.requireNonNull(typeRef).getType());
+    public static <T> T fromJson(String text, @NotNull BaseTypeRef<T> typeRef, @Nullable JsonHandler custom) {
+        return getJsonHandler(custom).deserialize(text, ObjectUtil.requireNonNull(typeRef).getType());
     }
 
     /**
@@ -169,9 +170,9 @@ public class JsonUtil {
      * @param json 指定一个JSON引擎，可以为{@code null}
      * @return JSON引擎
      */
-    private static JsonAdapter getJSON(JsonAdapter json) {
-        JsonAdapter result = json != null ? json : JsonFactory.get();
-        return ObjectUtil.requireNonNull(result, "JSON Provider Cannot find!");
+    private static JsonHandler getJsonHandler(JsonHandler json) {
+        JsonHandler result = json != null ? json : JsonFactory.defaultJsonHandler();
+        return ObjectUtil.requireNonNull(result, "JsonHandler Provider Cannot find!");
     }
 
 }

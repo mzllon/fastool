@@ -4,9 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.json.api.annotation.JsonProviderName;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
 import java.util.ServiceLoader;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * JSON Factory
@@ -18,45 +22,71 @@ import java.util.ServiceLoader;
 @Slf4j
 public class JsonFactory {
 
-    private static JsonAdapter defaultJsonAdapter;
+    private static JsonHandler defaultJsonHandler;
 
-    private static final List<JsonBuilderWrapper> ALL_REGISTRY_JSON_BUILDER = new ArrayList<>();
-
+    private static final Map<String, JsonHandler> ALL = new ConcurrentHashMap<>(4);
 
     static {
-        findJsonBuilderImplClasses();
+        findJsonHandlerImplClasses();
     }
 
-    private static void findJsonBuilderImplClasses() {
-        ServiceLoader<BaseJsonBuilder> loader = ServiceLoader.load(BaseJsonBuilder.class);
-        loader.forEach(jsonBuilder -> {
-            Class<? extends BaseJsonBuilder> jsonBuilderClass = jsonBuilder.getClass();
-            JsonProviderName jsonProviderName = jsonBuilderClass.getAnnotation(JsonProviderName.class);
+    private static void findJsonHandlerImplClasses() {
+        ServiceLoader<JsonHandler> loader = ServiceLoader.load(JsonHandler.class);
+        for (JsonHandler jsonHandler : loader) {
+            Class<? extends JsonHandler> clazz = jsonHandler.getClass();
+            JsonProviderName jsonProviderName = clazz.getAnnotation(JsonProviderName.class);
             if (jsonProviderName == null) {
-                log.warn("JSON Builder " + jsonBuilderClass.getName() + " JsonProviderName annotation is missing");
-                return;
+                log.warn("JSON Handler " + clazz + " JsonProviderName annotation is missing");
+                continue;
             }
             String name = jsonProviderName.value();
-            if (StringUtil.isEmpty(name)) {
-                name = jsonBuilderClass.getName();
-            }
+            ALL.put(name, jsonHandler);
+        }
 
-            log.info("Registry a json builder {} for {}", jsonBuilderClass.getCanonicalName(), name);
-            ALL_REGISTRY_JSON_BUILDER.add(new JsonBuilderWrapper(jsonProviderName.index(), name, jsonBuilder));
-        });
-        for (JsonBuilderWrapper wrapper : ALL_REGISTRY_JSON_BUILDER) {
+        String jsonProviderValue = null;
+        InputStream in = JsonHandler.class.getClassLoader().getResourceAsStream("fast-json-api.properties");
+        if (in != null) {
+            Properties properties = new Properties();
             try {
-                defaultJsonAdapter = wrapper.getJsonBuilder().build();
-                break;
-            } catch (Exception e) {
-                log.info("Cannot build JsonAdapter " + wrapper.getProviderName());
+                properties.load(in);
+                jsonProviderValue = properties.getProperty(JsonProviderName.class.getName());
+            } catch (IOException e) {
+                log.warn("Loading Properties[fast-json-api.properties] failed", e);
             }
+        }
+        if (StringUtil.isBlank(jsonProviderValue)) {
+            TreeMap<Integer, String> treeMap = new TreeMap<>();
+            ALL.values().forEach(item -> {
+                JsonProviderName jsonProviderName = item.getClass().getAnnotation(JsonProviderName.class);
+                treeMap.put(jsonProviderName.index(), jsonProviderName.value());
+            });
+            jsonProviderValue = treeMap.firstEntry().getValue();
+        }
+        if (StringUtil.isBlank(jsonProviderValue)) {
+            defaultJsonHandler = ALL.get(jsonProviderValue);
         }
     }
 
+    /**
+     * 返回默认的{@linkplain  JsonHandler}
+     * 优先从判断classpath是否有配置文件fast-json-api.properties
+     * 其次根据每个实现{@linkplain  JsonHandler}引擎的注解{@linkplain  JsonProviderName#index()},值小的将作为默认处理器
+     *
+     * @return {@linkplain JsonHandler}
+     */
+    public static JsonHandler defaultJsonHandler() {
+        assert defaultJsonHandler != null;
+        return defaultJsonHandler;
+    }
 
-    public static JsonAdapter get() {
-        return defaultJsonAdapter;
+    /**
+     * 返回指定的JSON引擎的实现,如果不存在返回默认{@linkplain  #defaultJsonHandler}
+     *
+     * @param jsonProviderValue JSON引擎名称
+     * @return {@linkplain JsonHandler}
+     */
+    public static JsonHandler jsonHandler(String jsonProviderValue) {
+        return ALL.getOrDefault(jsonProviderValue, defaultJsonHandler());
     }
 
 }

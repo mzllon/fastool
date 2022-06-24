@@ -10,6 +10,7 @@ import tech.fastool.http.api.convenient.*;
 import tech.fastool.json.api.BaseTypeRef;
 import tech.fastool.json.api.JsonUtil;
 
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.function.Supplier;
@@ -957,6 +958,17 @@ public class $ {
     }
 
     /**
+     * Java对象转为JSON字符串
+     *
+     * @param obj                 Java对象
+     * @param ignorePropertyNames 忽略的属性
+     * @return JSON字符串
+     */
+    public static String toJson(@Nullable Object obj, String... ignorePropertyNames) {
+        return JsonUtil.toJson(obj, ignorePropertyNames);
+    }
+
+    /**
      * JSON字符串转为Java对象
      *
      * @param json  JSON字符串
@@ -1434,6 +1446,17 @@ public class $ {
      * @see Md5Util#digestHex(String)
      */
     public static String md5Hex(final String data) {
+        return Md5Util.digestHex(data);
+    }
+
+    /**
+     * 计算的流的md5值，结果转为16进制的字符串返回
+     *
+     * @param data 待计算的数据
+     * @return 16进制的字符串
+     * @see Md5Util#digest(InputStream)
+     */
+    public static String md5Hex(final InputStream data) {
         return Md5Util.digestHex(data);
     }
 

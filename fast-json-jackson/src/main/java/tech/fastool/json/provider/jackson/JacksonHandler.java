@@ -3,8 +3,11 @@ package tech.fastool.json.provider.jackson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
@@ -32,6 +35,29 @@ public class JacksonHandler implements JsonHandler {
         this.objectMapper = ObjectUtil.requireNonNull(objectMapper, "objectMapper == null");
     }
 
+
+    /**
+     * 将Java对象序列化为JSON字符串
+     *
+     * @param src                 Java对象
+     * @param ignorePropertyNames 忽略的属性名
+     * @return JSON字符串
+     * @throws JsonRuntimeException 序列化出现异常
+     */
+    @Override
+    public String serialize(@NotNull Object src, @Nullable String... ignorePropertyNames) throws JsonRuntimeException {
+        if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
+            SimpleFilterProvider sfp = new SimpleFilterProvider();
+            sfp.addFilter("fieldFilter", SimpleBeanPropertyFilter.serializeAllExcept(ignorePropertyNames));
+            try {
+                return objectMapper.copy().setFilterProvider(sfp).writeValueAsString(src);
+            } catch (JsonProcessingException e) {
+                throw new JsonRuntimeException(e);
+            }
+        } else {
+            return serialize(src, (Type) null);
+        }
+    }
 
     /**
      * 将Java对象序列化为JSON字符串
@@ -87,7 +113,7 @@ public class JacksonHandler implements JsonHandler {
 
     @Override
     public <T> T deserialize(@NotNull Reader reader, @NotNull Type typeOfT) throws JsonRuntimeException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 }

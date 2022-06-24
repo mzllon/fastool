@@ -18,6 +18,16 @@ public interface JsonHandler {
     /**
      * 将Java对象序列化为JSON字符串
      *
+     * @param src                 Java对象
+     * @param ignorePropertyNames 忽略的属性名
+     * @return JSON字符串
+     * @throws JsonRuntimeException 序列化出现异常
+     */
+    String serialize(@NotNull Object src, @Nullable String... ignorePropertyNames) throws JsonRuntimeException;
+
+    /**
+     * 将Java对象序列化为JSON字符串
+     *
      * @param src     Java对象
      * @param typeOfT 类型
      * @return JSON字符串
