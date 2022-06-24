@@ -10,6 +10,7 @@ import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
+import tech.fastool.json.api.annotation.JsonProviderName;
 import tech.fastool.json.provider.gson.deser.*;
 import tech.fastool.json.provider.gson.ser.*;
 
@@ -24,6 +25,7 @@ import java.time.*;
  * @version 0.0.1
  * @date 2022-06-06
  */
+@JsonProviderName(value = "gson",index = 40)
 public class GsonJsonHandler implements JsonHandler {
 
     private final Gson gson;

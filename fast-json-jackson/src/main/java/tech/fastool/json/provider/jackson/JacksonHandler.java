@@ -11,6 +11,7 @@ import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.ObjectUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
+import tech.fastool.json.api.annotation.JsonProviderName;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -23,6 +24,7 @@ import java.lang.reflect.Type;
  * @version 0.0.1
  * @date 2022-06-06
  */
+@JsonProviderName(value = "jackson",index = 30)
 public class JacksonHandler implements JsonHandler {
 
     private final ObjectMapper objectMapper;

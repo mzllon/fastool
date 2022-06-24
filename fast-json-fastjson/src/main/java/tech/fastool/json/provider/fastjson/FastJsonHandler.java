@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.json.api.JsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
+import tech.fastool.json.api.annotation.JsonProviderName;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -18,6 +19,7 @@ import java.lang.reflect.Type;
  * @version 0.0.1
  * @date 2022-06-06
  */
+@JsonProviderName(value = "fastjson",index = 50)
 public class FastJsonHandler implements JsonHandler {
 
     /**
