@@ -62,7 +62,7 @@ public class JsonFactory {
             });
             jsonProviderValue = treeMap.firstEntry().getValue();
         }
-        if (StringUtil.isBlank(jsonProviderValue)) {
+        if (StringUtil.isNotBlank(jsonProviderValue)) {
             defaultJsonHandler = ALL.get(jsonProviderValue);
         }
     }
