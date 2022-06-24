@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.digest.Md5Util;
 import tech.fastool.core.lang.*;
 import tech.fastool.core.lang.reflect.ReflectUtil;
+import tech.fastool.core.lang.regex.PatternUtil;
 import tech.fastool.http.api.convenient.*;
 import tech.fastool.json.api.BaseTypeRef;
 import tech.fastool.json.api.JsonUtil;
@@ -818,6 +819,18 @@ public class $ {
      */
     public static String str(CharSequence cse) {
         return StringUtil.str(cse);
+    }
+
+    /**
+     * 给定内容是否匹配正则表达式
+     *
+     * @param regex 正则表达式
+     * @param cse   字符串
+     * @return 正则为null或者""则不检查，返回true，内容为null返回false
+     * @see PatternUtil#isMatch(String, CharSequence)
+     */
+    public static boolean isMatch(String regex, CharSequence cse) {
+        return PatternUtil.isMatch(regex, cse);
     }
 
     // endregion
