@@ -8,13 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.ObjectUtil;
-import tech.fastool.json.api.JsonHandler;
+import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
 import tech.fastool.json.api.annotation.JsonProviderName;
 import tech.fastool.json.provider.gson.deser.*;
 import tech.fastool.json.provider.gson.ser.*;
 
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.time.*;
 
@@ -25,8 +24,8 @@ import java.time.*;
  * @version 0.0.1
  * @date 2022-06-06
  */
-@JsonProviderName(value = "gson",index = 40)
-public class GsonJsonHandler implements JsonHandler {
+@JsonProviderName(value = "gson", index = 40)
+public class GsonJsonHandler extends BaseJsonHandler {
 
     private final Gson gson;
 
@@ -47,7 +46,7 @@ public class GsonJsonHandler implements JsonHandler {
      * @throws JsonRuntimeException 序列化出现异常
      */
     @Override
-    public String serialize(@NotNull Object src, @Nullable String... ignorePropertyNames) throws JsonRuntimeException {
+    public String doSerialize(@NotNull Object src, @Nullable String[] ignorePropertyNames) throws JsonRuntimeException {
         if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
             Gson customGson = this.gson.newBuilder()
                     .addSerializationExclusionStrategy(new ExclusionStrategy() {
@@ -77,7 +76,7 @@ public class GsonJsonHandler implements JsonHandler {
      * @throws JsonRuntimeException 序列化出现异常
      */
     @Override
-    public String serialize(@NotNull Object src, @Nullable Type typeOfT) throws JsonRuntimeException {
+    public String doSerialize(@NotNull Object src, @Nullable Type typeOfT) throws JsonRuntimeException {
         return (typeOfT == null) ? gson.toJson(src) : gson.toJson(src, typeOfT);
     }
 
@@ -90,13 +89,8 @@ public class GsonJsonHandler implements JsonHandler {
      * @throws JsonRuntimeException 反序列化出现异常
      */
     @Override
-    public <T> T deserialize(@NotNull String json, @NotNull Type typeOfT) throws JsonRuntimeException {
+    public <T> T doDeserialize(@NotNull String json, @NotNull Type typeOfT) throws JsonRuntimeException {
         return gson.fromJson(json, typeOfT);
-    }
-
-    @Override
-    public <T> T deserialize(@NotNull Reader reader, @NotNull Type typeOfT) throws JsonRuntimeException {
-        throw new UnsupportedOperationException();
     }
 
     /**

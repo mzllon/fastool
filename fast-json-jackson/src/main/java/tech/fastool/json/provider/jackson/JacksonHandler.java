@@ -9,12 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.ObjectUtil;
-import tech.fastool.json.api.JsonHandler;
+import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
 import tech.fastool.json.api.annotation.JsonProviderName;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.lang.reflect.Type;
 
 /**
@@ -24,8 +23,8 @@ import java.lang.reflect.Type;
  * @version 0.0.1
  * @date 2022-06-06
  */
-@JsonProviderName(value = "jackson",index = 30)
-public class JacksonHandler implements JsonHandler {
+@JsonProviderName(value = "jackson", index = 30)
+public class JacksonHandler extends BaseJsonHandler {
 
     private final ObjectMapper objectMapper;
 
@@ -47,7 +46,7 @@ public class JacksonHandler implements JsonHandler {
      * @throws JsonRuntimeException 序列化出现异常
      */
     @Override
-    public String serialize(@NotNull Object src, @Nullable String... ignorePropertyNames) throws JsonRuntimeException {
+    public String doSerialize(@NotNull Object src, @Nullable String[] ignorePropertyNames) throws JsonRuntimeException {
         if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
             SimpleFilterProvider sfp = new SimpleFilterProvider();
             sfp.addFilter("fieldFilter", SimpleBeanPropertyFilter.serializeAllExcept(ignorePropertyNames));
@@ -70,7 +69,7 @@ public class JacksonHandler implements JsonHandler {
      * @throws JsonRuntimeException 序列化出现异常
      */
     @Override
-    public String serialize(@NotNull Object src, @Nullable Type typeOfT) throws JsonRuntimeException {
+    public String doSerialize(@NotNull Object src, @Nullable Type typeOfT) throws JsonRuntimeException {
         try {
             return objectMapper.writeValueAsString(src);
         } catch (JsonProcessingException e) {
@@ -88,7 +87,7 @@ public class JacksonHandler implements JsonHandler {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T deserialize(@NotNull String json, @NotNull Type typeOfT) throws JsonRuntimeException {
+    public <T> T doDeserialize(@NotNull String json, @NotNull Type typeOfT) throws JsonRuntimeException {
         try {
             if (JacksonUtil.isJacksonJavaType(typeOfT)) {
                 return objectMapper.readValue(json, JacksonUtil.toJavaType(typeOfT));
@@ -111,11 +110,6 @@ public class JacksonHandler implements JsonHandler {
         } catch (IOException e) {
             throw new JsonRuntimeException(e);
         }
-    }
-
-    @Override
-    public <T> T deserialize(@NotNull Reader reader, @NotNull Type typeOfT) throws JsonRuntimeException {
-        throw new UnsupportedOperationException();
     }
 
 }
