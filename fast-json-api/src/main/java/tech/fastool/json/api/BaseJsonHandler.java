@@ -82,7 +82,7 @@ public abstract class BaseJsonHandler implements JsonHandler {
         if (StringUtil.isBlank(json)) {
             return null;
         }
-        ObjectUtil.requireNonNull(typeOfT, "The parameter [typeOfT] is null");r
+        ObjectUtil.requireNonNull(typeOfT, "The parameter [typeOfT] is null");
         return doDeserialize(json, typeOfT);
     }
 
