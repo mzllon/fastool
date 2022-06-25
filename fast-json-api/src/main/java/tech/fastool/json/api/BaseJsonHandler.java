@@ -33,6 +33,14 @@ public abstract class BaseJsonHandler implements JsonHandler {
         return doSerialize(src, ignorePropertyNames);
     }
 
+    /**
+     * 将Java对象序列化为JSON字符串
+     *
+     * @param src                 Java对象
+     * @param ignorePropertyNames 忽略的属性名
+     * @return JSON字符串
+     * @throws JsonRuntimeException 序列化出现异常
+     */
     public abstract String doSerialize(@NotNull Object src, String[] ignorePropertyNames) throws JsonRuntimeException;
 
     /**
@@ -48,9 +56,17 @@ public abstract class BaseJsonHandler implements JsonHandler {
         if (ObjectUtil.isNull(src)) {
             return null;
         }
-        return null;
+        return doSerialize(src, typeOfT);
     }
 
+    /**
+     * 将Java对象序列化为JSON字符串
+     *
+     * @param src     Java对象
+     * @param typeOfT 类型
+     * @return JSON字符串
+     * @throws JsonRuntimeException 序列化出现异常
+     */
     public abstract String doSerialize(@NotNull Object src, @Nullable Type typeOfT);
 
     /**
@@ -70,6 +86,14 @@ public abstract class BaseJsonHandler implements JsonHandler {
         return doDeserialize(json, typeOfT);
     }
 
+    /**
+     * 将JSON字符串放序列化为Java对象
+     *
+     * @param json    JSON字符串
+     * @param typeOfT Java类型
+     * @return Java对象
+     * @throws JsonRuntimeException 反序列化出现异常
+     */
     public abstract <T> T doDeserialize(@NotNull String json, @NotNull Type typeOfT);
 
     /**
