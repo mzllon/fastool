@@ -135,7 +135,7 @@ public final class ReflectUtil {
         setAccessible(method);
         try {
             return (T) method.invoke(ClassUtil.isStatic(method) ? null : obj, params);
-        } catch (ReflectiveOperationException e) {
+        } catch (ReflectiveOperationException | IllegalArgumentException e) {
             throw new ReflectiveOperationRuntimeException("The Method [" + method + "] invoked occur exception obj = "
                     + obj + " , params = " + ArrayUtil.toString(params), e);
         }

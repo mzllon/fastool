@@ -28,4 +28,14 @@ public class ReflectiveOperationRuntimeException extends GenericRuntimeException
         super(message, cause);
     }
 
+    /**
+     * Reflective Operation Exception Constructor
+     *
+     * @param message 异常消息
+     * @param cause   异常
+     */
+    public ReflectiveOperationRuntimeException(String message, Exception cause) {
+        super(message, cause);
+    }
+
 }
