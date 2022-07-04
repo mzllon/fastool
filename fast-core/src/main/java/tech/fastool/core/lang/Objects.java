@@ -523,4 +523,13 @@ public class Objects {
 
     // endregion
 
+    /**
+     * 对象转字符串
+     *
+     * @param obj 对象
+     * @return 字符串
+     */
+    public static String toString(Object obj) {
+        return ArrayUtil.toString(obj);
+    }
 }
