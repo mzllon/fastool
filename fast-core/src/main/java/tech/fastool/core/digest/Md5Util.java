@@ -27,7 +27,7 @@ public class Md5Util {
      * @return md5计算结果
      */
     public static byte[] digest(final byte[] data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -37,7 +37,7 @@ public class Md5Util {
      * @return md5计算结果
      */
     public static byte[] digest(final InputStream data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -68,7 +68,7 @@ public class Md5Util {
      * @return 16进制的字符串
      */
     public static String digestHex(final String data, final Charset inputEncoding) {
-        byte[] input = ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(inputEncoding));
+        byte[] input = Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(inputEncoding));
         return HexUtil.encodeToStr(digest(input));
     }
 
@@ -80,7 +80,7 @@ public class Md5Util {
      * @return 16进制的字符串
      */
     public static String digestUpperHex(final String data, final Charset inputEncoding) {
-        byte[] input = ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(inputEncoding));
+        byte[] input = Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(inputEncoding));
         return HexUtil.encodeToStr(digest(input), false);
     }
 
@@ -112,7 +112,7 @@ public class Md5Util {
      * @return BASE64的字符串
      */
     public static String digestBase64(final String data, final Charset outputEncoding) {
-        byte[] input = ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(outputEncoding));
+        byte[] input = Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(outputEncoding));
         return Base64Util.encode(digest(input));
     }
 

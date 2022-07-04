@@ -34,11 +34,11 @@ public class OkHttpClient implements HttpClient {
     }
 
     public OkHttpClient(@NotNull okhttp3.OkHttpClient delegate) {
-        this.delegate = ObjectUtil.requireNonNull(delegate);
+        this.delegate = Objects.requireNonNull(delegate);
     }
 
     public OkHttpClient(@Nullable HttpOptions options) {
-        HttpOptions httpOptions = ObjectUtil.getIfNull(options, HttpOptions.DEFAULT_OPTIONS);
+        HttpOptions httpOptions = Objects.getIfNull(options, HttpOptions.DEFAULT_OPTIONS);
 
         okhttp3.OkHttpClient.Builder builder = new okhttp3.OkHttpClient.Builder()
                 // 连接超时

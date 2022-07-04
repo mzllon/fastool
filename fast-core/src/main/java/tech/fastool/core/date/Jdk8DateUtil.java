@@ -1,6 +1,6 @@
 package tech.fastool.core.date;
 
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.core.lang.regex.RegexUtil;
 
@@ -82,7 +82,7 @@ public class Jdk8DateUtil {
         if (instant == null) {
             return null;
         }
-        return LocalDateTime.ofInstant(instant, ObjectUtil.getIfNull(zoneId, ZoneId.systemDefault()));
+        return LocalDateTime.ofInstant(instant, Objects.getIfNull(zoneId, ZoneId.systemDefault()));
     }
 
     /**
@@ -92,7 +92,7 @@ public class Jdk8DateUtil {
      * @return 日期时间对象
      */
     public static LocalDateTime of(final long epochMilli) {
-        ObjectUtil.isTrue(epochMilli >= 0, "epochMilli > 0");
+        Objects.isTrue(epochMilli >= 0, "epochMilli > 0");
         return of(Instant.ofEpochMilli(epochMilli));
     }
 
@@ -276,7 +276,7 @@ public class Jdk8DateUtil {
         if (localDateTime == null) {
             return null;
         }
-        return localDateTime.format(ObjectUtil.getIfNull(formatter, DatePattern.NORMAL_DATETIME_FORMATTER));
+        return localDateTime.format(Objects.getIfNull(formatter, DatePattern.NORMAL_DATETIME_FORMATTER));
     }
 
     /**
@@ -314,7 +314,7 @@ public class Jdk8DateUtil {
         if (localDate == null) {
             return null;
         }
-        return localDate.format(ObjectUtil.getIfNull(formatter, DatePattern.NORMAL_DATE_FORMATTER));
+        return localDate.format(Objects.getIfNull(formatter, DatePattern.NORMAL_DATE_FORMATTER));
     }
 
     // endregion
@@ -349,10 +349,10 @@ public class Jdk8DateUtil {
      * @return 时刻
      */
     public static Instant toInstant(LocalDateTime localDateTime, ZoneId zoneId) {
-        if (ObjectUtil.isAnyNull(localDateTime, zoneId)) {
+        if (Objects.isAnyNull(localDateTime, zoneId)) {
             return null;
         }
-        return localDateTime.atZone(ObjectUtil.getIfNull(zoneId, ZoneConstant.ASIA_SHANGHAI)).toInstant();
+        return localDateTime.atZone(Objects.getIfNull(zoneId, ZoneConstant.ASIA_SHANGHAI)).toInstant();
     }
 
     /**
@@ -414,7 +414,7 @@ public class Jdk8DateUtil {
         if (localDateTime == null) {
             return null;
         }
-        return Date.from(localDateTime.toInstant(ObjectUtil.getIfNull(zoneOffset, ZoneConstant.DEFAULT_ZONE_OFFSET)));
+        return Date.from(localDateTime.toInstant(Objects.getIfNull(zoneOffset, ZoneConstant.DEFAULT_ZONE_OFFSET)));
     }
 
 

@@ -3,7 +3,7 @@ package tech.fastool.core.date;
 import tech.fastool.core.exceptions.DateRuntimeException;
 import tech.fastool.core.lang.CharUtil;
 import tech.fastool.core.lang.NumberUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.core.lang.regex.Patterns;
 import tech.fastool.core.lang.regex.RegexUtil;
@@ -138,7 +138,7 @@ public class DateUtil {
      * @return 日期字符串
      */
     public static String format(final long epochMilli, final String pattern) {
-        ObjectUtil.isTrue(epochMilli >= 0, "epochMilli >= 0");
+        Objects.isTrue(epochMilli >= 0, "epochMilli >= 0");
         String strPattern;
         if (StringUtil.isBlank(pattern)) {
             strPattern = DatePattern.NORMAL_DATETIME_PATTERN;
@@ -299,7 +299,7 @@ public class DateUtil {
      * @return {@linkplain Date}
      */
     public static Date parse(CharSequence dateCse, String pattern) {
-        if (ObjectUtil.isAnyEmpty(dateCse, pattern)) {
+        if (Objects.isAnyEmpty(dateCse, pattern)) {
             return null;
         }
         String dateStr = StringUtil.trim(dateCse);
@@ -477,8 +477,8 @@ public class DateUtil {
      * @return 相差的天数
      */
     public static int betweenDays(Date start, Date end) {
-        ObjectUtil.requireNonNull(start, "start");
-        ObjectUtil.requireNonNull(end, "end");
+        Objects.requireNonNull(start, "start");
+        Objects.requireNonNull(end, "end");
         if (start.after(end)) {
             Date temp = start;
             start = end;
@@ -529,7 +529,7 @@ public class DateUtil {
      * @return 年份
      */
     public static int getYear(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return Jdk8DateUtil.of(date).getYear();
     }
 
@@ -543,7 +543,7 @@ public class DateUtil {
      * @return 月份
      */
     public static int getMonth(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return Jdk8DateUtil.of(date).getMonthValue();
     }
 
@@ -557,7 +557,7 @@ public class DateUtil {
      * @return 天
      */
     public static int getDay(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return Jdk8DateUtil.of(date).getDayOfMonth();
     }
 
@@ -571,7 +571,7 @@ public class DateUtil {
      * @return 小时（24制）
      */
     public static int get24Hour(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return Jdk8DateUtil.of(date).getHour();
     }
 
@@ -598,7 +598,7 @@ public class DateUtil {
      * @return 分钟
      */
     public static int getMinute(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return Jdk8DateUtil.of(date).getMinute();
     }
 
@@ -612,7 +612,7 @@ public class DateUtil {
      * @return 秒数
      */
     public static int getSecond(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return Jdk8DateUtil.of(date).getSecond();
     }
 
@@ -626,7 +626,7 @@ public class DateUtil {
      * @return 秒数
      */
     public static int getMilliSecond(Date date) {
-        ObjectUtil.requireNonNull(date, "date");
+        Objects.requireNonNull(date, "date");
         return (int) (date.getTime() % 1000L);
     }
 
@@ -673,7 +673,7 @@ public class DateUtil {
      * @return 年龄
      */
     public static int age(Date birthday, Date comparedDate) {
-        Date endDate = ObjectUtil.getIfNull(comparedDate, now());
+        Date endDate = Objects.getIfNull(comparedDate, now());
         if (birthday.after(comparedDate)) {
             throw new IllegalArgumentException("Birthday is after comparedDate");
         }

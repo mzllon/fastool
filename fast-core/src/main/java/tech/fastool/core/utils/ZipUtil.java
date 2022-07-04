@@ -41,7 +41,7 @@ public final class ZipUtil {
      * @return 打包好的压缩文件
      */
     public static File zip(String srcPath, Charset charset) {
-        return zip(new File(ObjectUtil.requireNotEmpty(srcPath, "srcPath is null or empty")), charset);
+        return zip(new File(Objects.requireNotEmpty(srcPath, "srcPath is null or empty")), charset);
     }
 
     /**

@@ -4,7 +4,7 @@ import tech.fastool.core.convert.ConvertUtil;
 import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.FileUtil;
 import tech.fastool.core.lang.MapUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.http.api.*;
 import tech.fastool.http.api.constants.HeaderName;
@@ -202,7 +202,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     @Override
     public Req connectTimeoutMillis(Integer connectTimeoutMillis) {
         if (connectTimeoutMillis != null) {
-            ObjectUtil.isTrue(connectTimeoutMillis >= 0, "connectTimeoutMillis >= 0.");
+            Objects.isTrue(connectTimeoutMillis >= 0, "connectTimeoutMillis >= 0.");
             if (this.options == null) {
                 this.options = HttpOptions.builder().build();
             }
@@ -235,7 +235,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     @Override
     public Req readTimeoutMillis(Integer readTimeoutMillis) {
         if (readTimeoutMillis != null) {
-            ObjectUtil.isTrue(readTimeoutMillis >= 0, "readTimeoutMillis >= 0.");
+            Objects.isTrue(readTimeoutMillis >= 0, "readTimeoutMillis >= 0.");
             if (this.options == null) {
                 this.options = HttpOptions.builder().build();
             }
@@ -268,7 +268,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     @Override
     public Req writeTimeoutMillis(Integer writeTimeoutMillis) {
         if (writeTimeoutMillis != null) {
-            ObjectUtil.isTrue(writeTimeoutMillis >= 0, "writeTimeoutMillis >= 0.");
+            Objects.isTrue(writeTimeoutMillis >= 0, "writeTimeoutMillis >= 0.");
             if (this.options == null) {
                 this.options = HttpOptions.builder().build();
             }

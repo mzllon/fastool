@@ -1,7 +1,7 @@
 package tech.fastool.core.bean;
 
 import tech.fastool.core.exceptions.BeanException;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.SimpleCache;
 import tech.fastool.core.lang.Singletons;
 
@@ -37,7 +37,7 @@ public class BeanIntrospectCache {
      * @return {@code PropertyDescriptor}数组
      */
     public List<PropertyDescriptor> getPropertyDescriptors(Class<?> beanClass) {
-        ObjectUtil.requireNonNull(beanClass, "BeanClass == null");
+        Objects.requireNonNull(beanClass, "BeanClass == null");
         List<PropertyDescriptor> propertyDescriptorList;
         synchronized (descriptorsCache) {
             propertyDescriptorList = descriptorsCache.get(beanClass);

@@ -189,7 +189,7 @@ public class FileUtil {
      * @return 返回文件
      */
     public static File touch(String pathname) {
-        File file = new File(ObjectUtil.requireNonNull(pathname, "The path must not be null"));
+        File file = new File(Objects.requireNonNull(pathname, "The path must not be null"));
         return touch(file);
     }
 
@@ -206,7 +206,7 @@ public class FileUtil {
      * @return 返回文件
      */
     public static File touch(File file) {
-        if (!ObjectUtil.requireNonNull(file, "File must not be null").exists()) {
+        if (!Objects.requireNonNull(file, "File must not be null").exists()) {
             forceMakeDir(file.getParentFile());
             try {
                 file.createNewFile();
@@ -245,7 +245,7 @@ public class FileUtil {
      * @return 主文件名
      */
     public static String mainName(File file) {
-        ObjectUtil.requireNonNull(file, "file == null");
+        Objects.requireNonNull(file, "file == null");
         if (file.isDirectory()) {
             return file.getName();
         }
@@ -350,7 +350,7 @@ public class FileUtil {
      */
     public static String getRelativePath(File file, String fromPath) {
         try {
-            ObjectUtil.requireNonNull(file, "file == null");
+            Objects.requireNonNull(file, "file == null");
             return getRelativePath(file.getCanonicalPath(), fromPath);
         } catch (IOException e) {
             throw new IoRuntimeException(e);
@@ -1079,7 +1079,7 @@ public class FileUtil {
      * @throws IoRuntimeException 文件处理异常
      */
     public static void cleanDirectory(File directory) throws IoRuntimeException {
-        if (!ObjectUtil.requireNonNull(directory, "Directory must not be null").exists()) {
+        if (!Objects.requireNonNull(directory, "Directory must not be null").exists()) {
             throw new IoRuntimeException("Directory [" + directory + "] does not exist.");
         }
         if (!directory.isDirectory()) {
@@ -1112,7 +1112,7 @@ public class FileUtil {
      * @throws IoRuntimeException 文件处理异常
      */
     public static FileInputStream openFileInputStream(File file) throws IoRuntimeException {
-        if (ObjectUtil.requireNonNull(file, "'file' must not be null").exists()) {
+        if (Objects.requireNonNull(file, "'file' must not be null").exists()) {
             if (file.isDirectory()) {
                 throw new IoRuntimeException("File '" + file + "' exists but is a directory");
             }
@@ -1178,7 +1178,7 @@ public class FileUtil {
      * @return {@link FileOutputStream}
      */
     private static FileOutputStream openFileOutputStream(File file, boolean append) throws IoRuntimeException {
-        if (ObjectUtil.requireNonNull(file, "File must not be null").exists()) {
+        if (Objects.requireNonNull(file, "File must not be null").exists()) {
             if (file.isDirectory()) {
                 throw new IoRuntimeException("Destination [" + file + "] exists but is a directory.");
             }
@@ -1215,8 +1215,8 @@ public class FileUtil {
     public static boolean pathEquals(File f1, File f2) {
         String str1, str2;
         try {
-            str1 = ObjectUtil.requireNonNull(f1).getCanonicalPath();
-            str2 = ObjectUtil.requireNonNull(f2).getCanonicalPath();
+            str1 = Objects.requireNonNull(f1).getCanonicalPath();
+            str2 = Objects.requireNonNull(f2).getCanonicalPath();
         } catch (IOException e) {
             throw new IoRuntimeException(e);
         }

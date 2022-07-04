@@ -1,7 +1,7 @@
 package tech.fastool.core.utils;
 
 import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.nio.charset.Charset;
@@ -137,8 +137,8 @@ public class ContentType implements java.io.Serializable {
     private final Charset charset;
 
     ContentType(String type, String subtype, Charset charset) {
-        this.type = ObjectUtil.requireNotEmpty(type, "type must not be null or empty");
-        this.subtype = ObjectUtil.requireNotEmpty(subtype, "subtype must not be null or empty");
+        this.type = Objects.requireNotEmpty(type, "type must not be null or empty");
+        this.subtype = Objects.requireNotEmpty(subtype, "subtype must not be null or empty");
         this.charset = charset;
     }
 
@@ -188,7 +188,7 @@ public class ContentType implements java.io.Serializable {
      * @return {@linkplain  ContentType}
      */
     public static ContentType parse(String contentType) {
-        ObjectUtil.requireNonNull(contentType, "contentType is null or empty");
+        Objects.requireNonNull(contentType, "contentType is null or empty");
 
         int index = contentType.indexOf(';');
         String fullType = (index >= 0 ? contentType.substring(0, index) : contentType).trim();

@@ -3,7 +3,7 @@ package tech.fastool.json.api;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.lang.reflect.Type;
 
@@ -148,7 +148,7 @@ public class JsonUtil {
      * @return 对象
      */
     public static <T> T fromJson(String text, @NotNull BaseTypeRef<T> typeRef) {
-        return getJsonHandler(null).deserialize(text, ObjectUtil.requireNonNull(typeRef).getType());
+        return getJsonHandler(null).deserialize(text, Objects.requireNonNull(typeRef).getType());
     }
 
     /**
@@ -161,7 +161,7 @@ public class JsonUtil {
      * @return 对象
      */
     public static <T> T fromJson(String text, @NotNull BaseTypeRef<T> typeRef, @Nullable JsonHandler custom) {
-        return getJsonHandler(custom).deserialize(text, ObjectUtil.requireNonNull(typeRef).getType());
+        return getJsonHandler(custom).deserialize(text, Objects.requireNonNull(typeRef).getType());
     }
 
     /**
@@ -172,7 +172,7 @@ public class JsonUtil {
      */
     private static JsonHandler getJsonHandler(JsonHandler json) {
         JsonHandler result = json != null ? json : JsonFactory.defaultJsonHandler();
-        return ObjectUtil.requireNonNull(result, "JsonHandler Provider Cannot find!");
+        return Objects.requireNonNull(result, "JsonHandler Provider Cannot find!");
     }
 
 }

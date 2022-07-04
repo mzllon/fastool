@@ -6,7 +6,7 @@ import tech.fastool.core.exceptions.IoRuntimeException;
 import tech.fastool.core.io.FastByteArrayOutputStream;
 import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.json.api.BaseTypeRef;
 import tech.fastool.json.api.JsonUtil;
@@ -49,7 +49,7 @@ public final class RequestUtil {
             return null;
         }
         return (StringUtil.isEmpty(body) ? null : JsonUtil.fromJson(body,
-                ObjectUtil.requireNonNull(clazz, "clazz == null")));
+                Objects.requireNonNull(clazz, "clazz == null")));
     }
 
     /**
@@ -73,7 +73,7 @@ public final class RequestUtil {
      */
     @Nullable
     public static String read2Bean(@Nullable HttpServletRequest request) {
-        if (ObjectUtil.isNull(request)) {
+        if (Objects.isNull(request)) {
             return null;
         }
         int contentLength = request.getContentLength();

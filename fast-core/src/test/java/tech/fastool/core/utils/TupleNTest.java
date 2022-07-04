@@ -1,36 +1,36 @@
 package tech.fastool.core.utils;
 
 import org.junit.jupiter.api.Test;
-import tech.fastool.core.lang.tuple.Tuple;
+import tech.fastool.core.lang.tuple.TupleN;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * {@linkplain Tuple} Test
+ * {@linkplain TupleN} Test
  *
  * @author miles.tang
  * @version 0.0.1
  * @date 2022-06-06
  */
-public class TupleTest {
+public class TupleNTest {
 
     @Test
     public void getElements() {
-        Tuple tuple = new Tuple(null, 1, "A");
+        TupleN tuple = new TupleN(null, 1, "A");
         assertArrayEquals(new Object[]{null, 1, "A"}, tuple.getElements());
     }
 
     @Test
     public void get() {
-        Tuple tuple = new Tuple(null, 1, "A", new Object());
-        assertNull(tuple.get(0));
-        assertEquals("A", tuple.get(2));
+        TupleN tupleN = new TupleN(null, 1, "A", new Object());
+        assertNull(tupleN.get(0));
+        assertEquals("A", tupleN.get(2));
     }
 
     @Test
     public void testEquals() {
-        Tuple tuple1 = new Tuple("A", 1, null);
-        Tuple tuple2 = new Tuple("A", 1, null);
+        TupleN tuple1 = new TupleN("A", 1, null);
+        TupleN tuple2 = new TupleN("A", 1, null);
         assertEquals(tuple1, tuple2);
     }
 
@@ -41,7 +41,7 @@ public class TupleTest {
 
     @Test
     public void iterator() {
-        Tuple tuple1 = new Tuple("A", 1, null);
+        TupleN tuple1 = new TupleN("A", 1, null);
         Object ele = tuple1.iterator().next();
         assertEquals("A", ele);
     }

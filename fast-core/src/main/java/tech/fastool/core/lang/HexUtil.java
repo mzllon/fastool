@@ -67,7 +67,7 @@ public final class HexUtil {
      * @return 字符数组
      */
     public static char[] encode(final byte[] data, final boolean toLowerCase) {
-        return doEncode(ObjectUtil.requireNonNull(data), toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
+        return doEncode(Objects.requireNonNull(data), toLowerCase ? DIGITS_LOWER : DIGITS_UPPER);
     }
 
     /**
@@ -99,7 +99,7 @@ public final class HexUtil {
      * @return 字节数组
      */
     public static byte[] decode(final String data) {
-        return decode(ObjectUtil.requireNonNull(data).toCharArray());
+        return decode(Objects.requireNonNull(data).toCharArray());
     }
 
     /**

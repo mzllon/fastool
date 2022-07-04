@@ -3,7 +3,7 @@ package tech.fastool.core.io;
 import tech.fastool.core.exceptions.IoRuntimeException;
 import tech.fastool.core.lang.ArrayUtil;
 import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.io.*;
@@ -607,7 +607,7 @@ public final class IoUtil {
      * @return 文件后缀
      */
     public static String getRealBinExt(InputStream in) {
-        ObjectUtil.requireNonNull(in, "in == null");
+        Objects.requireNonNull(in, "in == null");
         //https://filesignatures.net/index.php?page=all&order=EXT&alpha=M
         //https://my.oschina.net/ososchina/blog/1610685?nocache=1541639315254
 

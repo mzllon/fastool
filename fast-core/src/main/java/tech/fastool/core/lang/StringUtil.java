@@ -760,7 +760,7 @@ public class StringUtil {
      * @see String#endsWith(String)
      */
     public static boolean endsWithIgnoreCase(CharSequence cse, CharSequence suffix) {
-        if (ObjectUtil.isAnyNull(cse, suffix)) {
+        if (Objects.isAnyNull(cse, suffix)) {
             return false;
         }
         if (cse.length() < suffix.length()) {
@@ -890,7 +890,7 @@ public class StringUtil {
      * @return 如果都出现则返回{@code true}，否则返回{@code false}
      */
     public static boolean containsAll(CharSequence cse, char... matchChars) {
-        if (ObjectUtil.isNull(cse) || ArrayUtil.isEmpty(matchChars)) {
+        if (Objects.isNull(cse) || ArrayUtil.isEmpty(matchChars)) {
             return false;
         }
         for (char matchChar : matchChars) {
@@ -922,7 +922,7 @@ public class StringUtil {
      * @return 存在返回{@code true}，否则返回{@code false}
      */
     public static boolean contains(CharSequence cse, CharSequence search, boolean ignoreCase) {
-        if (ObjectUtil.isAnyNull(cse, search)) {
+        if (Objects.isAnyNull(cse, search)) {
             return false;
         }
         String str = cse.toString(), result = search.toString();
@@ -989,7 +989,7 @@ public class StringUtil {
      * @return 存在为{@code true},否则为{@code false}
      */
     public static boolean containsAll(CharSequence cse, boolean ignoreCase, CharSequence... array) {
-        if (ObjectUtil.isAnyNull(cse) || ArrayUtil.isEmpty(array)) {
+        if (Objects.isAnyNull(cse) || ArrayUtil.isEmpty(array)) {
             return false;
         }
         String search = ignoreCase ? cse.toString().toLowerCase(Locale.ROOT) : cse.toString();

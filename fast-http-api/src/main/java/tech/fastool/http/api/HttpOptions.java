@@ -2,7 +2,7 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.util.concurrent.TimeUnit;
 
@@ -135,7 +135,7 @@ public class HttpOptions {
         }
 
         Builder(@NotNull HttpOptions source) {
-            this.connectTimeoutMillis = ObjectUtil.requireNonNull(source).connectTimeoutMillis;
+            this.connectTimeoutMillis = Objects.requireNonNull(source).connectTimeoutMillis;
             this.readTimeoutMillis = source.readTimeoutMillis;
             this.writeTimeoutMillis = source.connectTimeoutMillis;
             this.followRedirects = source.followRedirects;
@@ -150,7 +150,7 @@ public class HttpOptions {
          * @return {@code Builder}
          */
         public Builder connectTimeoutMillis(int connectTimeoutMillis) {
-            ObjectUtil.isTrue(connectTimeoutMillis >= 0, "'connectTimeoutMillis' must than 0");
+            Objects.isTrue(connectTimeoutMillis >= 0, "'connectTimeoutMillis' must than 0");
             this.connectTimeoutMillis = connectTimeoutMillis;
             return this;
         }
@@ -176,8 +176,8 @@ public class HttpOptions {
          * @return {@code Builder}
          */
         public Builder connectTimeout(int connectTimeout, @NotNull TimeUnit timeUnit) {
-            ObjectUtil.isTrue(connectTimeoutMillis >= 0, "'connectTimeout' must than 0");
-            ObjectUtil.requireNonNull(timeUnit, "'timeUnit' must not be null");
+            Objects.isTrue(connectTimeoutMillis >= 0, "'connectTimeout' must than 0");
+            Objects.requireNonNull(timeUnit, "'timeUnit' must not be null");
             this.connectTimeoutMillis = (int) timeUnit.toMillis(connectTimeout);
             return this;
         }
@@ -203,7 +203,7 @@ public class HttpOptions {
          * @return {@code Builder}
          */
         public Builder readTimeoutMillis(int readTimeoutMillis) {
-            ObjectUtil.isTrue(readTimeoutMillis >= 0, "'readTimeoutMillis' must than 0");
+            Objects.isTrue(readTimeoutMillis >= 0, "'readTimeoutMillis' must than 0");
             this.readTimeoutMillis = readTimeoutMillis;
             return this;
         }
@@ -229,8 +229,8 @@ public class HttpOptions {
          * @return {@code Builder}
          */
         public Builder readTimeout(int readTimeout, @NotNull TimeUnit timeUnit) {
-            ObjectUtil.isTrue(readTimeout >= 0, "'readTimeout' must than 0");
-            ObjectUtil.requireNonNull(timeUnit, "'timeUnit' must not be null");
+            Objects.isTrue(readTimeout >= 0, "'readTimeout' must than 0");
+            Objects.requireNonNull(timeUnit, "'timeUnit' must not be null");
             this.readTimeoutMillis = (int) timeUnit.toMillis(readTimeout);
             return this;
         }
@@ -256,7 +256,7 @@ public class HttpOptions {
          * @return {@code Builder}
          */
         public Builder writeTimeoutMillis(int writeTimeoutMillis) {
-            ObjectUtil.isTrue(writeTimeoutMillis >= 0, "'writeTimeoutMillis' must than 0");
+            Objects.isTrue(writeTimeoutMillis >= 0, "'writeTimeoutMillis' must than 0");
             this.writeTimeoutMillis = writeTimeoutMillis;
             return this;
         }
@@ -282,8 +282,8 @@ public class HttpOptions {
          * @return {@code Builder}
          */
         public Builder writeTimeout(int writeTimeout, @NotNull TimeUnit timeUnit) {
-            ObjectUtil.isTrue(writeTimeout >= 0, "'writeTimeout' must than 0");
-            ObjectUtil.requireNonNull(timeUnit, "'timeUnit' must not be null");
+            Objects.isTrue(writeTimeout >= 0, "'writeTimeout' must than 0");
+            Objects.requireNonNull(timeUnit, "'timeUnit' must not be null");
             this.writeTimeoutMillis = (int) timeUnit.toMillis(writeTimeout);
             return this;
         }
@@ -314,7 +314,7 @@ public class HttpOptions {
          * @return {@linkplain Builder}
          */
         public Builder retryCount(int retryCount) {
-            ObjectUtil.isTrue(retryCount >= 0, "'retryCount' must than 0");
+            Objects.isTrue(retryCount >= 0, "'retryCount' must than 0");
             this.retryCount = retryCount;
             return this;
         }
@@ -327,8 +327,8 @@ public class HttpOptions {
          * @return {@linkplain Builder}
          */
         public Builder httpProxy(@NotNull String hostOrIp, int port) {
-            ObjectUtil.requireNotEmpty(hostOrIp, "'hostOrIp' must not be null or empty");
-            ObjectUtil.isTrue(port > 0 && port <= 65535, "port between 1 and 65535");
+            Objects.requireNotEmpty(hostOrIp, "'hostOrIp' must not be null or empty");
+            Objects.isTrue(port > 0 && port <= 65535, "port between 1 and 65535");
             this.proxyInfo = ProxyInfo.http(hostOrIp, port);
             return this;
         }

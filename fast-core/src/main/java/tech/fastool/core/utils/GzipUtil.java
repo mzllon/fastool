@@ -2,7 +2,7 @@ package tech.fastool.core.utils;
 
 import lombok.experimental.UtilityClass;
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ public final class GzipUtil {
      */
     public static boolean isGzipStream(InputStream in) {
         try {
-            ObjectUtil.requireNonNull(in, "in == null").mark(2);
+            Objects.requireNonNull(in, "in == null").mark(2);
             int b = in.read();
             int magic = in.read() << 8 | b;
             in.reset();

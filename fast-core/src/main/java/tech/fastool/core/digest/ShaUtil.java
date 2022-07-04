@@ -2,7 +2,7 @@ package tech.fastool.core.digest;
 
 import tech.fastool.core.lang.CharsetUtil;
 import tech.fastool.core.lang.HexUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.Singletons;
 
 import java.io.InputStream;
@@ -32,7 +32,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha1(final byte[] data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -42,7 +42,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha1(final InputStream data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -63,7 +63,7 @@ public class ShaUtil {
      * @return 16进制的字符串
      */
     public static String sha1Hex(final String data, final Charset inputEncoding) {
-        return sha1Hex(ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(inputEncoding)));
+        return sha1Hex(Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(inputEncoding)));
     }
 
     /**
@@ -97,7 +97,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha256(final String data) {
-        return sha256(ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.defaultCharset()));
+        return sha256(Objects.requireNonNull(data).getBytes(CharsetUtil.defaultCharset()));
     }
 
     /**
@@ -107,7 +107,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha256(final byte[] data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -117,7 +117,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha256(final InputStream data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -138,7 +138,7 @@ public class ShaUtil {
      * @return 16进制的字符串
      */
     public static String sha256Hex(final String data, final Charset encoding) {
-        return sha256Hex(ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(encoding)));
+        return sha256Hex(Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(encoding)));
     }
 
     /**
@@ -185,7 +185,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha384(final String data, final Charset encoding) {
-        return sha384(ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(encoding)));
+        return sha384(Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(encoding)));
     }
 
     /**
@@ -195,7 +195,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha384(final byte[] data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -205,7 +205,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha384(final InputStream data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -272,7 +272,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha512(final String data, final Charset encoding) {
-        return sha512(ObjectUtil.requireNonNull(data).getBytes(CharsetUtil.getCharset(encoding)));
+        return sha512(Objects.requireNonNull(data).getBytes(CharsetUtil.getCharset(encoding)));
     }
 
     /**
@@ -282,7 +282,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha512(final byte[] data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**
@@ -292,7 +292,7 @@ public class ShaUtil {
      * @return 计算后的数据
      */
     public static byte[] sha512(final InputStream data) {
-        return CREATOR.digest(ObjectUtil.requireNonNull(data));
+        return CREATOR.digest(Objects.requireNonNull(data));
     }
 
     /**

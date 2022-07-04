@@ -85,7 +85,7 @@ public class BigDecimalOperator {
      */
     public static BigDecimalOperator of(String val) {
         BigDecimalOperator calculator = new BigDecimalOperator();
-        calculator.result = new BigDecimal(ObjectUtil.requireNotEmpty(val));
+        calculator.result = new BigDecimal(Objects.requireNotEmpty(val));
         calculator.autoScale(val);
         return calculator;
     }
@@ -111,7 +111,7 @@ public class BigDecimalOperator {
      */
     public static BigDecimalOperator of(String val, int newScale, RoundingMode mode) {
         BigDecimalOperator bigDecimalOperator = new BigDecimalOperator();
-        bigDecimalOperator.result = new BigDecimal(ObjectUtil.requireNotEmpty(val)).setScale(newScale, mode);
+        bigDecimalOperator.result = new BigDecimal(Objects.requireNotEmpty(val)).setScale(newScale, mode);
         return bigDecimalOperator;
     }
 
@@ -123,7 +123,7 @@ public class BigDecimalOperator {
      */
     public static BigDecimalOperator of(BigDecimal val) {
         BigDecimalOperator bigDecimalOperator = new BigDecimalOperator();
-        bigDecimalOperator.result = ObjectUtil.requireNonNull(val);
+        bigDecimalOperator.result = Objects.requireNonNull(val);
         return bigDecimalOperator;
     }
 

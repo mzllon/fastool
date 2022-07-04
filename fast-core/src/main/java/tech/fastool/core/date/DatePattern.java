@@ -1,6 +1,6 @@
 package tech.fastool.core.date;
 
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -320,7 +320,7 @@ public class DatePattern {
      * @return {@linkplain DateTimeFormatter}格式化器
      */
     public static DateTimeFormatter ofPattern(String pattern) {
-        ObjectUtil.requireNotEmpty(pattern, "pattern must not be null or empty");
+        Objects.requireNotEmpty(pattern, "pattern must not be null or empty");
         DateTimeFormatter result = BUILTIN.get(pattern);
         if (result != null) {
             return result;

@@ -2,7 +2,7 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.utils.ContentType;
 
 import java.nio.charset.Charset;
@@ -56,8 +56,8 @@ public final class HttpFormBody extends HttpRequestBody {
         }
 
         public Builder add(@NotNull String name, @NotNull String value) {
-            ObjectUtil.requireNonNull(name, "'name' must not be null");
-            ObjectUtil.requireNonNull(value, "'value' must not be null");
+            Objects.requireNonNull(name, "'name' must not be null");
+            Objects.requireNonNull(value, "'value' must not be null");
 
             items.add(new Item(name, value));
             return this;

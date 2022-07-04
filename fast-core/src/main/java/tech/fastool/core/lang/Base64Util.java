@@ -111,7 +111,7 @@ public final class Base64Util {
      * @return 经过BASE64编码后的内容
      */
     public static String encode(final InputStream in, final boolean isUrlSafe) {
-        byte[] src = IoUtil.readBytes(ObjectUtil.requireNonNull(in));
+        byte[] src = IoUtil.readBytes(Objects.requireNonNull(in));
         return isUrlSafe ? Base64.getUrlEncoder().encodeToString(src) : Base64.getEncoder().encodeToString(src);
     }
 

@@ -154,7 +154,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@link Req}
      */
     public Req json(Object value) {
-        ObjectUtil.requireNonNull(value, "value == null");
+        Objects.requireNonNull(value, "value == null");
         return this.json(JsonUtil.toJson(value));
     }
 
@@ -165,7 +165,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@link Req}
      */
     public Req json(String json) {
-        ObjectUtil.requireNonNull(json, "json == null");
+        Objects.requireNonNull(json, "json == null");
         this.httpRequestBody = HttpRequestBody.create(ContentType.APPLICATION_JSON, json);
         return (Req) this;
     }
@@ -177,7 +177,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@link Req}
      */
     public Req text(String text) {
-        ObjectUtil.requireNonNull(text, "text == null");
+        Objects.requireNonNull(text, "text == null");
         this.httpRequestBody = HttpRequestBody.create(ContentType.TEXT_PLAIN, text);
         return (Req) this;
     }
@@ -189,7 +189,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@link Req}
      */
     public Req xml(String xml) {
-        ObjectUtil.requireNonNull(xml, "xml == null");
+        Objects.requireNonNull(xml, "xml == null");
         this.httpRequestBody = HttpRequestBody.create(ContentType.APPLICATION_XML, xml);
         return (Req) this;
     }
@@ -201,7 +201,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@link Req}
      */
     public Req html(String html) {
-        ObjectUtil.requireNonNull(html, "html == null");
+        Objects.requireNonNull(html, "html == null");
         this.httpRequestBody = HttpRequestBody.create(ContentType.APPLICATION_HTML, html);
         return (Req) this;
     }
@@ -213,7 +213,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@link Req}
      */
     public Req javascript(String javascript) {
-        ObjectUtil.requireNonNull(javascript, "javascriptc == null");
+        Objects.requireNonNull(javascript, "javascriptc == null");
         this.httpRequestBody = HttpRequestBody.create(ContentType.APPLICATION_JAVASCRIPT, javascript);
         return (Req) this;
     }

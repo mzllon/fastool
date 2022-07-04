@@ -5,19 +5,18 @@ import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tester for {@linkplain  ObjectUtil}
+ * Tester for {@linkplain  Objects}
  *
  * @author miles.tang
  * @version 0.0.1
  * @date 2022-03-31
  */
-public class ObjectUtilTest {
+public class ObjectsTest {
 
     @Test
     public void isEmpty() {
@@ -26,38 +25,38 @@ public class ObjectUtilTest {
     @Test
     public void isNotEmpty() {
         Object obj = null;
-        assertFalse(ObjectUtil.isNotEmpty(obj));
+        assertFalse(Objects.isNotEmpty(obj));
         obj = "";
-        assertFalse(ObjectUtil.isNotEmpty(obj));
+        assertFalse(Objects.isNotEmpty(obj));
         obj = 1;
-        assertTrue(ObjectUtil.isNotEmpty(obj));
+        assertTrue(Objects.isNotEmpty(obj));
         obj = " ";
-        assertTrue(ObjectUtil.isNotEmpty(obj));
+        assertTrue(Objects.isNotEmpty(obj));
         obj = "\n";
-        assertTrue(ObjectUtil.isNotEmpty(obj));
+        assertTrue(Objects.isNotEmpty(obj));
         obj = new int[0];
-        assertFalse(ObjectUtil.isNotEmpty(obj));
+        assertFalse(Objects.isNotEmpty(obj));
         obj = new Integer[2];
-        assertTrue(ObjectUtil.isNotEmpty(obj)); // 数组不为空就代表对象不为空
+        assertTrue(Objects.isNotEmpty(obj)); // 数组不为空就代表对象不为空
         obj = new String[]{null, null};
-        assertTrue(ObjectUtil.isNotEmpty(obj));
+        assertTrue(Objects.isNotEmpty(obj));
 
     }
 
     @Test
     public void isAnyEmpty() {
         Object[] array = null;
-        assertTrue(ObjectUtil.isAnyEmpty(array));
+        assertTrue(Objects.isAnyEmpty(array));
         array = new Object[0];
-        assertTrue(ObjectUtil.isAnyEmpty(array));
+        assertTrue(Objects.isAnyEmpty(array));
         array = new Object[2];
-        assertTrue(ObjectUtil.isAnyEmpty(array));
+        assertTrue(Objects.isAnyEmpty(array));
         array = new Object[]{null, "1"};
-        assertTrue(ObjectUtil.isAnyEmpty(array));
+        assertTrue(Objects.isAnyEmpty(array));
         array = new Object[]{"", 1};
-        assertTrue(ObjectUtil.isAnyEmpty(array));
+        assertTrue(Objects.isAnyEmpty(array));
         array = new Object[]{"1", 0};
-        assertFalse(ObjectUtil.isAnyEmpty(array));
+        assertFalse(Objects.isAnyEmpty(array));
     }
 
     @Test
@@ -75,80 +74,80 @@ public class ObjectUtilTest {
     @Test
     public void nonNull() {
         Object[] array = null;
-        assertTrue(ObjectUtil.nonNull(array));
+        assertFalse(Objects.nonNull(array));
         array = new Object[]{};
-        assertTrue(ObjectUtil.nonNull(array));
+        assertTrue(Objects.nonNull(array));
         array = new Object[2];
-        assertTrue(ObjectUtil.nonNull(array));
+        assertTrue(Objects.nonNull(array));
         array = new Object[]{null, null, null};
-        assertTrue(ObjectUtil.nonNull(array));
+        assertTrue(Objects.nonNull(array));
         array = new Object[]{"", null};
-        assertFalse(ObjectUtil.nonNull(array));
+        assertTrue(Objects.nonNull(array));
     }
 
     @Test
     public void isNotNull() {
         Object obj = null;
-        assertFalse(ObjectUtil.isNotNull(obj));
+        assertFalse(Objects.isNotNull(obj));
         obj = "";
-        assertTrue(ObjectUtil.isNotNull(obj));
+        assertTrue(Objects.isNotNull(obj));
         obj = 1;
-        assertTrue(ObjectUtil.isNotNull(obj));
+        assertTrue(Objects.isNotNull(obj));
     }
 
     @Test
     public void nullSafeEquals() {
         Object a = null, b = null;
-        assertTrue(ObjectUtil.safeEquals(a, b));
+        assertTrue(Objects.equals(a, b));
         a = 1;
-        assertFalse(ObjectUtil.safeEquals(a, b));
+        assertFalse(Objects.equals(a, b));
         b = 2;
-        assertFalse(ObjectUtil.safeEquals(a, b));
+        assertFalse(Objects.equals(a, b));
         b = 1;
-        assertTrue(ObjectUtil.safeEquals(a, b));
+        assertTrue(Objects.equals(a, b));
         a = "";
-        assertFalse(ObjectUtil.safeEquals(a, b));
+        assertFalse(Objects.equals(a, b));
         a = new Object[]{1, 2};
         b = new Object[]{1, 2};
-        assertTrue(ObjectUtil.safeEquals(a, b));
+        assertTrue(Objects.equals(a, b));
         a = new int[]{0, 1};
         b = new int[]{0, 1};
-        assertTrue(ObjectUtil.safeEquals(a, b));
+        assertTrue(Objects.equals(a, b));
         a = new String[]{"a", "b"};
         b = new String[]{"a", "b"};
-        assertTrue(ObjectUtil.safeEquals(a, b));
+        assertTrue(Objects.equals(a, b));
 
     }
 
     @Test
     public void testEquals() {
         Object a = null, b = null;
-        assertTrue(ObjectUtil.equals(a, b));
+        assertTrue(Objects.equals(a, b));
         a = 1;
-        assertFalse(ObjectUtil.equals(a, b));
+        assertFalse(Objects.equals(a, b));
         b = 2;
-        assertFalse(ObjectUtil.equals(a, b));
+        assertFalse(Objects.equals(a, b));
         b = 1;
-        assertTrue(ObjectUtil.equals(a, b));
+        assertTrue(Objects.equals(a, b));
         a = "";
-        assertFalse(ObjectUtil.equals(a, b));
+        assertFalse(Objects.equals(a, b));
         a = new Object[]{1, 2};
         b = new Object[]{1, 2};
-        assertFalse(ObjectUtil.equals(a, b));
+        assertTrue(Objects.equals(a, b));
     }
 
     @Test
     public void compare() {
         Integer a = null, b = null;
-        assertEquals(0, ObjectUtil.compare(a, b));
+        assertEquals(0, Objects.compare(a, b));
         a = 10;
-        assertEquals(1, ObjectUtil.compare(a, b));
+        assertEquals(1, Objects.compare(a, b));
         b = 10;
-        assertEquals(0, ObjectUtil.compare(a, b));
+        assertEquals(0, Objects.compare(a, b));
         a = 20;
-        assertEquals(1, ObjectUtil.compare(a, b));
+        assertEquals(1, Objects.compare(a, b));
         String str1 = "Abc", str2 = "abc";
-        assertEquals(-32, ObjectUtil.compare(str1, str2));
+        assertEquals(-32, Objects.compare(str1, str2));
     }
 
     @Test
@@ -161,8 +160,8 @@ public class ObjectUtilTest {
                 return o1.weight.compareTo(o2.weight);
             }
         };
-        assertEquals(1, ObjectUtil.compare(apple1, apple2, comparator));
-        assertEquals(-1, ObjectUtil.compare(apple2, apple3, comparator));
+        assertEquals(1, Objects.compare(apple1, apple2, comparator));
+        assertEquals(-1, Objects.compare(apple2, apple3, comparator));
     }
 
     @Test
@@ -172,21 +171,21 @@ public class ObjectUtilTest {
     @Test
     public void testHashCode() {
         Object a = null;
-        assertEquals(0, ObjectUtil.hashCode(a));
+        assertEquals(0, Objects.hashCode(a));
         Integer val = 100;
-        assertEquals(val, ObjectUtil.hashCode(val));
+        assertEquals(val, Objects.hashCode(val));
     }
 
     @Test
     public void getIfNull() {
-        assertEquals("a", ObjectUtil.getIfNull(null, "a"));
-        assertEquals("res", ObjectUtil.getIfNull("res", "a"));
+        assertEquals("a", Objects.getIfNull(null, "a"));
+        assertEquals("res", Objects.getIfNull("res", "a"));
     }
 
     @Test
     public void testGetIfNull() {
-        assertEquals("a", ObjectUtil.getIfNull(null, (Supplier<Object>) () -> "a"));
-        assertEquals("res", ObjectUtil.getIfNull("res", (Supplier<Object>) () -> "a"));
+        assertEquals("a", Objects.getIfNull(null, (Supplier<Object>) () -> "a"));
+        assertEquals("res", Objects.getIfNull("res", (Supplier<Object>) () -> "a"));
     }
 
     @Getter

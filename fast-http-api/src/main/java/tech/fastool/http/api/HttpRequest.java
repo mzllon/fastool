@@ -3,7 +3,7 @@ package tech.fastool.http.api;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.MapUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.UrlUtil;
 import tech.fastool.core.utils.LinkedMultiValueMap;
 import tech.fastool.core.utils.MultiValueMap;
@@ -143,18 +143,18 @@ public final class HttpRequest {
         }
 
         public Builder method(@NotNull HttpMethod method) {
-            this.method = ObjectUtil.requireNonNull(method, "method == null ");
+            this.method = Objects.requireNonNull(method, "method == null ");
             return this;
         }
 
         public Builder url(@NotNull String url) {
-            this.url = ObjectUtil.requireNotEmpty(url, "url is null or empty");
+            this.url = Objects.requireNotEmpty(url, "url is null or empty");
             return this;
         }
 
         public Builder replaceHeader(String name, String value) {
-            ObjectUtil.requireNotEmpty(name, "name is null or empty");
-            ObjectUtil.requireNonNull(value, "value == null");
+            Objects.requireNotEmpty(name, "name is null or empty");
+            Objects.requireNonNull(value, "value == null");
 
             List<String> values = new ArrayList<>();
             values.add(value);
@@ -163,8 +163,8 @@ public final class HttpRequest {
         }
 
         public Builder addHeader(String name, String value) {
-            ObjectUtil.requireNotEmpty(name, "name is null or empty");
-            ObjectUtil.requireNonNull(value, "value == null");
+            Objects.requireNotEmpty(name, "name is null or empty");
+            Objects.requireNonNull(value, "value == null");
 
             List<String> values = headerMap.computeIfAbsent(name, k -> new ArrayList<>());
             values.add(value);
@@ -179,7 +179,7 @@ public final class HttpRequest {
         public Builder headers(HttpHeaders headers) {
             if (MapUtil.isNotEmpty(headers)) {
                 headers.forEach((BiConsumer<String, Object>) (name, values) -> {
-                    if (ObjectUtil.isAnyNull(name, values)) {
+                    if (Objects.isAnyNull(name, values)) {
                         return;
                     }
                     List<String> oValues = headerMap.computeIfAbsent(name, k -> new ArrayList<>());
@@ -201,7 +201,7 @@ public final class HttpRequest {
         public Builder queryParams(Map<String, ?> queryParamMap) {
             if (MapUtil.isNotEmpty(queryParamMap)) {
                 queryParamMap.forEach((BiConsumer<String, Object>) (name, values) -> {
-                    if (ObjectUtil.isAnyNull(name, values)) {
+                    if (Objects.isAnyNull(name, values)) {
                         return;
                     }
                     List<String> oValues = queryParams.computeIfAbsent(name, k -> new ArrayList<>());

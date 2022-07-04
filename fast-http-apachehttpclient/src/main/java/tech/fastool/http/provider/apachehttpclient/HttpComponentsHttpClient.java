@@ -24,7 +24,7 @@ import tech.fastool.core.exceptions.IoRuntimeException;
 import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.CharsetUtil;
 import tech.fastool.core.lang.ListUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.http.api.HttpHeaders;
 import tech.fastool.http.api.HttpRequest;
@@ -55,7 +55,7 @@ public class HttpComponentsHttpClient implements HttpClient {
     }
 
     public HttpComponentsHttpClient(@NotNull org.apache.http.client.HttpClient httpClient) {
-        this.httpClient = ObjectUtil.requireNonNull(httpClient, "httpClient == null");
+        this.httpClient = Objects.requireNonNull(httpClient, "httpClient == null");
     }
 
     public HttpComponentsHttpClient(@Nullable HttpOptions options) {

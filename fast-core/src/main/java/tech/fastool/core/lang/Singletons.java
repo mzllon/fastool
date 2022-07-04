@@ -50,7 +50,7 @@ public class Singletons {
      * @return 对象
      */
     public static <T> T get(String className, Object... params) {
-        Class<T> clazz = ClassUtil.loadClass(ObjectUtil.requireNotEmpty(className));
+        Class<T> clazz = ClassUtil.loadClass(Objects.requireNotEmpty(className));
         return get(clazz, params);
     }
 

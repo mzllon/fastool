@@ -245,7 +245,7 @@ public final class NumberUtil {
      * @return 金额元
      */
     public static String fen2YuanString(Long fen) {
-        return ObjectUtil.isNull(fen) ? null : fen2YuanString(fen.longValue());
+        return Objects.isNull(fen) ? null : fen2YuanString(fen.longValue());
     }
 
     // region min & max
@@ -374,7 +374,7 @@ public final class NumberUtil {
     @SuppressWarnings("unchecked")
     public static <T extends Number> T convert(Number number, Class<T> targetClass)
             throws IllegalArgumentException {
-        if (ObjectUtil.isAnyNull(number, targetClass)) {
+        if (Objects.isAnyNull(number, targetClass)) {
             return null;
         }
 

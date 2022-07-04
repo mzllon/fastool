@@ -3,7 +3,7 @@ package tech.fastool.http.api;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.FileUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.core.utils.ContentType;
 
@@ -116,7 +116,7 @@ public class HttpMultipartBody extends HttpRequestBody {
         }
 
         public static Part create(String name, String filename, @NotNull File file) {
-            ObjectUtil.requireNonNull(file, "file == null");
+            Objects.requireNonNull(file, "file == null");
             Part part = new Part(name, filename, ContentType.parseByFileExt(FileUtil.getFileExt(file)));
             part.file = file;
             return part;
@@ -164,7 +164,7 @@ public class HttpMultipartBody extends HttpRequestBody {
         }
 
         public Builder contentType(@NotNull ContentType contentType) {
-            this.contentType = ObjectUtil.requireNonNull(contentType, "contentType == null");
+            this.contentType = Objects.requireNonNull(contentType, "contentType == null");
             return this;
         }
 
@@ -194,7 +194,7 @@ public class HttpMultipartBody extends HttpRequestBody {
         }
 
         public Builder add(@NotNull Part part) {
-            parts.add(ObjectUtil.requireNonNull(part, "part == null"));
+            parts.add(Objects.requireNonNull(part, "part == null"));
             return this;
         }
 

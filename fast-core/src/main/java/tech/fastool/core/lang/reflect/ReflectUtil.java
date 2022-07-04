@@ -92,7 +92,7 @@ public final class ReflectUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> Constructor<T>[] getConstructorsFromCache(Class<T> clazz) {
-        ObjectUtil.requireNonNull(clazz);
+        Objects.requireNonNull(clazz);
         return (Constructor<T>[]) CONSTRUCTORS_CACHE.computeIfAbsent(clazz, () -> getConstructors(clazz));
     }
 
@@ -104,7 +104,7 @@ public final class ReflectUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> Constructor<T>[] getConstructors(Class<T> clazz) {
-        return (Constructor<T>[]) ObjectUtil.requireNonNull(clazz).getDeclaredConstructors();
+        return (Constructor<T>[]) Objects.requireNonNull(clazz).getDeclaredConstructors();
     }
 
     /**
@@ -214,7 +214,7 @@ public final class ReflectUtil {
      * @return 字段列表
      */
     public static List<Field> getFieldsDirectly(Class<?> clazz) {
-        ObjectUtil.requireNonNull(clazz, "clazz == null");
+        Objects.requireNonNull(clazz, "clazz == null");
         List<Field> declaredFields = new ArrayList<>();
         Class<?> searchClass = clazz;
         while (searchClass != null) {

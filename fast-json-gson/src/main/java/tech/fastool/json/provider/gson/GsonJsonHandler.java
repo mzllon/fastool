@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.ArrayUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
 import tech.fastool.json.api.annotation.JsonProviderName;
@@ -34,7 +34,7 @@ public class GsonJsonHandler extends BaseJsonHandler {
     }
 
     public GsonJsonHandler(Gson gson) {
-        this.gson = ObjectUtil.requireNonNull(gson, "gson == null");
+        this.gson = Objects.requireNonNull(gson, "gson == null");
     }
 
     /**

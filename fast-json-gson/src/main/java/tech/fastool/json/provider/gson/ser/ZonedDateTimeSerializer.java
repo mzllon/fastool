@@ -6,7 +6,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import tech.fastool.core.date.DatePattern;
 import tech.fastool.core.date.ZoneConstant;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.lang.reflect.Type;
 import java.time.ZonedDateTime;
@@ -28,7 +28,7 @@ public class ZonedDateTimeSerializer implements JsonSerializer<ZonedDateTime> {
     }
 
     public ZonedDateTimeSerializer(DateTimeFormatter formatter) {
-        this.formatter = ObjectUtil.requireNonNull(formatter, "formatter == null");
+        this.formatter = Objects.requireNonNull(formatter, "formatter == null");
         if (this.formatter.getZone() == null) {
             this.formatter.withZone(ZoneConstant.BEIJING_ZONE_OFFSET);
         }

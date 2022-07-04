@@ -3,7 +3,7 @@ package tech.fastool.http.api;
 import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.CharsetUtil;
 import tech.fastool.core.lang.CollectionUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.http.api.constants.HeaderName;
 
@@ -31,7 +31,7 @@ public class Utils {
     }
 
     public static String header(Map<String, List<String>> headers, String headerName, boolean ignoreCase) {
-        if (ObjectUtil.isAnyEmpty(headers, headerName)) {
+        if (Objects.isAnyEmpty(headers, headerName)) {
             return null;
         }
         List<String> values = null;
@@ -47,7 +47,7 @@ public class Utils {
     }
 
     public static String header(Map<String, List<String>> headers, HeaderName headerName, boolean ignoreCase) {
-        ObjectUtil.requireNonNull(headerName, "headerName == null");
+        Objects.requireNonNull(headerName, "headerName == null");
         return header(headers, headerName.toString(), ignoreCase);
     }
 

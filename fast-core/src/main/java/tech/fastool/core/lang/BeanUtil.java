@@ -64,7 +64,7 @@ public class BeanUtil {
      * @throws BeanException 获取属性异常
      */
     public static List<PropertyDescriptor> getPropertyDescriptorList(Class<?> beanClass) throws BeanException {
-        ObjectUtil.requireNonNull(beanClass, "beanClass == null");
+        Objects.requireNonNull(beanClass, "beanClass == null");
         return BeanIntrospectCache.getInstance().getPropertyDescriptors(beanClass);
     }
 
@@ -92,7 +92,7 @@ public class BeanUtil {
      * @return {@linkplain PropertyDescriptor}
      */
     public static PropertyDescriptor getPropertyDescriptor(Class<?> beanClass, String propertyName) {
-        return getPropertyDescriptorMap(beanClass).get(ObjectUtil.requireNotEmpty(propertyName, "propertyName is null or empty"));
+        return getPropertyDescriptorMap(beanClass).get(Objects.requireNotEmpty(propertyName, "propertyName is null or empty"));
     }
 
     /**
@@ -105,7 +105,7 @@ public class BeanUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T getPropertyValue(Object bean, String propertyName) {
-        ObjectUtil.requireNonNull(bean, "bean == null");
+        Objects.requireNonNull(bean, "bean == null");
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), propertyName);
         if (pd == null) {
             return null;

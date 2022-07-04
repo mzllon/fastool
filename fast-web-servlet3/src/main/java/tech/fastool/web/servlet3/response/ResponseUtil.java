@@ -6,7 +6,7 @@ import tech.fastool.core.exceptions.IoRuntimeException;
 import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.CharsetUtil;
 import tech.fastool.core.lang.FileUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.core.lang.regex.RegexUtil;
 import tech.fastool.core.utils.ContentType;
@@ -65,7 +65,7 @@ public class ResponseUtil {
      * @param response HTTP响应对象
      */
     public static void writeJson(@Nullable String json, @Nullable Charset encoding, @Nullable HttpServletResponse response) {
-        if (ObjectUtil.isAnyNull(json, response)) {
+        if (Objects.isAnyNull(json, response)) {
             return;
         }
         encoding = CharsetUtil.getCharset(encoding, CharsetUtil.UTF_8);
@@ -102,7 +102,7 @@ public class ResponseUtil {
      * @param encoding 字符集编码
      */
     public static void writeHtml(@Nullable String html, @Nullable HttpServletResponse response, @Nullable Charset encoding) {
-        if (ObjectUtil.isAnyNull(html, response)) {
+        if (Objects.isAnyNull(html, response)) {
             return;
         }
         encoding = CharsetUtil.getCharset(encoding, CharsetUtil.UTF_8);
@@ -128,7 +128,7 @@ public class ResponseUtil {
      * @param encoding 编码
      */
     public static void writePlainText(@Nullable String data, @Nullable HttpServletResponse response, @Nullable Charset encoding) {
-        if (ObjectUtil.isAnyNull(data, response)) {
+        if (Objects.isAnyNull(data, response)) {
             return;
         }
         encoding = CharsetUtil.getCharset(encoding, CharsetUtil.UTF_8);
@@ -165,7 +165,7 @@ public class ResponseUtil {
      * @param response     HTTP响应对象
      */
     public static void writeFile(File downloadFile, boolean isDeleted, HttpServletRequest request, HttpServletResponse response) {
-        if (ObjectUtil.isNull(downloadFile)) {
+        if (Objects.isNull(downloadFile)) {
             return;
         }
         writeFile(downloadFile.getName(), downloadFile, isDeleted, request, response);

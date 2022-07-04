@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
@@ -26,7 +26,7 @@ public class InstantSerializer implements JsonSerializer<Instant> {
     }
 
     public InstantSerializer(DateTimeFormatter formatter) {
-        this.formatter = ObjectUtil.requireNonNull(formatter, "formatter == null");
+        this.formatter = Objects.requireNonNull(formatter, "formatter == null");
     }
 
     @Override

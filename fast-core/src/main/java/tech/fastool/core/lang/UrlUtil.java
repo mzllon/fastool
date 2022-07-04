@@ -262,7 +262,7 @@ public class UrlUtil {
      */
     public static InputStream openStream(URL url) {
         try {
-            return ObjectUtil.requireNonNull(url).openStream();
+            return Objects.requireNonNull(url).openStream();
         } catch (IOException e) {
             throw new IoRuntimeException(e);
         }
@@ -277,7 +277,7 @@ public class UrlUtil {
      */
     public static URL getUrl(File file) {
         try {
-            return ObjectUtil.requireNonNull(file).toURI().toURL();
+            return Objects.requireNonNull(file).toURI().toURL();
         } catch (MalformedURLException e) {
             throw new IoRuntimeException(e);
         }

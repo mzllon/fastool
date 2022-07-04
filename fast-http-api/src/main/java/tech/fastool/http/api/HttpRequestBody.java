@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.CharsetUtil;
 import tech.fastool.core.lang.FileUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.utils.ContentType;
 
 import java.io.File;
@@ -69,12 +69,12 @@ public class HttpRequestBody {
     }
 
     public static HttpRequestBody create(@Nullable ContentType contentType, @NotNull File file) {
-        ObjectUtil.requireNonNull(file, "file == null");
+        Objects.requireNonNull(file, "file == null");
         return new HttpRequestBody(contentType, FileUtil.readBytes(file));
     }
 
     public static HttpRequestBody create(@Nullable ContentType contentType, InputStream in) {
-        return new HttpRequestBody(contentType, IoUtil.readBytes(ObjectUtil.requireNonNull(in, "in == null")));
+        return new HttpRequestBody(contentType, IoUtil.readBytes(Objects.requireNonNull(in, "in == null")));
     }
 
 }

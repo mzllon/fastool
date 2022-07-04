@@ -22,10 +22,10 @@ public class Validator {
      *
      * @param value 值
      * @return 是否为空
-     * @see ObjectUtil#isEmpty(Object)
+     * @see Objects#isEmpty(Object)
      */
     public static boolean isEmpty(Object value) {
-        return ObjectUtil.isEmpty(value);
+        return Objects.isEmpty(value);
     }
 
     /**

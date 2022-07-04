@@ -7,7 +7,7 @@ import tech.fastool.core.io.IoUtil;
 import tech.fastool.core.lang.CharsetUtil;
 import tech.fastool.core.lang.ListUtil;
 import tech.fastool.core.lang.MapUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.http.api.exceptions.HttpClientErrorException;
 import tech.fastool.http.api.exceptions.HttpServerErrorException;
 import tech.fastool.http.api.exceptions.UnknownHttpStatusCodeException;
@@ -203,7 +203,7 @@ public class HttpResponse implements Closeable {
         }
 
         Builder(@NotNull HttpResponse source) {
-            this.rawStatus = ObjectUtil.requireNonNull(source).rawStatus;
+            this.rawStatus = Objects.requireNonNull(source).rawStatus;
             this.reason = source.reason;
             this.headers = source.headers;
             this.body = source.body;
@@ -270,7 +270,7 @@ public class HttpResponse implements Closeable {
          * @see HttpResponse#request
          */
         public Builder request(HttpRequest request) {
-            this.request = ObjectUtil.requireNonNull(request, "request is required");
+            this.request = Objects.requireNonNull(request, "request is required");
             return this;
         }
 
@@ -326,11 +326,11 @@ public class HttpResponse implements Closeable {
         }
 
         public static HttpResponseBody create(byte[] data) {
-            return new ByteArrayResponseBody(ObjectUtil.requireNonNull(data));
+            return new ByteArrayResponseBody(Objects.requireNonNull(data));
         }
 
         public static HttpResponseBody create(@NotNull String text, @Nullable Charset charset) {
-            return create(ObjectUtil.requireNotEmpty(text).getBytes(CharsetUtil.getCharset(charset)));
+            return create(Objects.requireNotEmpty(text).getBytes(CharsetUtil.getCharset(charset)));
         }
     }
 
@@ -390,7 +390,7 @@ public class HttpResponse implements Closeable {
         }
 
         public static HttpResponseBody create(@NotNull InputStream in, int length) {
-            return new InputStreamResponseBody(ObjectUtil.requireNonNull(in), length);
+            return new InputStreamResponseBody(Objects.requireNonNull(in), length);
         }
 
     }

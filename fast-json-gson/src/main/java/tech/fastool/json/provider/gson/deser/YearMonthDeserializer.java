@@ -1,7 +1,7 @@
 package tech.fastool.json.provider.gson.deser;
 
 import com.google.gson.*;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.lang.reflect.Type;
@@ -22,7 +22,7 @@ public class YearMonthDeserializer implements JsonDeserializer<YearMonth> {
     }
 
     public YearMonthDeserializer(DateTimeFormatter formatter) {
-        this.formatter = ObjectUtil.requireNonNull(formatter, "formatter == null");
+        this.formatter = Objects.requireNonNull(formatter, "formatter == null");
     }
 
     @Override

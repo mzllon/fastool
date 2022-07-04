@@ -3,7 +3,7 @@ package tech.fastool.json.provider.gson.deser;
 import com.google.gson.*;
 import tech.fastool.core.date.DatePattern;
 import tech.fastool.core.date.ZoneConstant;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.lang.reflect.Type;
@@ -26,7 +26,7 @@ public class OffsetTimeDeserializer implements JsonDeserializer<OffsetTime> {
     }
 
     public OffsetTimeDeserializer(DateTimeFormatter formatter) {
-        this.formatter = ObjectUtil.requireNonNull(formatter, "formatter == null");
+        this.formatter = Objects.requireNonNull(formatter, "formatter == null");
         if (this.formatter.getZone() == null) {
             this.formatter = this.formatter.withZone(ZoneConstant.BEIJING_ZONE_OFFSET);
         }

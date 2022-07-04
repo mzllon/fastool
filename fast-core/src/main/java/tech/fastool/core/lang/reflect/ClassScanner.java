@@ -185,9 +185,9 @@ public class ClassScanner {
         }
         while (enumerationUrls.hasMoreElements()) {
             URL url = enumerationUrls.nextElement();
-            if (ObjectUtil.equals("file", url.getProtocol())) {
+            if (Objects.equals("file", url.getProtocol())) {
                 scanFile(new File(UrlUtil.decode(url.getFile(), encoding)), null);
-            } else if (ObjectUtil.equals("jar", url.getProtocol())) {
+            } else if (Objects.equals("jar", url.getProtocol())) {
                 scanJar(UrlUtil.getJarFile(url));
             }
         }

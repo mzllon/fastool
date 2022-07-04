@@ -2,7 +2,7 @@ package tech.fastool.json.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.io.Reader;
@@ -27,7 +27,7 @@ public abstract class BaseJsonHandler implements JsonHandler {
      */
     @Override
     public String serialize(@Nullable Object src, @Nullable String... ignorePropertyNames) throws JsonRuntimeException {
-        if (ObjectUtil.isNull(src)) {
+        if (Objects.isNull(src)) {
             return null;
         }
         return doSerialize(src, ignorePropertyNames);
@@ -53,7 +53,7 @@ public abstract class BaseJsonHandler implements JsonHandler {
      */
     @Override
     public String serialize(@Nullable Object src, @Nullable Type typeOfT) throws JsonRuntimeException {
-        if (ObjectUtil.isNull(src)) {
+        if (Objects.isNull(src)) {
             return null;
         }
         return doSerialize(src, typeOfT);
@@ -82,7 +82,7 @@ public abstract class BaseJsonHandler implements JsonHandler {
         if (StringUtil.isBlank(json)) {
             return null;
         }
-        ObjectUtil.requireNonNull(typeOfT, "The parameter [typeOfT] is null");
+        Objects.requireNonNull(typeOfT, "The parameter [typeOfT] is null");
         return doDeserialize(json, typeOfT);
     }
 

@@ -5,7 +5,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import tech.fastool.core.date.DatePattern;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.lang.reflect.Type;
 import java.time.OffsetTime;
@@ -27,7 +27,7 @@ public class OffsetTimeSerializer implements JsonSerializer<OffsetTime> {
     }
 
     public OffsetTimeSerializer(DateTimeFormatter formatter) {
-        this.formatter = ObjectUtil.requireNonNull(formatter, "formatter == null");
+        this.formatter = Objects.requireNonNull(formatter, "formatter == null");
     }
 
     @Override

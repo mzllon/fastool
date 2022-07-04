@@ -1,6 +1,6 @@
 package tech.fastool.core.lang.regex;
 
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.util.regex.Pattern;
@@ -39,7 +39,7 @@ public class RegexUtil {
      * @return 正则为null或者""则不检查，返回true，内容为null返回false
      */
     public static boolean isMatch(Pattern pattern, CharSequence cse) {
-        if (ObjectUtil.isAnyNull(pattern, cse)) {
+        if (Objects.isAnyNull(pattern, cse)) {
             return false;
         }
         return pattern.matcher(cse).matches();

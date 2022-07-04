@@ -4,7 +4,7 @@ import tech.fastool.core.date.DatePattern;
 import tech.fastool.core.date.DateUtil;
 import tech.fastool.core.date.Jdk8DateUtil;
 import tech.fastool.core.date.ZoneConstant;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 
 import java.time.*;
@@ -110,7 +110,7 @@ public class TemporalAccessorConverter extends AbstractConverter<TemporalAccesso
         if (targetClass == Instant.class) {
             return instant;
         }
-        zoneId = ObjectUtil.getIfNull(zoneId, ZoneConstant.DEFAULT_ZONE_OFFSET);
+        zoneId = Objects.getIfNull(zoneId, ZoneConstant.DEFAULT_ZONE_OFFSET);
         if (targetClass == LocalDateTime.class) {
             return instant.atZone(zoneId).toLocalDateTime();
         } else if (targetClass == LocalDate.class) {

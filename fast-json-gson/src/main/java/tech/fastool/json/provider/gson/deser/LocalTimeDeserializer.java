@@ -2,7 +2,7 @@ package tech.fastool.json.provider.gson.deser;
 
 import com.google.gson.*;
 import tech.fastool.core.date.DatePattern;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.StringUtil;
 import tech.fastool.json.provider.gson.ser.LocalTimeSerializer;
 
@@ -26,7 +26,7 @@ public class LocalTimeDeserializer implements JsonDeserializer<LocalTime> {
     }
 
     public LocalTimeDeserializer(DateTimeFormatter formatter) {
-        this.formatter = ObjectUtil.requireNonNull(formatter, "formatter == null");
+        this.formatter = Objects.requireNonNull(formatter, "formatter == null");
     }
 
     @Override

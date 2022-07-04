@@ -25,6 +25,11 @@ public class ArrayUtil {
     public static final int INDEX_NOT_FOUND = -1;
 
     /**
+     * 空数组（对象类型）
+     */
+    public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+
+    /**
      * 空数组(字符串类型)
      */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
@@ -1530,6 +1535,23 @@ public class ArrayUtil {
         return obj.toString();
     }
 
+    /**
+     * 数组的哈希值
+     *
+     * @param values 数组的元素
+     * @return 哈希值
+     */
+    public static int hashCode(Object[] values) {
+        if (values == null) {
+            return 0;
+        }
+        int result = 1;
+        for (Object element : values)
+            result = 31 * result + (element == null ? 0 : element.hashCode());
+
+        return result;
+    }
+
     // endregion
 
 
@@ -1547,7 +1569,7 @@ public class ArrayUtil {
     public static <T> int indexOf(T[] array, T element) {
         if (null != array) {
             for (int i = 0; i < array.length; i++) {
-                if (ObjectUtil.equals(element, array[i])) {
+                if (Objects.equals(element, array[i])) {
                     return i;
                 }
             }
@@ -1618,6 +1640,7 @@ public class ArrayUtil {
 
 
     // region contains
+
     /**
      * 数组中是否包含元素
      *
@@ -1668,14 +1691,14 @@ public class ArrayUtil {
      * @param element 检查的元素对象
      * @param <T>     泛型类型声明
      * @return 如果数组中存在则返回{@code true},否则返回{@code false}
-     * @see ObjectUtil#safeEquals(Object, Object)
+     * @see Objects#equals(Object, Object)
      */
     public static <T> boolean contains(final T[] array, T element) {
         if (isEmpty(array)) {
             return false;
         }
         for (Object arrayEle : array) {
-            if (ObjectUtil.safeEquals(arrayEle, element)) {
+            if (Objects.equals(arrayEle, element)) {
                 return true;
             }
         }

@@ -3,7 +3,7 @@ package tech.fastool.core.lang.reflect;
 import lombok.experimental.UtilityClass;
 import tech.fastool.core.exceptions.ClassNotFoundRuntimeException;
 import tech.fastool.core.lang.ArrayUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -77,7 +77,7 @@ public final class ClassUtil {
      * @return 其对应的类型数组
      */
     public static Class<?>[] getClasses(Object... values) {
-        return Arrays.stream(ObjectUtil.requireNonNull(values))
+        return Arrays.stream(Objects.requireNonNull(values))
                 .map(o -> o == null ? Object.class : o.getClass())
                 .toArray(Class<?>[]::new);
     }
@@ -95,7 +95,7 @@ public final class ClassUtil {
      * @return 类的默认值
      */
     public static Object getDefaultValue(Class<?> clazz) {
-        if (ObjectUtil.requireNonNull(clazz).isPrimitive()) {
+        if (Objects.requireNonNull(clazz).isPrimitive()) {
             if (clazz == boolean.class) {
                 return false;
             } else if (clazz == byte.class) {
@@ -124,7 +124,7 @@ public final class ClassUtil {
      * @return 对饮的默认值
      */
     public static Object[] getDefaultValues(Class<?>[] parameterTypes) {
-        return Arrays.stream(ObjectUtil.requireNonNull(parameterTypes))
+        return Arrays.stream(Objects.requireNonNull(parameterTypes))
                 .map(ClassUtil::getDefaultValue)
                 .toArray(Object[]::new);
     }
@@ -138,8 +138,8 @@ public final class ClassUtil {
      * @see Class#isAssignableFrom(Class)
      */
     public static boolean isAssignable(Class<?> sourceType, Class<?> targetType) {
-        ObjectUtil.requireNonNull(sourceType, "sourceType == null");
-        ObjectUtil.requireNonNull(targetType, "targetType == null");
+        Objects.requireNonNull(sourceType, "sourceType == null");
+        Objects.requireNonNull(targetType, "targetType == null");
         if (sourceType.isAssignableFrom(targetType)) {
             return true;
         }
@@ -237,7 +237,7 @@ public final class ClassUtil {
      * @return 是否是静态方法
      */
     public static boolean isStatic(Method method) {
-        return Modifier.isStatic(ObjectUtil.requireNonNull(method, "method == null").getModifiers());
+        return Modifier.isStatic(Objects.requireNonNull(method, "method == null").getModifiers());
     }
 
     /**

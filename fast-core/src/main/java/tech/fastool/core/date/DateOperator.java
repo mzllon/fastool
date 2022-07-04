@@ -1,6 +1,6 @@
 package tech.fastool.core.date;
 
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,16 +25,16 @@ public class DateOperator {
     }
 
     public DateOperator(Date date) {
-        ObjectUtil.requireNonNull(date, "date == null");
+        Objects.requireNonNull(date, "date == null");
         localDateTime = Jdk8DateUtil.of(date);
     }
 
     public DateOperator(LocalDateTime localDateTime) {
-        this.localDateTime = ObjectUtil.requireNonNull(localDateTime, "localDateTime == null");
+        this.localDateTime = Objects.requireNonNull(localDateTime, "localDateTime == null");
     }
 
     public DateOperator(LocalDate localDate) {
-        localDateTime = ObjectUtil.requireNonNull(localDate, "localDate == null").atStartOfDay();
+        localDateTime = Objects.requireNonNull(localDate, "localDate == null").atStartOfDay();
     }
 
     public DateOperator(long epochMilli) {
@@ -278,7 +278,7 @@ public class DateOperator {
      * @return 如果是则返回{@code true}，否则返回{@code false}
      */
     public boolean isBefore(LocalDateTime other) {
-        return localDateTime.isBefore(ObjectUtil.requireNonNull(other, "other == null"));
+        return localDateTime.isBefore(Objects.requireNonNull(other, "other == null"));
     }
 
     /**
@@ -288,7 +288,7 @@ public class DateOperator {
      * @return 如果是则返回{@code true}，否则返回{@code false}
      */
     public boolean isAfter(LocalDateTime other) {
-        return localDateTime.isAfter(ObjectUtil.requireNonNull(other, "other == null"));
+        return localDateTime.isAfter(Objects.requireNonNull(other, "other == null"));
     }
 
     /**
@@ -298,7 +298,7 @@ public class DateOperator {
      * @return 如果是则返回{@code true}，否则返回{@code false}
      */
     public boolean isBefore(DateOperator target) {
-        return this.localDateTime.isBefore(ObjectUtil.requireNonNull(target, "other == null").localDateTime);
+        return this.localDateTime.isBefore(Objects.requireNonNull(target, "other == null").localDateTime);
     }
 
     /**
@@ -308,6 +308,6 @@ public class DateOperator {
      * @return 如果是则返回{@code true}，否则返回{@code false}
      */
     public boolean isAfter(DateOperator target) {
-        return this.localDateTime.isAfter(ObjectUtil.requireNonNull(target, "other == null").localDateTime);
+        return this.localDateTime.isAfter(Objects.requireNonNull(target, "other == null").localDateTime);
     }
 }

@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.digest.Md5Util;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.*;
 import tech.fastool.core.lang.reflect.ReflectUtil;
 import tech.fastool.core.lang.regex.PatternUtil;
@@ -34,10 +35,10 @@ public class $ {
      * @param obj 对象
      * @return 校验后的非空对象
      * @throws NullPointerException if {@code reference} is null
-     * @see ObjectUtil#requireNonNull(Object)
+     * @see Objects#requireNonNull(Object)
      */
     public static <T> T requireNonNull(T obj) {
-        return ObjectUtil.requireNonNull(obj);
+        return Objects.requireNonNull(obj);
     }
 
     /**
@@ -47,10 +48,10 @@ public class $ {
      * @param message 异常消息,会通过{@linkplain String#valueOf(Object)}包装,即消息可{@code null}
      * @return 校验后的非空对象
      * @throws NullPointerException if {@code reference} is null
-     * @see ObjectUtil#requireNonNull(Object, String)
+     * @see Objects#requireNonNull(Object, String)
      */
     public static <T> T requireNonNull(final T obj, String message) {
-        return ObjectUtil.requireNonNull(obj, message);
+        return Objects.requireNonNull(obj, message);
     }
 
     /**
@@ -58,10 +59,10 @@ public class $ {
      *
      * @param obj 被检查的对象
      * @return {@code true} or {@code false}
-     * @see ObjectUtil#isNull(Object)
+     * @see Objects#isNull(Object)
      */
     public static boolean isNull(final Object obj) {
-        return ObjectUtil.isNull(obj);
+        return Objects.isNull(obj);
     }
 
     /**
@@ -69,10 +70,10 @@ public class $ {
      *
      * @param array 数组
      * @return 如果数组任意一个元素为{@code null}则返回{@code true}，否则返回{@code false}
-     * @see ObjectUtil#isAnyNull(Object...)
+     * @see Objects#isAnyNull(Object...)
      */
     public static boolean isAnyNull(final Object... array) {
-        return ObjectUtil.isAnyNull(array);
+        return Objects.isAnyNull(array);
     }
 
     /**
@@ -80,10 +81,10 @@ public class $ {
      *
      * @param array 数组
      * @return 如果数组所有元素都为{@code null}则返回{@code true}，否则返回{@code false}
-     * @see ObjectUtil#isAllNull(Object...)
+     * @see Objects#isAllNull(Object...)
      */
     public static boolean isAllNull(final Object... array) {
-        return ObjectUtil.isAllNull(array);
+        return Objects.isAllNull(array);
     }
 
     /**
@@ -91,10 +92,10 @@ public class $ {
      *
      * @param obj 被检查的对象
      * @return {@code true} or {@code false}
-     * @see ObjectUtil#nonNull(Object)
+     * @see Objects#nonNull(Object)
      */
     public static boolean nonNull(final Object obj) {
-        return ObjectUtil.nonNull(obj);
+        return Objects.nonNull(obj);
     }
 
     /**
@@ -152,10 +153,10 @@ public class $ {
      *
      * @param obj 被判断的对象
      * @return 是否为空
-     * @see ObjectUtil#isEmpty(Object)
+     * @see Objects#isEmpty(Object)
      */
     public static boolean isEmpty(final Object obj) {
-        return ObjectUtil.isEmpty(obj);
+        return Objects.isEmpty(obj);
     }
 
     /**
@@ -202,7 +203,7 @@ public class $ {
      * @return 是否任意为空
      */
     public static boolean isAnyEmpty(Object... array) {
-        return ObjectUtil.isAnyEmpty(array);
+        return Objects.isAnyEmpty(array);
     }
 
 
@@ -226,22 +227,10 @@ public class $ {
      * @param a 第一个比较对象
      * @param b 第二个比较对象
      * @return 判断两个对象内容是否相等
-     * @see ObjectUtil#safeEquals(Object, Object)
+     * @see Objects#equals(Object, Object)
      */
-    public static boolean safeEquals(@Nullable final Object a, @Nullable final Object b) {
-        return ObjectUtil.safeEquals(a, b);
-    }
-
-    /**
-     * 判断两个对象是否相等
-     *
-     * @param a 对象a
-     * @param b 对象b
-     * @return 如果两个对象相等这返回{@code true},否则返回{@code false}
-     * @see ObjectUtil#equals(Object, Object)
-     */
-    public static boolean equals(@Nullable Object a, Object b) {
-        return ObjectUtil.equals(a, b);
+    public static boolean equals(@Nullable final Object a, @Nullable final Object b) {
+        return Objects.equals(a, b);
     }
 
     /**
@@ -249,10 +238,10 @@ public class $ {
      *
      * @param obj 对象
      * @return 哈希码
-     * @see ObjectUtil#hashCode(Object)
+     * @see Objects#hashCode(Object)
      */
     public static int hashCode(final Object obj) {
-        return ObjectUtil.hashCode(obj);
+        return Objects.hashCode(obj);
     }
 
     // endregion
@@ -280,11 +269,11 @@ public class $ {
      * @param nullGreater 当被比对为{@code null}时是否排序在前面,{@code true}则表示{@code null}比任何非{@code null}大,{@code false}反之
      * @param <T>         对象的类型
      * @return 如果 a &gt; b 则返回1,如果 a = b 则返回0,如果 a &lt; b 则返回-1
-     * @see ObjectUtil#compare(Comparable, Comparable, boolean)
+     * @see Objects#compare(Comparable, Comparable, boolean)
      */
     public static <T extends Comparable<? super T>> int compare(@Nullable final T a, @Nullable final T b,
                                                                 final boolean nullGreater) {
-        return ObjectUtil.compare(a, b, nullGreater);
+        return Objects.compare(a, b, nullGreater);
     }
 
     /**
@@ -295,7 +284,7 @@ public class $ {
      * @param c   比较器
      * @param <T> 对象的类型
      * @return 如果 a &gt; b 则返回1,如果 a = b 则返回0,如果 a &lt; b 则返回-1
-     * @see ObjectUtil#compare(Object, Object, Comparator)
+     * @see Objects#compare(Object, Object, Comparator)
      */
     public static <T> int compare(T a, T b, Comparator<? super T> c) {
         if (a == b) {
@@ -304,7 +293,7 @@ public class $ {
         if (c == null) {
             throw new NullPointerException();
         }
-        return ObjectUtil.compare(a, b, c);
+        return Objects.compare(a, b, c);
     }
 
     // endregion
@@ -327,11 +316,11 @@ public class $ {
      * @param defaultValue 被检查对象为{@code null}返回的默认值，可以为{@code null}
      * @param <T>          对象类型
      * @return 被检查对象为{@code null}返回默认值，否则返回原值
-     * @see ObjectUtil#getIfNull(Object, Object)
+     * @see Objects#getIfNull(Object, Object)
      */
     @Nullable
     public static <T> T getIfNull(@Nullable final T obj, @Nullable final T defaultValue) {
-        return ObjectUtil.getIfNull(obj, defaultValue);
+        return Objects.getIfNull(obj, defaultValue);
     }
 
     /**
@@ -349,11 +338,11 @@ public class $ {
      * @param supplier 被检查对象为{@code null}返回的提供器的函数值，不可以为{@code null}
      * @param <T>      对象类型
      * @return 被检查对象为{@code null}返回默认值，否则返回原值
-     * @see ObjectUtil#getIfNull(Object, Supplier)
+     * @see Objects#getIfNull(Object, Supplier)
      */
     @Nullable
     public static <T> T getIfNull(@Nullable final T obj, @NotNull Supplier<T> supplier) {
-        return ObjectUtil.getIfNull(obj, supplier);
+        return Objects.getIfNull(obj, supplier);
     }
 
     // endregion
@@ -500,7 +489,7 @@ public class $ {
      * @param element 检查的元素对象
      * @param <T>     泛型类型声明
      * @return 如果数组中存在则返回{@code true},否则返回{@code false}
-     * @see ObjectUtil#safeEquals(Object, Object)
+     * @see ArrayUtil#contains(Object[], Object)
      */
     public static <T> boolean contains(final T[] array, T element) {
         return ArrayUtil.contains(array, element);
@@ -861,7 +850,7 @@ public class $ {
     // region Bean Converter
 
     public static Map<String, Object> toMap(@Nullable Object bean) {
-        if (ObjectUtil.isAnyNull(bean)) {
+        if (Objects.isAnyNull(bean)) {
             return null;
         }
         Map<String, Object> target = new HashMap<>(MapUtil.DEFAULT_INITIAL_CAPACITY);
@@ -879,7 +868,7 @@ public class $ {
      */
     @Nullable
     public static <T> T toBean(@Nullable Map<String, Object> map, Class<T> beanClass) {
-        if (ObjectUtil.isAnyNull(map, beanClass)) {
+        if (Objects.isAnyNull(map, beanClass)) {
             return null;
         }
         T target = ReflectUtil.newInstance(beanClass);
@@ -912,7 +901,7 @@ public class $ {
     @Nullable
     public static <E> List<E> copyProperties(@Nullable Collection<?> src, Class<E> targetClass,
                                              @Nullable String... ignoreProperties) {
-        if (ObjectUtil.isAnyNull(src, targetClass)) {
+        if (Objects.isAnyNull(src, targetClass)) {
             return null;
         }
         List<E> list = ListUtil.newArrayList();
@@ -947,7 +936,7 @@ public class $ {
     @Nullable
     public static <E> E copyProperties(@Nullable Object src, Class<E> targetClass,
                                        @Nullable String... ignoreProperties) {
-        if (ObjectUtil.isAnyNull(src, targetClass)) {
+        if (Objects.isAnyNull(src, targetClass)) {
             return null;
         }
         E target = ReflectUtil.newInstance(targetClass);

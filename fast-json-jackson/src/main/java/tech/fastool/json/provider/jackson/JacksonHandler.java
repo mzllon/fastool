@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.ArrayUtil;
-import tech.fastool.core.lang.ObjectUtil;
+import tech.fastool.core.lang.Objects;
 import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
 import tech.fastool.json.api.annotation.JsonProviderName;
@@ -33,7 +33,7 @@ public class JacksonHandler extends BaseJsonHandler {
     }
 
     public JacksonHandler(ObjectMapper objectMapper) {
-        this.objectMapper = ObjectUtil.requireNonNull(objectMapper, "objectMapper == null");
+        this.objectMapper = Objects.requireNonNull(objectMapper, "objectMapper is null");
     }
 
 
