@@ -89,7 +89,7 @@ public interface HttpClient {
             boolean hasAcceptHeader = false;
             Integer contentLength = null;
             for (String field : request.headers().keySet()) {
-                if (field.equalsIgnoreCase("Accept")) {
+                if ("Accept".equalsIgnoreCase(field)) {
                     hasAcceptHeader = true;
                 }
                 for (String value : request.headers().get(field)) {

@@ -1546,9 +1546,9 @@ public class Arrays {
             return 0;
         }
         int result = 1;
-        for (Object element : values)
+        for (Object element : values) {
             result = 31 * result + (element == null ? 0 : element.hashCode());
-
+        }
         return result;
     }
 

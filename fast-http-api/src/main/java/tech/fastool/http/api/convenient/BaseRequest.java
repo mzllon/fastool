@@ -207,6 +207,7 @@ public interface BaseRequest<Req extends BaseRequest<Req>> {
      * 将响应结果输出到文件中
      *
      * @param saveFile 目标保存文件,非空
+     * @throws HttpClientException 如果服务器返回非200则抛出此异常
      */
     void file(File saveFile) throws HttpClientException;
 
@@ -214,6 +215,7 @@ public interface BaseRequest<Req extends BaseRequest<Req>> {
      * 将响应结果输出到输出流,并不会主动关闭输出流{@code out}
      *
      * @param out 输出流,非空
+     * @throws HttpClientException 如果服务器返回非200则抛出此异常
      */
     void outputStream(OutputStream out) throws HttpClientException;
 

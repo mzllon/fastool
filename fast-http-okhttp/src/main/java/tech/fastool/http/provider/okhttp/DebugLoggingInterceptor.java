@@ -135,7 +135,7 @@ public enum DebugLoggingInterceptor implements Interceptor {
         if (mediaType == null) {
             return false;
         }
-        if (mediaType.type().equals("text")) {
+        if ("text".equals(mediaType.type())) {
             return true;
         }
         String subtype = mediaType.subtype();

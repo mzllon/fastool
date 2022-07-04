@@ -22,6 +22,7 @@ public class TupleN extends BaseTuple {
      *
      * @return 获得所有元素
      */
+    @Override
     public Object[] elements() {
         return elements;
     }

@@ -69,7 +69,7 @@ public class ContentType implements java.io.Serializable {
     public static final ContentType DEFAULT_BINARY;
 
     //support file extension
-    private static final Map<String, ContentType> supportFileExts;
+    private static final Map<String, ContentType> SUPPORT_FILE_EXTS;
 
     static {
         ALL = new ContentType("*", "*", null);
@@ -127,7 +127,7 @@ public class ContentType implements java.io.Serializable {
         _supportFileExts.put("apk", APPLICATION_APK);
         _supportFileExts.put("ipa", APPLICATION_IPA);
 
-        supportFileExts = Collections.unmodifiableMap(_supportFileExts);
+        SUPPORT_FILE_EXTS = Collections.unmodifiableMap(_supportFileExts);
     }
 
     private final String type;
@@ -177,7 +177,7 @@ public class ContentType implements java.io.Serializable {
             return DEFAULT_BINARY;
         }
         fileExt = fileExt.toLowerCase();
-        ContentType contentType = supportFileExts.get(fileExt);
+        ContentType contentType = SUPPORT_FILE_EXTS.get(fileExt);
         return (contentType == null) ? DEFAULT_BINARY : contentType;
     }
 

@@ -5,6 +5,7 @@ import tech.fastool.core.lang.Charsets;
 import tech.fastool.core.lang.Collections;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.Strings;
+import tech.fastool.core.lang.regex.PatternPool;
 import tech.fastool.http.api.constants.HeaderName;
 
 import java.io.InputStream;
@@ -62,7 +63,7 @@ public class Utils {
             contentDisposition = new String(contentDisposition.getBytes(Charsets.ISO_8859_1));
         }
 
-        Pattern pattern = Pattern.compile("filename=\"?(.+)\"?", Pattern.DOTALL);
+        Pattern pattern = PatternPool.get("filename=\"?(.+)\"?", Pattern.DOTALL);
         Matcher matcher = pattern.matcher(contentDisposition);
         if (matcher.find()) {
             return matcher.group(1);
