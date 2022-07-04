@@ -349,7 +349,7 @@ public class Jdk8DateUtil {
      * @return 时刻
      */
     public static Instant toInstant(LocalDateTime localDateTime, ZoneId zoneId) {
-        if (Objects.isAnyNull(localDateTime, zoneId)) {
+        if (Objects.isAllNull(localDateTime, zoneId)) {
             return null;
         }
         return localDateTime.atZone(Objects.getIfNull(zoneId, ZoneConstant.ASIA_SHANGHAI)).toInstant();
