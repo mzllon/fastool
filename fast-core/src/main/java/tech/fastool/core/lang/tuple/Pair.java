@@ -2,7 +2,7 @@ package tech.fastool.core.lang.tuple;
 
 import org.jetbrains.annotations.NotNull;
 import tech.fastool.core.lang.CloneSupport;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -142,11 +142,11 @@ public class Pair<L, R> extends CloneSupport<Pair<L, R>> implements Map.Entry<L,
      *
      * @param pattern 字符串模板
      * @return 格式化后的字符串
-     * @see StringUtil#format(String, Object...)
+     * @see Strings#format(String, Object...)
      */
     @NotNull
     public String toString(@NotNull String pattern) {
-        return StringUtil.format(pattern, left, right);
+        return Strings.format(pattern, left, right);
     }
 
 }

@@ -1,6 +1,6 @@
 package tech.fastool.http.api.exceptions;
 
-import tech.fastool.core.lang.CharsetUtil;
+import tech.fastool.core.lang.Charsets;
 import tech.fastool.http.api.HttpHeaders;
 import tech.fastool.http.api.HttpRequest;
 
@@ -36,7 +36,7 @@ public class HttpClientResponseException extends HttpClientException {
         this.reason = reason;
         this.responseHeaders = responseHeaders;
         this.responseBody = responseBody;
-        this.responseCharset = CharsetUtil.getCharset(responseCharset, CharsetUtil.UTF_8);
+        this.responseCharset = Charsets.getCharset(responseCharset, Charsets.UTF_8);
         this.request = request;
     }
 

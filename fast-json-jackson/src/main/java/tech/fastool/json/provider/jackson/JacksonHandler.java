@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.ArrayUtil;
+import tech.fastool.core.lang.Arrays;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
@@ -47,7 +47,7 @@ public class JacksonHandler extends BaseJsonHandler {
      */
     @Override
     public String doSerialize(@NotNull Object src, @Nullable String[] ignorePropertyNames) throws JsonRuntimeException {
-        if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
+        if (Arrays.isNotEmpty(ignorePropertyNames)) {
             SimpleFilterProvider sfp = new SimpleFilterProvider();
             sfp.addFilter("fieldFilter", SimpleBeanPropertyFilter.serializeAllExcept(ignorePropertyNames));
             try {

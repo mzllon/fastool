@@ -1,7 +1,7 @@
 package tech.fastool.http.api.convenient;
 
 import org.jetbrains.annotations.NotNull;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.http.api.Factory;
 import tech.fastool.http.api.HttpClient;
 
@@ -37,7 +37,7 @@ public class HttpClients {
      * @return {@link GetRequest}
      */
     public static GetRequest get(@NotNull String urlPattern, Object... args) {
-        return new GetRequest(StringUtil.format(urlPattern, args));
+        return new GetRequest(Strings.format(urlPattern, args));
     }
 
     /**
@@ -57,7 +57,7 @@ public class HttpClients {
      * @return {@link PostRequest}
      */
     public static PostRequest post(String urlPattern, Object... args) {
-        return new PostRequest(StringUtil.format(urlPattern, args));
+        return new PostRequest(Strings.format(urlPattern, args));
     }
 
     /**
@@ -77,7 +77,7 @@ public class HttpClients {
      * @return {@linkplain DeleteRequest}
      */
     public static DeleteRequest delete(@NotNull String urlPattern, Object... args) {
-        return new DeleteRequest(StringUtil.format(urlPattern, args));
+        return new DeleteRequest(Strings.format(urlPattern, args));
     }
 
     /**
@@ -97,7 +97,7 @@ public class HttpClients {
      * @return {@linkplain HeadRequest}
      */
     public static HeadRequest head(@NotNull String urlPattern, Object... args) {
-        return new HeadRequest(StringUtil.format(urlPattern, args));
+        return new HeadRequest(Strings.format(urlPattern, args));
     }
 
     /**
@@ -117,7 +117,7 @@ public class HttpClients {
      * @return {@linkplain PatchRequest}
      */
     public static PatchRequest patch(@NotNull String urlPattern, Object... args) {
-        return new PatchRequest(StringUtil.format(urlPattern, args));
+        return new PatchRequest(Strings.format(urlPattern, args));
     }
 
     /**
@@ -137,7 +137,7 @@ public class HttpClients {
      * @return {@linkplain PutRequest}
      */
     public static PutRequest put(@NotNull String urlPattern, Object... args) {
-        return new PutRequest(StringUtil.format(urlPattern, args));
+        return new PutRequest(Strings.format(urlPattern, args));
     }
 
 }

@@ -1,7 +1,7 @@
 package tech.fastool.core.io;
 
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.lang.CharsetUtil;
+import tech.fastool.core.lang.Charsets;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -146,7 +146,7 @@ public class FastByteArrayOutputStream extends OutputStream {
      * @return 字符串
      */
     public String toString(String charsetName) {
-        return toString(CharsetUtil.forName(charsetName));
+        return toString(Charsets.forName(charsetName));
     }
 
     /**

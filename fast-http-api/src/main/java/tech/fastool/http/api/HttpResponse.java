@@ -3,10 +3,10 @@ package tech.fastool.http.api;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.ListUtil;
-import tech.fastool.core.lang.MapUtil;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Charsets;
+import tech.fastool.core.lang.Lists;
+import tech.fastool.core.lang.Maps;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.http.api.exceptions.HttpClientErrorException;
 import tech.fastool.http.api.exceptions.HttpServerErrorException;
@@ -114,9 +114,9 @@ public class HttpResponse implements Closeable {
         }
         builder.append('\n');
 
-        if (MapUtil.isNotEmpty(headers)) {
+        if (Maps.isNotEmpty(headers)) {
             for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-                if (ListUtil.isNotEmpty(entry.getValue())) {
+                if (Lists.isNotEmpty(entry.getValue())) {
                     for (String value : entry.getValue()) {
                         builder.append(entry.getKey()).append(": ").append(value).append('\n');
                     }
@@ -132,7 +132,7 @@ public class HttpResponse implements Closeable {
 
     @Override
     public void close() {
-        IoUtil.closeQuietly(body);
+        IOes.closeQuietly(body);
     }
 
     /**
@@ -145,7 +145,7 @@ public class HttpResponse implements Closeable {
     public void checkStatus() {
         if (hasError()) {
             HttpStatus statusCode = status();
-            byte[] responseBody = IoUtil.readBytes(body.byteStream());
+            byte[] responseBody = IOes.readBytes(body.byteStream());
             switch (statusCode.series()) {
                 case CLIENT_ERROR:
                     throw new HttpClientErrorException(statusCode, reason, headers, responseBody, null, request);
@@ -330,7 +330,7 @@ public class HttpResponse implements Closeable {
         }
 
         public static HttpResponseBody create(@NotNull String text, @Nullable Charset charset) {
-            return create(Objects.requireNotEmpty(text).getBytes(CharsetUtil.getCharset(charset)));
+            return create(Objects.requireNotEmpty(text).getBytes(Charsets.getCharset(charset)));
         }
     }
 
@@ -368,7 +368,7 @@ public class HttpResponse implements Closeable {
 
         @Override
         public Reader charStream(Charset charset) throws IoRuntimeException {
-            Charset encoding = CharsetUtil.getCharset(charset, CharsetUtil.UTF_8);
+            Charset encoding = Charsets.getCharset(charset, Charsets.UTF_8);
             return new BufferedReader(new InputStreamReader(in, encoding));
         }
 
@@ -381,7 +381,7 @@ public class HttpResponse implements Closeable {
          */
         @Override
         public String string(Charset charset) throws IoRuntimeException {
-            return IoUtil.read(charStream(charset));
+            return IOes.read(charStream(charset));
         }
 
         @Override

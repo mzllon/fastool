@@ -1,7 +1,7 @@
 package tech.fastool.core.utils;
 
-import tech.fastool.core.lang.CollectionUtil;
-import tech.fastool.core.lang.ListUtil;
+import tech.fastool.core.lang.Collections;
+import tech.fastool.core.lang.Lists;
 
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +39,7 @@ public final class BooleanEvaluator {
      * @param falseFactors  为假的银子
      */
     public BooleanEvaluator(boolean nullValue, boolean strIgnoreCase, Object[] trueFactors, Object[] falseFactors) {
-        this(nullValue, strIgnoreCase, ListUtil.newArrayList(trueFactors), ListUtil.newArrayList(falseFactors));
+        this(nullValue, strIgnoreCase, Lists.newArrayList(trueFactors), Lists.newArrayList(falseFactors));
     }
 
     /**
@@ -99,7 +99,7 @@ public final class BooleanEvaluator {
      * @param trueFactors 为真的银子
      */
     public void addTrueFactors(List<Object> trueFactors) {
-        if (CollectionUtil.isNotEmpty(trueFactors)) {
+        if (Collections.isNotEmpty(trueFactors)) {
             for (Object object : trueFactors) {
                 addTrueFactor(object);
             }
@@ -112,7 +112,7 @@ public final class BooleanEvaluator {
      * @param falseFactors 为假的因子
      */
     public void addFalseFactors(List<Object> falseFactors) {
-        if (CollectionUtil.isNotEmpty(falseFactors)) {
+        if (Collections.isNotEmpty(falseFactors)) {
             for (Object object : falseFactors) {
                 addFalseFactor(object);
             }

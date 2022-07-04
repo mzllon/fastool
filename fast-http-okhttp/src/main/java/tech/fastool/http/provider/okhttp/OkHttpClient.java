@@ -6,7 +6,7 @@ import okhttp3.MediaType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.io.IoUtil;
+import tech.fastool.core.io.IOes;
 import tech.fastool.core.lang.*;
 import tech.fastool.core.utils.ContentType;
 import tech.fastool.http.api.*;
@@ -58,7 +58,7 @@ public class OkHttpClient implements HttpClient {
         ProxyInfo proxyInfo = httpOptions.proxyInfo();
         if (proxyInfo != null) {
             builder.proxy(proxyInfo.toJdkProxy());
-            if (StringUtil.isAllNotBlank(proxyInfo.username(), proxyInfo.password())) {
+            if (Strings.isAllNotBlank(proxyInfo.username(), proxyInfo.password())) {
                 builder.proxyAuthenticator((route, response) -> response.request().newBuilder()
                         .header("Proxy-Authorization", Credentials.basic(proxyInfo.username(), proxyInfo.password()))
                         .build());
@@ -99,7 +99,7 @@ public class OkHttpClient implements HttpClient {
             ProxyInfo proxyInfo = options.proxyInfo();
             if (proxyInfo != null) {
                 builder.proxy(proxyInfo.toJdkProxy());
-                if (StringUtil.isAllNotBlank(proxyInfo.username(), proxyInfo.password())) {
+                if (Strings.isAllNotBlank(proxyInfo.username(), proxyInfo.password())) {
                     builder.proxyAuthenticator((route, response) -> response.request().newBuilder()
                             .header("Proxy-Authorization", Credentials.basic(proxyInfo.username(), proxyInfo.password()))
                             .build());
@@ -125,7 +125,7 @@ public class OkHttpClient implements HttpClient {
 
     private static okhttp3.Request toOkHttpRequest(HttpRequest input) {
         HttpUrl.Builder httpUrlBuilder = HttpUrl.parse(input.url()).newBuilder();
-        if (MapUtil.isNotEmpty(input.queryParams())) {
+        if (Maps.isNotEmpty(input.queryParams())) {
             input.queryParams().forEach((name, values) -> values.forEach(value -> httpUrlBuilder.addQueryParameter(name, value)));
         }
 
@@ -140,13 +140,13 @@ public class OkHttpClient implements HttpClient {
         // header
         boolean hasAcceptHeader = false;
         for (Map.Entry<String, List<String>> entry : input.headers().entrySet()) {
-            if (StringUtil.equalsIgnoreCase(entry.getKey(), "Accept")) {
+            if (Strings.equalsIgnoreCase(entry.getKey(), "Accept")) {
                 hasAcceptHeader = true;
             }
 
             for (String value : entry.getValue()) {
                 requestBuilder.addHeader(entry.getKey(), value);
-                if (StringUtil.equalsIgnoreCase("Content-Type", entry.getKey())) {
+                if (Strings.equalsIgnoreCase("Content-Type", entry.getKey())) {
                     contentType = ContentType.parse(value);
                 }
             }
@@ -180,14 +180,14 @@ public class OkHttpClient implements HttpClient {
         } else if (input.body() instanceof HttpMultipartBody) {
             HttpMultipartBody multipartBody = (HttpMultipartBody) input.body();
             okhttp3.MultipartBody.Builder builder;
-            if (StringUtil.hasLength(multipartBody.getBoundary())) {
+            if (Strings.hasLength(multipartBody.getBoundary())) {
                 builder = new okhttp3.MultipartBody.Builder(multipartBody.getBoundary());
             } else {
                 builder = new okhttp3.MultipartBody.Builder();
             }
             builder.setType(okhttp3MediaType);
 
-            if (ListUtil.isEmpty(multipartBody.getParts())) {
+            if (Lists.isEmpty(multipartBody.getParts())) {
                 builder.addPart(okhttp3.RequestBody.create(okhttp3.MultipartBody.FORM, new byte[0]));
             } else {
                 for (HttpMultipartBody.Part part : multipartBody.getParts()) {
@@ -269,15 +269,15 @@ public class OkHttpClient implements HttpClient {
                     encoding = okMediaType.charset(charset);
                 }
                 if (encoding == null) {
-                    encoding = CharsetUtil.UTF_8;
+                    encoding = Charsets.UTF_8;
                 }
 
                 Reader reader = null;
                 try {
                     reader = charStream(encoding);
-                    return IoUtil.read(reader);
+                    return IOes.read(reader);
                 } finally {
-                    IoUtil.closeQuietly(reader);
+                    IOes.closeQuietly(reader);
                 }
             }
 

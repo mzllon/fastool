@@ -1,7 +1,7 @@
 package tech.fastool.core.utils;
 
 import tech.fastool.core.lang.CloneSupport;
-import tech.fastool.core.lang.CollectionUtil;
+import tech.fastool.core.lang.Collections;
 
 import java.io.Serializable;
 import java.util.*;
@@ -40,7 +40,7 @@ public class LinkedMultiValueMap<K, V> extends CloneSupport<LinkedMultiValueMap<
     @Override
     public V getFirst(K key) {
         List<V> values = this.storeMap.get(key);
-        return CollectionUtil.isNotEmpty(values) ? values.get(0) : null;
+        return Collections.isNotEmpty(values) ? values.get(0) : null;
     }
 
     /**
@@ -89,7 +89,7 @@ public class LinkedMultiValueMap<K, V> extends CloneSupport<LinkedMultiValueMap<
     public Map<K, V> toSingleValueMap() {
         LinkedHashMap<K, V> singleValueMap = new LinkedHashMap<>(this.storeMap.size());
         this.storeMap.forEach((key, values) -> {
-            if (CollectionUtil.isNotEmpty(values)) {
+            if (Collections.isNotEmpty(values)) {
                 singleValueMap.put(key, values.get(0));
             }
         });

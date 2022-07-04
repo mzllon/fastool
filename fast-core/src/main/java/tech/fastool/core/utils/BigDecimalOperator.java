@@ -129,7 +129,7 @@ public class BigDecimalOperator {
 
     private void autoScale(String val) {
         if (autoScale > 0 || autoScale == -1) {
-            int index = val.indexOf(CharUtil.DOT);
+            int index = val.indexOf(Chars.DOT);
             if (index >= 0) {
                 autoScale = val.substring(index + 1).length();
             }
@@ -191,7 +191,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(short... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (short value : values) {
                 add(value);
             }
@@ -206,7 +206,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(Short[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Short value : values) {
                 add(value);
             }
@@ -246,7 +246,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(int... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (int value : values) {
                 add(value);
             }
@@ -261,7 +261,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(Integer[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Integer value : values) {
                 add(value);
             }
@@ -276,7 +276,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator addInts(Collection<Integer> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Integer value : values) {
                 add(value);
             }
@@ -316,7 +316,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(float... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (float value : values) {
                 add(value);
             }
@@ -331,7 +331,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(Float[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Float value : values) {
                 add(value);
             }
@@ -346,7 +346,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator addFloats(Collection<Float> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Float value : values) {
                 add(value);
             }
@@ -386,7 +386,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(long... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (long value : values) {
                 add(value);
             }
@@ -401,7 +401,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(Long[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Long value : values) {
                 add(value);
             }
@@ -416,7 +416,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator addLongs(Collection<Long> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Long value : values) {
                 add(value);
             }
@@ -456,7 +456,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(double... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (double value : values) {
                 add(value);
             }
@@ -471,7 +471,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(Double[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Double value : values) {
                 add(value);
             }
@@ -486,7 +486,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator addDoubles(Collection<Double> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Double value : values) {
                 add(value);
             }
@@ -507,9 +507,9 @@ public class BigDecimalOperator {
      */
     public BigDecimalOperator add(String val) {
         //非空
-        if (StringUtil.hasText(val)) {
+        if (Strings.hasText(val)) {
             //去除左右两侧空白
-            val = StringUtil.trim(val);
+            val = Strings.trim(val);
             add(new BigDecimal(val));
             autoScale(val);
         }
@@ -523,7 +523,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(String... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (String value : values) {
                 add(value);
             }
@@ -538,7 +538,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator addStrs(Collection<String> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (String value : values) {
                 add(value);
             }
@@ -571,7 +571,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(BigDecimal... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (BigDecimal value : values) {
                 add(value);
             }
@@ -586,7 +586,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator add(Collection<BigDecimal> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (BigDecimal value : values) {
                 add(value);
             }
@@ -645,7 +645,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(int... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (int value : values) {
                 subtract(value);
             }
@@ -660,7 +660,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(Integer[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Integer value : values) {
                 subtract(value);
             }
@@ -675,7 +675,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtractInts(Collection<Integer> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Integer value : values) {
                 subtract(value);
             }
@@ -715,7 +715,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(float... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (float value : values) {
                 subtract(value);
             }
@@ -730,7 +730,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(Float[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Float value : values) {
                 subtract(value);
             }
@@ -745,7 +745,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtractFloats(Collection<Float> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Float value : values) {
                 subtract(value);
             }
@@ -785,7 +785,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(long... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (long value : values) {
                 subtract(value);
             }
@@ -800,7 +800,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(Long[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Long value : values) {
                 subtract(value);
             }
@@ -815,7 +815,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtractLongs(Collection<Long> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Long value : values) {
                 subtract(value);
             }
@@ -855,7 +855,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(double... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (double value : values) {
                 subtract(value);
             }
@@ -870,7 +870,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(Double[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Double value : values) {
                 subtract(value);
             }
@@ -885,7 +885,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtractDoubles(Collection<Double> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Double value : values) {
                 subtract(value);
             }
@@ -905,8 +905,8 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(String val) {
-        if (StringUtil.hasText(val)) {
-            val = StringUtil.trim(val);
+        if (Strings.hasText(val)) {
+            val = Strings.trim(val);
             subtract(new BigDecimal(val));
             autoScale(val);
         }
@@ -920,7 +920,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(String... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (String value : values) {
                 subtract(value);
             }
@@ -935,7 +935,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtractStrs(Collection<String> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (String value : values) {
                 subtract(value);
             }
@@ -968,7 +968,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(BigDecimal... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (BigDecimal value : values) {
                 subtract(value);
             }
@@ -983,7 +983,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator subtract(Collection<BigDecimal> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (BigDecimal value : values) {
                 subtract(value);
             }
@@ -1023,7 +1023,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(int... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (int value : values) {
                 multiply(value);
             }
@@ -1038,7 +1038,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(Integer[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Integer value : values) {
                 multiply(value);
             }
@@ -1053,7 +1053,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiplyInts(Collection<Integer> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Integer value : values) {
                 multiply(value);
             }
@@ -1093,7 +1093,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(float... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (float value : values) {
                 multiply(value);
             }
@@ -1108,7 +1108,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(Float[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Float value : values) {
                 multiply(value);
             }
@@ -1123,7 +1123,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiplyFloats(Collection<Float> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Float value : values) {
                 multiply(value);
             }
@@ -1163,7 +1163,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(long... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (long value : values) {
                 multiply(value);
             }
@@ -1178,7 +1178,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(Long[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Long value : values) {
                 multiply(value);
             }
@@ -1193,7 +1193,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiplyLongs(Collection<Long> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Long value : values) {
                 multiply(value);
             }
@@ -1233,7 +1233,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(double... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (double value : values) {
                 multiply(value);
             }
@@ -1248,7 +1248,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(Double[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Double value : values) {
                 multiply(value);
             }
@@ -1263,7 +1263,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiplyDoubles(Collection<Double> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Double value : values) {
                 multiply(value);
             }
@@ -1283,8 +1283,8 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(String val) {
-        if (StringUtil.hasText(val)) {
-            val = StringUtil.trim(val);
+        if (Strings.hasText(val)) {
+            val = Strings.trim(val);
             multiply(new BigDecimal(val));
         }
         return this;
@@ -1297,7 +1297,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(String... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (String value : values) {
                 multiply(value);
             }
@@ -1312,7 +1312,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiplyStrs(Collection<String> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (String value : values) {
                 multiply(value);
             }
@@ -1346,7 +1346,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(BigDecimal... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (BigDecimal value : values) {
                 multiply(value);
             }
@@ -1361,7 +1361,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator multiply(Collection<BigDecimal> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (BigDecimal value : values) {
                 multiply(value);
             }
@@ -1416,7 +1416,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, int... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (int value : values) {
                 divide(scale, roundingMode, value);
             }
@@ -1431,7 +1431,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(RoundingMode roundingMode, Integer[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Integer value : values) {
                 divide(value, roundingMode, value);
             }
@@ -1446,7 +1446,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int newScale, RoundingMode roundingMode, Collection<Integer> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (Integer value : values) {
                 divide(newScale, roundingMode, value);
             }
@@ -1493,7 +1493,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int newScale, RoundingMode mode, float... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (float value : values) {
                 divide(newScale, mode, value);
             }
@@ -1508,7 +1508,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int newScale, RoundingMode mode, Float[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Float value : values) {
                 divide(newScale, mode, value);
             }
@@ -1552,7 +1552,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, long... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (long value : values) {
                 divide(scale, roundingMode, value);
             }
@@ -1567,7 +1567,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, Long... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Long value : values) {
                 divide(scale, roundingMode, value);
             }
@@ -1611,7 +1611,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, double... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (double value : values) {
                 divide(scale, roundingMode, value);
             }
@@ -1626,7 +1626,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, Double[] values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (Double value : values) {
                 divide(scale, roundingMode, value);
             }
@@ -1646,8 +1646,8 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, String val) {
-        if (StringUtil.hasText(val)) {
-            val = StringUtil.trim(val);
+        if (Strings.hasText(val)) {
+            val = Strings.trim(val);
             return divide(scale, roundingMode, new BigDecimal(val));
         }
         return this;
@@ -1660,7 +1660,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, String... values) {
-        if (ArrayUtil.isNotEmpty(values)) {
+        if (Arrays.isNotEmpty(values)) {
             for (String value : values) {
                 divide(scale, roundingMode, value);
             }
@@ -1675,7 +1675,7 @@ public class BigDecimalOperator {
      * @return {@linkplain BigDecimalOperator}
      */
     public BigDecimalOperator divide(int scale, RoundingMode roundingMode, List<String> values) {
-        if (CollectionUtil.isNotEmpty(values)) {
+        if (Collections.isNotEmpty(values)) {
             for (String value : values) {
                 divide(scale, roundingMode, value);
             }

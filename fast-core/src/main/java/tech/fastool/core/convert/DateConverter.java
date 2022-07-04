@@ -1,6 +1,6 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
@@ -99,7 +99,7 @@ public class DateConverter extends AbstractConverter< Date> {
         } else if (targetClass == java.sql.Timestamp.class) {
             return new java.sql.Timestamp(mills);
         }
-        throw new UnsupportedOperationException(StringUtil.format("Unsupported date type {}", targetClass.getName()));
+        throw new UnsupportedOperationException(Strings.format("Unsupported date type {}", targetClass.getName()));
     }
 
     /**

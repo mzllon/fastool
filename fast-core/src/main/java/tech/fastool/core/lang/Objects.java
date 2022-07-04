@@ -6,7 +6,6 @@ import tech.fastool.core.io.FastByteArrayOutputStream;
 
 import java.io.*;
 import java.nio.Buffer;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -112,13 +111,13 @@ public class Objects {
             return true;
         }
         if (obj instanceof CharSequence) {
-            return StringUtil.isEmpty((CharSequence) obj);
-        } else if (ArrayUtil.isArray(obj)) {
-            return ArrayUtil.isEmpty(obj);
+            return Strings.isEmpty((CharSequence) obj);
+        } else if (Arrays.isArray(obj)) {
+            return Arrays.isEmpty(obj);
         } else if (obj instanceof Collection<?>) {
-            return CollectionUtil.isEmpty((Collection<?>) obj);
+            return Collections.isEmpty((Collection<?>) obj);
         } else if (obj instanceof Map<?, ?>) {
-            return MapUtil.isEmpty((Map<?, ?>) obj);
+            return Maps.isEmpty((Map<?, ?>) obj);
         } else if (obj instanceof Buffer) {
             return ((Buffer) obj).hasRemaining();
         }
@@ -156,7 +155,7 @@ public class Objects {
      * @return 是否任意为空
      */
     public static boolean isAnyEmpty(Object... objArray) {
-        if (ArrayUtil.isEmpty(objArray)) {
+        if (Arrays.isEmpty(objArray)) {
             return true;
         }
         for (Object obj : objArray) {
@@ -187,7 +186,7 @@ public class Objects {
      * @param a 第一个比较对象
      * @param b 第二个比较对象
      * @return 判断两个对象内容是否相等
-     * @see Arrays#equals(Object[], Object[])
+     * @see java.util.Arrays#equals(Object[], Object[])
      */
     public static boolean equals(final Object a, final Object b) {
         if (a == b) {
@@ -201,31 +200,31 @@ public class Objects {
         }
         if (a.getClass().isArray() && b.getClass().isArray()) {
             if (a instanceof Object[] && b instanceof Object[]) {
-                return Arrays.equals((Object[]) a, (Object[]) b);
+                return java.util.Arrays.equals((Object[]) a, (Object[]) b);
             }
             if (a instanceof boolean[] && b instanceof boolean[]) {
-                return Arrays.equals((boolean[]) a, (boolean[]) b);
+                return java.util.Arrays.equals((boolean[]) a, (boolean[]) b);
             }
             if (a instanceof byte[] && b instanceof byte[]) {
-                return Arrays.equals((byte[]) a, (byte[]) b);
+                return java.util.Arrays.equals((byte[]) a, (byte[]) b);
             }
             if (a instanceof char[] && b instanceof char[]) {
-                return Arrays.equals((char[]) a, (char[]) b);
+                return java.util.Arrays.equals((char[]) a, (char[]) b);
             }
             if (a instanceof double[] && b instanceof double[]) {
-                return Arrays.equals((double[]) a, (double[]) b);
+                return java.util.Arrays.equals((double[]) a, (double[]) b);
             }
             if (a instanceof float[] && b instanceof float[]) {
-                return Arrays.equals((float[]) a, (float[]) b);
+                return java.util.Arrays.equals((float[]) a, (float[]) b);
             }
             if (a instanceof int[] && b instanceof int[]) {
-                return Arrays.equals((int[]) a, (int[]) b);
+                return java.util.Arrays.equals((int[]) a, (int[]) b);
             }
             if (a instanceof long[] && b instanceof long[]) {
-                return Arrays.equals((long[]) a, (long[]) b);
+                return java.util.Arrays.equals((long[]) a, (long[]) b);
             }
             if (a instanceof short[] && b instanceof short[]) {
-                return Arrays.equals((short[]) a, (short[]) b);
+                return java.util.Arrays.equals((short[]) a, (short[]) b);
             }
         }
         return false;
@@ -248,7 +247,7 @@ public class Objects {
      * @return 哈希值
      */
     public static int hashCode(Object... values) {
-        return ArrayUtil.hashCode(values);
+        return Arrays.hashCode(values);
     }
 
     /**
@@ -509,7 +508,7 @@ public class Objects {
      */
     @SuppressWarnings("unchecked")
     public static <T> T deserialize(byte[] data) throws IoRuntimeException, ClassNotFoundRuntimeException {
-        if (ArrayUtil.isEmpty(data)) {
+        if (Arrays.isEmpty(data)) {
             return null;
         }
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data))) {
@@ -530,6 +529,6 @@ public class Objects {
      * @return 字符串
      */
     public static String toString(Object obj) {
-        return ArrayUtil.toString(obj);
+        return Arrays.toString(obj);
     }
 }

@@ -1,7 +1,7 @@
 package tech.fastool.json.api;
 
 import lombok.extern.slf4j.Slf4j;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.json.api.annotation.JsonProviderName;
 
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class JsonFactory {
                 log.warn("Loading Properties[fast-json-api.properties] failed", e);
             }
         }
-        if (StringUtil.isBlank(jsonProviderValue)) {
+        if (Strings.isBlank(jsonProviderValue)) {
             TreeMap<Integer, String> treeMap = new TreeMap<>();
             ALL.values().forEach(item -> {
                 JsonProviderName jsonProviderName = item.getClass().getAnnotation(JsonProviderName.class);
@@ -62,7 +62,7 @@ public class JsonFactory {
             });
             jsonProviderValue = treeMap.firstEntry().getValue();
         }
-        if (StringUtil.isNotBlank(jsonProviderValue)) {
+        if (Strings.isNotBlank(jsonProviderValue)) {
             defaultJsonHandler = ALL.get(jsonProviderValue);
         }
     }

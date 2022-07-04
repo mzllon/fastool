@@ -1,8 +1,8 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
-import tech.fastool.core.utils.BooleanUtil;
+import tech.fastool.core.lang.Strings;
+import tech.fastool.core.utils.Booleans;
 
 /**
  * 字符转换器
@@ -18,10 +18,10 @@ public class CharacterConverter extends AbstractConverter<Character> {
     @Override
     protected Character handleInternal(Object value) {
         if (value instanceof Boolean) {
-            return BooleanUtil.toCharacter((Boolean) value);
+            return Booleans.toCharacter((Boolean) value);
         }
         final String valueStr = execToStr(value);
-        if (StringUtil.hasText(valueStr)) {
+        if (Strings.hasText(valueStr)) {
             return valueStr.charAt(0);
         }
         return null;

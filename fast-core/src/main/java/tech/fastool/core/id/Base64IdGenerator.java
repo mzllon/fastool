@@ -1,6 +1,6 @@
 package tech.fastool.core.id;
 
-import tech.fastool.core.lang.Base64Util;
+import tech.fastool.core.lang.Base64s;
 import tech.fastool.core.lang.Singletons;
 
 import java.security.SecureRandom;
@@ -31,7 +31,7 @@ public class Base64IdGenerator implements IdGenerator<String> {
      * as defined here: http://www.ietf.org/rfc/rfc4122.txt
      */
     public String getBase64Uuid(Random random) {
-        return Base64Util.encode(getUuidBytes(random), true);
+        return Base64s.encode(getUuidBytes(random), true);
     }
 
     private byte[] getUuidBytes(Random random) {

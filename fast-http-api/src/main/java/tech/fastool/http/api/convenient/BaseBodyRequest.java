@@ -1,13 +1,14 @@
 package tech.fastool.http.api.convenient;
 
-import tech.fastool.core.convert.ConvertUtil;
+import tech.fastool.core.convert.Converts;
+import tech.fastool.core.lang.Arrays;
 import tech.fastool.core.lang.*;
 import tech.fastool.core.utils.ContentType;
 import tech.fastool.http.api.HttpFormBody;
 import tech.fastool.http.api.HttpMultipartBody;
 import tech.fastool.http.api.HttpRequestBody;
 import tech.fastool.http.api.exceptions.HttpClientException;
-import tech.fastool.json.api.JsonUtil;
+import tech.fastool.json.api.Jsons;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -62,7 +63,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@linkplain PostRequest}
      */
     public Req param(String name, Object value) {
-        if (StringUtil.hasLength(name) && value != null) {
+        if (Strings.hasLength(name) && value != null) {
             if (value instanceof Collection<?>) {
                 ((Collection<?>) value).forEach((Consumer<Object>) obj -> processParam(name, obj));
             } else {
@@ -79,7 +80,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@linkplain PostRequest}
      */
     public Req param(Map<String, ?> parameters) {
-        if (MapUtil.isNotEmpty(parameters)) {
+        if (Maps.isNotEmpty(parameters)) {
             parameters.forEach((BiConsumer<String, Object>) this::param);
         }
         return (Req) this;
@@ -93,7 +94,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@linkplain PostRequest}
      */
     public Req param(String name, File uploadFile) {
-        if (StringUtil.hasLength(name) && uploadFile != null) {
+        if (Strings.hasLength(name) && uploadFile != null) {
             this.isMultipart = true;
             this.parts.add(HttpMultipartBody.Part.create(name, uploadFile));
         }
@@ -109,9 +110,9 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@linkplain PostRequest}
      */
     public Req param(String name, File uploadFile, String filename) {
-        if (StringUtil.hasLength(name) && uploadFile != null) {
+        if (Strings.hasLength(name) && uploadFile != null) {
             this.isMultipart = true;
-            if (StringUtil.hasLength(filename)) {
+            if (Strings.hasLength(filename)) {
                 this.parts.add(HttpMultipartBody.Part.create(name, filename, uploadFile));
             } else {
                 this.parts.add(HttpMultipartBody.Part.create(name, uploadFile));
@@ -129,7 +130,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      * @return {@linkplain PostRequest}
      */
     public Req param(String name, InputStream inputStream, String streamName) {
-        if (StringUtil.hasLength(name) && inputStream != null && StringUtil.hasLength(streamName)) {
+        if (Strings.hasLength(name) && inputStream != null && Strings.hasLength(streamName)) {
             this.isMultipart = true;
             this.parts.add(HttpMultipartBody.Part.create(name, streamName, inputStream));
         }
@@ -137,7 +138,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
     }
 
     public Req param(String name, byte[] binaryData, String filename) {
-        if (StringUtil.hasLength(name) && ArrayUtil.isNotEmpty(binaryData) && StringUtil.hasLength(filename)) {
+        if (Strings.hasLength(name) && Arrays.isNotEmpty(binaryData) && Strings.hasLength(filename)) {
             this.isMultipart = true;
             this.parts.add(HttpMultipartBody.Part.create(name, filename, new ByteArrayInputStream(binaryData)));
         }
@@ -155,7 +156,7 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
      */
     public Req json(Object value) {
         Objects.requireNonNull(value, "value == null");
-        return this.json(JsonUtil.toJson(value));
+        return this.json(Jsons.toJson(value));
     }
 
     /**
@@ -233,16 +234,16 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
         }
         if (isMultipart) {
             HttpMultipartBody.Builder builder = HttpMultipartBody.builder();
-            if (MapUtil.isNotEmpty(params)) {
+            if (Maps.isNotEmpty(params)) {
                 params.forEach(builder::add);
             }
-            if (ListUtil.isNotEmpty(parts)) {
+            if (Lists.isNotEmpty(parts)) {
                 parts.forEach(builder::add);
             }
             return builder.build();
         } else {
             HttpFormBody.Builder builder = HttpFormBody.builder();
-            if (MapUtil.isNotEmpty(params)) {
+            if (Maps.isNotEmpty(params)) {
                 params.forEach(builder::add);
             }
             return builder.build();
@@ -259,12 +260,12 @@ public class BaseBodyRequest<Req extends BaseBodyRequest<Req>> extends AbstractB
                 throw new HttpClientException("Please use overload method[BaseBodyRequest#param(...)] instead.");
             } else if (value instanceof URL) {
                 URL url = (URL) value;
-                this.param(name, UrlUtil.openStream(url), FileUtil.getFilename(url.getFile()));
+                this.param(name, Urls.openStream(url), Files.getFilename(url.getFile()));
             } else if (value instanceof HttpMultipartBody.Part) {
                 this.parts.add((HttpMultipartBody.Part) value);
                 this.isMultipart = true;
             } else {
-                this.params.put(name, ConvertUtil.toStr(value));
+                this.params.put(name, Converts.toStr(value));
             }
         }
     }

@@ -1,17 +1,17 @@
 package tech.fastool.http.api.convenient;
 
-import tech.fastool.core.convert.ConvertUtil;
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.FileUtil;
-import tech.fastool.core.lang.MapUtil;
+import tech.fastool.core.convert.Converts;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Files;
+import tech.fastool.core.lang.Maps;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.http.api.*;
 import tech.fastool.http.api.constants.HeaderName;
 import tech.fastool.http.api.constants.HttpMethod;
 import tech.fastool.http.api.exceptions.HttpClientException;
 import tech.fastool.json.api.BaseTypeRef;
-import tech.fastool.json.api.JsonUtil;
+import tech.fastool.json.api.Jsons;
 
 import java.io.File;
 import java.io.InputStream;
@@ -67,7 +67,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req queryParam(String name, Number value) {
-        if (StringUtil.hasLength(name) && value != null) {
+        if (Strings.hasLength(name) && value != null) {
             this.queryParams.put(name, value.toString());
         }
         return (Req) this;
@@ -82,7 +82,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req queryParam(String name, String value) {
-        if (StringUtil.isAllNotBlank(name) && value != null) {
+        if (Strings.isAllNotBlank(name) && value != null) {
             this.queryParams.put(name, value);
         }
         return (Req) this;
@@ -96,10 +96,10 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req queryParam(Map<String, ?> parameters) {
-        if (MapUtil.isNotEmpty(parameters)) {
+        if (Maps.isNotEmpty(parameters)) {
             parameters.forEach((BiConsumer<String, Object>) (key, value) -> {
-                if (StringUtil.hasLength(key) && value != null) {
-                    queryParams.put(key, ConvertUtil.toStr(value));
+                if (Strings.hasLength(key) && value != null) {
+                    queryParams.put(key, Converts.toStr(value));
                 }
             });
         }
@@ -115,7 +115,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req header(String key, String value) {
-        if (StringUtil.hasLength(key) && value != null) {
+        if (Strings.hasLength(key) && value != null) {
             this.headers.append(key, value);
         }
         return (Req) this;
@@ -144,7 +144,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req header(HttpHeaders headers) {
-        if (MapUtil.isNotEmpty(headers)) {
+        if (Maps.isNotEmpty(headers)) {
             headers.forEach((key, values) -> this.headers.put(key, values));
         }
         return (Req) this;
@@ -158,7 +158,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req header(Map<String, String> headers) {
-        if (MapUtil.isNotEmpty(headers)) {
+        if (Maps.isNotEmpty(headers)) {
             headers.forEach((key, value) -> this.headers.append(key, value));
         }
         return (Req) this;
@@ -172,7 +172,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public Req removeHeader(String key) {
-        if (StringUtil.hasLength(key)) {
+        if (Strings.hasLength(key)) {
             this.headers.remove(key);
         }
         return (Req) this;
@@ -303,7 +303,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
             httpResponse.checkStatus();
             return httpResponse.body().string(null);
         } finally {
-            IoUtil.closeQuietly(httpResponse);
+            IOes.closeQuietly(httpResponse);
         }
     }
 
@@ -317,7 +317,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     @Override
     public <T> T bean(Class<T> targetClass) throws HttpClientException {
         String jsonStr = this.string();
-        return JsonUtil.fromJson(jsonStr, targetClass);
+        return Jsons.fromJson(jsonStr, targetClass);
     }
 
     /**
@@ -333,7 +333,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     @Override
     public <T> T bean(BaseTypeRef<T> typeRef) throws HttpClientException {
         String jsonStr = this.string();
-        return JsonUtil.fromJson(jsonStr, typeRef);
+        return Jsons.fromJson(jsonStr, typeRef);
     }
 
     /**
@@ -349,9 +349,9 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
             httpResponse = this.execute();
             httpResponse.checkStatus();
             InputStream in = httpResponse.body().byteStream();
-            return IoUtil.readBytes(in);
+            return IOes.readBytes(in);
         } finally {
-            IoUtil.closeQuietly(httpResponse);
+            IOes.closeQuietly(httpResponse);
         }
     }
 
@@ -372,7 +372,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
             File target;
             if (saveFile.isDirectory()) {
                 String filename = Utils.expandFilenameFromContentDisposition(httpResponse.headers());
-                if (StringUtil.isEmpty(filename)) {
+                if (Strings.isEmpty(filename)) {
                     filename = "Chillies-Download";
                 }
                 target = new File(saveFile, filename);
@@ -380,15 +380,15 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
                 target = saveFile;
             }
             if (replace) {
-                FileUtil.delete(target);
+                Files.delete(target);
             } else {
                 if (target.exists()) {
                     target = getNewFilename(target, 1);
                 }
             }
-            FileUtil.copyStream(responseBody.byteStream(), target);
+            Files.copyStream(responseBody.byteStream(), target);
         } finally {
-            IoUtil.closeQuietly(httpResponse);
+            IOes.closeQuietly(httpResponse);
         }
     }
 
@@ -403,9 +403,9 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
         try {
             httpResponse = this.execute();
             httpResponse.checkStatus();
-            IoUtil.copy(httpResponse.body().byteStream(), out);
+            IOes.copy(httpResponse.body().byteStream(), out);
         } finally {
-            IoUtil.closeQuietly(httpResponse);
+            IOes.closeQuietly(httpResponse);
         }
     }
 
@@ -437,12 +437,12 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     }
 
     private File getNewFilename(File file, int index) {
-        String mainName = FileUtil.mainName(file);
-        String fileExt = FileUtil.getFileExt(file);
+        String mainName = Files.mainName(file);
+        String fileExt = Files.getFileExt(file);
         if (fileExt == null) {
-            fileExt = StringUtil.EMPTY_STRING;
+            fileExt = Strings.EMPTY_STRING;
         } else {
-            fileExt += StringUtil.DOT;
+            fileExt += Strings.DOT;
         }
         File target = new File(file.getParentFile(), mainName + "(" + index + ")" + fileExt);
         if (target.exists()) {

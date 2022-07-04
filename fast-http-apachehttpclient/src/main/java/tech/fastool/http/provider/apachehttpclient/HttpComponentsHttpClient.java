@@ -21,11 +21,11 @@ import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.ListUtil;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Charsets;
+import tech.fastool.core.lang.Lists;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.http.api.HttpHeaders;
 import tech.fastool.http.api.HttpRequest;
 import tech.fastool.http.api.HttpResponse;
@@ -78,7 +78,7 @@ public class HttpComponentsHttpClient implements HttpClient {
             if (proxyInfo != null) {
                 builder.setProxy(new HttpHost(proxyInfo.hostOrIp(), proxyInfo.port(), proxyInfo.type().name()));
 
-                if (StringUtil.isAllNotBlank(proxyInfo.username(), proxyInfo.password())) {
+                if (Strings.isAllNotBlank(proxyInfo.username(), proxyInfo.password())) {
                     CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
                     credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(proxyInfo.username(), proxyInfo.password()));
                     builder.setDefaultCredentialsProvider(credentialsProvider);
@@ -132,7 +132,7 @@ public class HttpComponentsHttpClient implements HttpClient {
                 hasAcceptHeader = true;
             }
 
-            if (StringUtil.equalsIgnoreCase(headerName, HeaderName.CONTENT_LENGTH.toString())) {
+            if (Strings.equalsIgnoreCase(headerName, HeaderName.CONTENT_LENGTH.toString())) {
                 // The 'Content-Length' header is always set by the Apache client and it
                 // doesn't like us to set it as well.
                 continue;
@@ -199,10 +199,10 @@ public class HttpComponentsHttpClient implements HttpClient {
             for (Map.Entry<String, List<String>> entry : request.headers().entrySet()) {
                 if (entry.getKey().equalsIgnoreCase(HeaderName.CONTENT_TYPE.toString())) {
                     List<String> values = entry.getValue();
-                    if (ListUtil.isNotEmpty(values)) {
+                    if (Lists.isNotEmpty(values)) {
                         contentType = ContentType.parse(values.get(0));
                         if (contentType.getCharset() == null) {
-                            contentType = contentType.withCharset(CharsetUtil.UTF_8);
+                            contentType = contentType.withCharset(Charsets.UTF_8);
                         }
                         break;
                     }
@@ -265,7 +265,7 @@ public class HttpComponentsHttpClient implements HttpClient {
             @Override
             public String string(Charset charset) throws IoRuntimeException {
                 try {
-                    return IoUtil.read(charStream(charset));
+                    return IOes.read(charStream(charset));
                 } finally {
                     try {
                         close();
@@ -281,7 +281,7 @@ public class HttpComponentsHttpClient implements HttpClient {
                     EntityUtils.consume(entity);
                 } finally {
                     if (httpResponse instanceof Cloneable) {
-                        IoUtil.closeQuietly(((Closeable) httpResponse));
+                        IOes.closeQuietly(((Closeable) httpResponse));
                     }
                 }
             }
@@ -296,7 +296,7 @@ public class HttpComponentsHttpClient implements HttpClient {
                     }
                 }
                 if (resultEncoding == null) {
-                    resultEncoding = CharsetUtil.UTF_8;
+                    resultEncoding = Charsets.UTF_8;
                 }
                 return resultEncoding;
             }

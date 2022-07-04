@@ -1,7 +1,7 @@
 package tech.fastool.core.utils;
 
 import lombok.experimental.UtilityClass;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 /**
  * Console Utilities
@@ -50,7 +50,7 @@ public class Console {
      * @param args   占位符值
      */
     public static void println(String format, Object... args) {
-        System.out.println(StringUtil.format(format, args));
+        System.out.println(Strings.format(format, args));
     }
 
     /**
@@ -60,7 +60,7 @@ public class Console {
      * @param args   占位符值
      */
     public static void print(String format, Object... args) {
-        System.out.print(StringUtil.format(format, args));
+        System.out.print(Strings.format(format, args));
     }
 
     //endregion
@@ -109,7 +109,7 @@ public class Console {
      */
     public static void error(Throwable e, String format, Object... args) {
         //Formatter
-        System.err.println(StringUtil.format(format, args));
+        System.err.println(Strings.format(format, args));
 
         if (e != null) {
             e.printStackTrace(System.err);

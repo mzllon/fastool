@@ -1,7 +1,7 @@
 package tech.fastool.core.lang;
 
-import tech.fastool.core.lang.reflect.ClassUtil;
-import tech.fastool.core.lang.reflect.ReflectUtil;
+import tech.fastool.core.lang.reflect.Classes;
+import tech.fastool.core.lang.reflect.Reflects;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +38,7 @@ public class Singletons {
      */
     public static <T> T get(Class<T> clazz, Object... params) {
         final String key = buildKey(clazz.getName(), params);
-        return get(key, () -> ReflectUtil.newInstance(clazz, params));
+        return get(key, () -> Reflects.newInstance(clazz, params));
     }
 
     /**
@@ -50,7 +50,7 @@ public class Singletons {
      * @return 对象
      */
     public static <T> T get(String className, Object... params) {
-        Class<T> clazz = ClassUtil.loadClass(Objects.requireNotEmpty(className));
+        Class<T> clazz = Classes.loadClass(Objects.requireNotEmpty(className));
         return get(clazz, params);
     }
 
@@ -148,10 +148,10 @@ public class Singletons {
      * @return key
      */
     private static String buildKey(String className, Object... params) {
-        if (ArrayUtil.isEmpty(params)) {
+        if (Arrays.isEmpty(params)) {
             return className;
         }
-        return className + "(" + ArrayUtil.join(params) + ")";
+        return className + "(" + Arrays.join(params) + ")";
     }
 
 }

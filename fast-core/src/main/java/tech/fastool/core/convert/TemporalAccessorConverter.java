@@ -1,11 +1,11 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.date.DatePattern;
-import tech.fastool.core.date.DateUtil;
+import tech.fastool.core.date.Dates;
 import tech.fastool.core.date.Jdk8DateUtil;
 import tech.fastool.core.date.ZoneConstant;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -83,7 +83,7 @@ public class TemporalAccessorConverter extends AbstractConverter<TemporalAccesso
     }
 
     private TemporalAccessor parseFromStr(String str) {
-        if (StringUtil.isEmpty(str)) {
+        if (Strings.isEmpty(str)) {
             return null;
         }
         Instant instant;
@@ -93,7 +93,7 @@ public class TemporalAccessorConverter extends AbstractConverter<TemporalAccesso
             instant = dtf.parse(str, Instant::from);
             zoneId = dtf.getZone();
         } else {
-            DateUtil.parse(str);
+            Dates.parse(str);
         }
         //TODO 暂未实现
         return null;

@@ -1,6 +1,6 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
 
 /**
@@ -22,7 +22,7 @@ public class ShortConverter extends AbstractConverter<Short> {
     @Override
     protected Short handleInternal(Object input) {
         Integer output = IntegerConverter.getInstance().handleInternal(input);
-        return NumberUtil.convert(output, Short.class);
+        return Numbers.convert(output, Short.class);
     }
 
     /**

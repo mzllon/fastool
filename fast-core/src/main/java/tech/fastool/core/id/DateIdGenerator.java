@@ -3,7 +3,7 @@ package tech.fastool.core.id;
 import tech.fastool.core.date.DatePattern;
 import tech.fastool.core.date.Jdk8DateUtil;
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,7 +27,7 @@ public class DateIdGenerator implements IdGenerator<String> {
     @Override
     public String get() {
         String datetimePrefix = Jdk8DateUtil.format(DatePattern.PURE_DATETIME_MS_FORMATTER);
-        return datetimePrefix + StringUtil.DASH + getSeqId() + getRandomString(8);
+        return datetimePrefix + Strings.DASH + getSeqId() + getRandomString(8);
     }
 
     private static final int maxId = 999999;

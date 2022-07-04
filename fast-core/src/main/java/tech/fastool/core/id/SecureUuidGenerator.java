@@ -1,7 +1,7 @@
 package tech.fastool.core.id;
 
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.security.SecureRandom;
 import java.util.UUID;
@@ -33,7 +33,7 @@ public class SecureUuidGenerator extends UuidGenerator {
         final byte[] randomBytes = new byte[16];
         Singletons.get(SecureRandom.class).nextBytes(randomBytes);
         String id = UUID.nameUUIDFromBytes(randomBytes).toString();
-        return ignoreDash ? StringUtil.replace(id, StringUtil.DASH, StringUtil.EMPTY_STRING) : id;
+        return ignoreDash ? Strings.replace(id, Strings.DASH, Strings.EMPTY_STRING) : id;
     }
 
     /**

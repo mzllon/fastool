@@ -3,7 +3,7 @@ package tech.fastool.json.provider.gson.deser;
 import com.google.gson.*;
 import tech.fastool.core.date.DatePattern;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.json.provider.gson.ser.LocalTimeSerializer;
 
 import java.lang.reflect.Type;
@@ -35,7 +35,7 @@ public class LocalTimeDeserializer implements JsonDeserializer<LocalTime> {
             JsonPrimitive primitive = element.getAsJsonPrimitive();
             if (primitive.isString()) {
                 String value = primitive.getAsString();
-                if (StringUtil.isEmpty(value)) {
+                if (Strings.isEmpty(value)) {
                     return null;
                 }
                 return LocalTime.parse(value, formatter);

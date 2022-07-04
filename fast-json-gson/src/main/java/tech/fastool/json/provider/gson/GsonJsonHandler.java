@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.ArrayUtil;
+import tech.fastool.core.lang.Arrays;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
@@ -47,12 +47,12 @@ public class GsonJsonHandler extends BaseJsonHandler {
      */
     @Override
     public String doSerialize(@NotNull Object src, @Nullable String[] ignorePropertyNames) throws JsonRuntimeException {
-        if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
+        if (Arrays.isNotEmpty(ignorePropertyNames)) {
             Gson customGson = this.gson.newBuilder()
                     .addSerializationExclusionStrategy(new ExclusionStrategy() {
                         @Override
                         public boolean shouldSkipField(FieldAttributes fa) {
-                            return ArrayUtil.contains(ignorePropertyNames, fa.getName());
+                            return Arrays.contains(ignorePropertyNames, fa.getName());
                         }
 
                         @Override

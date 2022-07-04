@@ -2,7 +2,7 @@ package tech.fastool.json.api;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.reflect.ClassUtil;
+import tech.fastool.core.lang.reflect.Classes;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -20,7 +20,7 @@ public class JsonAdapter {
     private JsonHandler handler;
 
     public String toJson(Object src) {
-        return toJson(src, ClassUtil.getClass(src));
+        return toJson(src, Classes.getClass(src));
     }
 
     public String toJson(@Nullable Object src, @Nullable Type typeOfSrc) {

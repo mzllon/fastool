@@ -1,9 +1,9 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.exceptions.ConverterRuntimeException;
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 /**
  * {@linkplain Integer} 转换器
@@ -30,15 +30,15 @@ public class IntegerConverter extends AbstractConverter<Integer> {
         } else if (input instanceof Boolean) {
             return ((Boolean) input) ? 1 : 0;
         } else if (input instanceof Number) {
-            return NumberUtil.convert((Number) input, Integer.class);
+            return Numbers.convert((Number) input, Integer.class);
         } else if (input instanceof String) {
-            Number number = NumberUtil.createNumber(input.toString());
+            Number number = Numbers.createNumber(input.toString());
             if (number == null) {
                 return null;
             }
-            return NumberUtil.convert(number, Integer.class);
+            return Numbers.convert(number, Integer.class);
         }
-        throw new ConverterRuntimeException(StringUtil.format("Can't cast {} to java.lang.Integer", input));
+        throw new ConverterRuntimeException(Strings.format("Can't cast {} to java.lang.Integer", input));
     }
 
     /**

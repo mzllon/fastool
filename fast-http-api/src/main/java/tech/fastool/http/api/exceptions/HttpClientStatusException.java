@@ -1,7 +1,7 @@
 package tech.fastool.http.api.exceptions;
 
-import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Charsets;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.http.api.HttpHeaders;
 import tech.fastool.http.api.HttpRequest;
 import tech.fastool.http.api.HttpStatus;
@@ -37,7 +37,7 @@ public class HttpClientStatusException extends HttpClientResponseException {
 
     public HttpClientStatusException(HttpStatus statusCode, String reason, HttpHeaders responseHeaders,
                                      byte[] responseBody, Charset responseCharset, HttpRequest request) {
-        super(statusCode.value() + " " + (StringUtil.hasLength(reason) ? reason : new String(responseBody, CharsetUtil.getCharset(responseCharset))),
+        super(statusCode.value() + " " + (Strings.hasLength(reason) ? reason : new String(responseBody, Charsets.getCharset(responseCharset))),
                 statusCode.value(), reason, responseHeaders, responseBody, responseCharset, request);
         this.statusCode = statusCode;
     }

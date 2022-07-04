@@ -3,7 +3,7 @@ package tech.fastool.json.api;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -79,7 +79,7 @@ public abstract class BaseJsonHandler implements JsonHandler {
      */
     @Override
     public <T> T deserialize(@Nullable String json, @Nullable Type typeOfT) throws JsonRuntimeException {
-        if (StringUtil.isBlank(json)) {
+        if (Strings.isBlank(json)) {
             return null;
         }
         Objects.requireNonNull(typeOfT, "The parameter [typeOfT] is null");

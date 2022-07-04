@@ -1,6 +1,6 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
 
 import java.math.BigDecimal;
@@ -19,11 +19,11 @@ public class BigDecimalConverter extends AbstractConverter<BigDecimal> {
     @Override
     protected BigDecimal handleInternal(Object value) {
         if (value instanceof Number) {
-            return NumberUtil.createBigDecimal((Number) value);
+            return Numbers.createBigDecimal((Number) value);
         } else if (value instanceof Boolean) {
             return BigDecimal.valueOf(((Boolean) value) ? 1 : 0);
         }
-        return NumberUtil.createBigDecimal(execToStr(value));
+        return Numbers.createBigDecimal(execToStr(value));
     }
 
     /**

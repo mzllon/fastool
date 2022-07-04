@@ -1,8 +1,8 @@
 package tech.fastool.core.utils;
 
-import tech.fastool.core.lang.ArrayUtil;
-import tech.fastool.core.lang.CharUtil;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Arrays;
+import tech.fastool.core.lang.Chars;
+import tech.fastool.core.lang.Strings;
 
 /**
  * Message Formatter
@@ -43,7 +43,7 @@ public class MessageFormatter {
      * @return 格式化的消息
      */
     public String format(Object... args) {
-        if (messagePattern == null || ArrayUtil.isEmpty(args)) {
+        if (messagePattern == null || Arrays.isEmpty(args)) {
             return messagePattern;
         }
 
@@ -51,7 +51,7 @@ public class MessageFormatter {
         StringBuilder builder = new StringBuilder(messagePattern.length() + argLength * 50);
 
         for (int i = 0; i < argLength; i++) {
-            findIndex = messagePattern.indexOf(StringUtil.EMPTY_JSON, pos);
+            findIndex = messagePattern.indexOf(Strings.EMPTY_JSON, pos);
             if (findIndex == -1) {
                 // no more variables
                 if (pos == 0) {
@@ -69,7 +69,7 @@ public class MessageFormatter {
                     // {被转义了
                     i--;
                     builder.append(messagePattern, pos, findIndex - 1);
-                    builder.append(StringUtil.DELIMITER_START);
+                    builder.append(Strings.DELIMITER_START);
                     pos = findIndex + 1;
                 } else {
                     // aa x:\\{}
@@ -94,8 +94,8 @@ public class MessageFormatter {
             return;
         }
 
-        if (ArrayUtil.isArray(arg)) {
-            builder.append(ArrayUtil.toString(arg));
+        if (Arrays.isArray(arg)) {
+            builder.append(Arrays.toString(arg));
         } else {
             builder.append(arg);
         }
@@ -113,7 +113,7 @@ public class MessageFormatter {
             return false;
         }
         char potentialEscape = messagePattern.charAt(delimiterStartIndex - 1);
-        return potentialEscape == CharUtil.BACKSLASH;
+        return potentialEscape == Chars.BACKSLASH;
     }
 
     /**
@@ -124,7 +124,7 @@ public class MessageFormatter {
      * @return 如果是返回{@code true}，否则返回{@code false}
      */
     private boolean isDoubleEscaped(String messagePattern, int delimiterStartIndex) {
-        return delimiterStartIndex >= 2 && messagePattern.charAt(delimiterStartIndex - 2) == CharUtil.BACKSLASH;
+        return delimiterStartIndex >= 2 && messagePattern.charAt(delimiterStartIndex - 2) == Chars.BACKSLASH;
     }
 
 }

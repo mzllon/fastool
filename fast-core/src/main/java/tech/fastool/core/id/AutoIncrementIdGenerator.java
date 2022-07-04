@@ -1,6 +1,6 @@
 package tech.fastool.core.id;
 
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -46,7 +46,7 @@ public class AutoIncrementIdGenerator implements IdGenerator<Long> {
         if (formatSize == id.length()) {
             return id;
         } else if (formatSize < id.length()) {
-            return StringUtil.EMPTY_STRING;
+            return Strings.EMPTY_STRING;
         }
         return String.format("%0" + formatSize + "d", next);
     }

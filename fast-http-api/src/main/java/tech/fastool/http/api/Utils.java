@@ -1,10 +1,10 @@
 package tech.fastool.http.api;
 
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.CollectionUtil;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Charsets;
+import tech.fastool.core.lang.Collections;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.http.api.constants.HeaderName;
 
 import java.io.InputStream;
@@ -36,11 +36,11 @@ public class Utils {
         }
         List<String> values = null;
         for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-            if (StringUtil.equals(entry.getKey(), headerName, ignoreCase)) {
+            if (Strings.equals(entry.getKey(), headerName, ignoreCase)) {
                 values = entry.getValue();
             }
         }
-        if (CollectionUtil.isEmpty(values)) {
+        if (Collections.isEmpty(values)) {
             return null;
         }
         return values.get(0);
@@ -58,8 +58,8 @@ public class Utils {
         }
 
         // 判断是不是ISO-8859-1
-        if (contentDisposition.equals(new String(contentDisposition.getBytes(CharsetUtil.ISO_8859_1), CharsetUtil.ISO_8859_1))) {
-            contentDisposition = new String(contentDisposition.getBytes(CharsetUtil.ISO_8859_1));
+        if (contentDisposition.equals(new String(contentDisposition.getBytes(Charsets.ISO_8859_1), Charsets.ISO_8859_1))) {
+            contentDisposition = new String(contentDisposition.getBytes(Charsets.ISO_8859_1));
         }
 
         Pattern pattern = Pattern.compile("filename=\"?(.+)\"?", Pattern.DOTALL);
@@ -74,11 +74,11 @@ public class Utils {
         if (requestBody instanceof HttpMultipartBody) {
             HttpMultipartBody multipartBody = (HttpMultipartBody) requestBody;
             List<HttpMultipartBody.Part> parts = multipartBody.getParts();
-            if (CollectionUtil.isNotEmpty(parts)) {
+            if (Collections.isNotEmpty(parts)) {
                 parts.forEach(part -> {
                     InputStream in = part.getIn();
                     if (in != null) {
-                        IoUtil.closeQuietly(in);
+                        IOes.closeQuietly(in);
                     }
                 });
             }

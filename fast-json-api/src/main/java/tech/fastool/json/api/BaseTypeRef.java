@@ -1,6 +1,6 @@
 package tech.fastool.json.api;
 
-import tech.fastool.core.lang.reflect.TypeUtil;
+import tech.fastool.core.lang.reflect.Types;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -31,7 +31,7 @@ public abstract class BaseTypeRef<T> implements Comparator<T> {
             throw new IllegalArgumentException("Internal error: TypeReference constructed without actual type information");
         }
         type = ((ParameterizedType) superClass).getActualTypeArguments()[0];
-        this.rawType = (Class<? super T>) TypeUtil.getRawType(type);
+        this.rawType = (Class<? super T>) Types.getRawType(type);
     }
 
     public Type getType() {

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -76,7 +75,7 @@ public class ClassScanner {
      * @return 类集合
      */
     public static Set<Class<?>> scanPackage() {
-        return scanPackage(StringUtil.EMPTY_STRING, null);
+        return scanPackage(Strings.EMPTY_STRING, null);
     }
 
     /**
@@ -134,7 +133,7 @@ public class ClassScanner {
      * @param classFilter 过滤器，无需传入null
      */
     public ClassScanner(String packageName, Filter<Class<?>> classFilter) {
-        this(packageName, classFilter, CharsetUtil.UTF_8);
+        this(packageName, classFilter, Charsets.UTF_8);
     }
 
     /**
@@ -145,10 +144,10 @@ public class ClassScanner {
      * @param encoding    编码
      */
     public ClassScanner(String packageName, Filter<Class<?>> classFilter, Charset encoding) {
-        this.packageName = packageName == null ? StringUtil.EMPTY_STRING : packageName;
-        this.packageNameWithDot = StringUtil.addSuffixIfNot(this.packageName, StringUtil.DOT);
-        this.packageDirName = this.packageName.replace(CharUtil.DOT, File.separatorChar);
-        this.packagePath = this.packageName.replace(CharUtil.DOT, CharUtil.SLASH);
+        this.packageName = packageName == null ? Strings.EMPTY_STRING : packageName;
+        this.packageNameWithDot = Strings.addSuffixIfNot(this.packageName, Strings.DOT);
+        this.packageDirName = this.packageName.replace(Chars.DOT, File.separatorChar);
+        this.packagePath = this.packageName.replace(Chars.DOT, Chars.SLASH);
         this.classFilter = classFilter;
         this.encoding = encoding;
     }
@@ -179,32 +178,32 @@ public class ClassScanner {
     public Set<Class<?>> scan() {
         Enumeration<URL> enumerationUrls;
         try {
-            enumerationUrls = ClassLoaderUtil.getContextClassLoader().getResources(packagePath);
+            enumerationUrls = ClassLoaders.getContextClassLoader().getResources(packagePath);
         } catch (IOException e) {
             throw new IoRuntimeException(e);
         }
         while (enumerationUrls.hasMoreElements()) {
             URL url = enumerationUrls.nextElement();
             if (Objects.equals("file", url.getProtocol())) {
-                scanFile(new File(UrlUtil.decode(url.getFile(), encoding)), null);
+                scanFile(new File(Urls.decode(url.getFile(), encoding)), null);
             } else if (Objects.equals("jar", url.getProtocol())) {
-                scanJar(UrlUtil.getJarFile(url));
+                scanJar(Urls.getJarFile(url));
             }
         }
-        if (CollectionUtil.isEmpty(classes)) {
+        if (Collections.isEmpty(classes)) {
             scanJavaClassPaths();
         }
-        return Collections.unmodifiableSet(classes);
+        return java.util.Collections.unmodifiableSet(classes);
     }
 
     /**
      * 扫描Java指定的ClassPath路径
      */
     private void scanJavaClassPaths() {
-        String[] javaClassPaths = ClassUtil.getJavaClassPaths();
+        String[] javaClassPaths = Classes.getJavaClassPaths();
         for (String javaClassPath : javaClassPaths) {
             // bug修复，由于路径中空格和中文导致的Jar找不到
-            javaClassPath = UrlUtil.decode(javaClassPath, CharsetUtil.systemCharset());
+            javaClassPath = Urls.decode(javaClassPath, Charsets.systemCharset());
             scanFile(new File(javaClassPath), null);
         }
     }
@@ -216,10 +215,10 @@ public class ClassScanner {
      */
     private void scanJar(JarFile jarFile) {
         jarFile.stream().forEach(jarEntry -> {
-            String name = StringUtil.deletePrefix(jarEntry.getName(), StringUtil.SLASH);
+            String name = Strings.deletePrefix(jarEntry.getName(), Strings.SLASH);
             if (name.startsWith(packageName)) {
                 if (name.endsWith(".class") && !jarEntry.isDirectory()) {
-                    String className = name.substring(0, name.length() - 6).replace(CharUtil.SLASH, CharUtil.DOT);
+                    String className = name.substring(0, name.length() - 6).replace(Chars.SLASH, Chars.DOT);
                     addIfAccept(loadClass(className));
                 }
             }
@@ -237,7 +236,7 @@ public class ClassScanner {
             String absolutePath = file.getAbsolutePath();
             if (absolutePath.endsWith(".class")) {
                 String className = absolutePath.substring(rootDir.length(), absolutePath.length() - 6)
-                        .replace(File.separatorChar, CharUtil.DOT);
+                        .replace(File.separatorChar, Chars.DOT);
                 addIfAccept(className);
             } else if (absolutePath.endsWith(".jar")) {
                 try {
@@ -248,7 +247,7 @@ public class ClassScanner {
             }
         } else if (file.isDirectory()) {
             File[] files = file.listFiles();
-            if (ArrayUtil.isNotEmpty(files)) {
+            if (Arrays.isNotEmpty(files)) {
                 for (File subFile : files) {
                     scanFile(subFile, (null == rootDir) ? subPathBeforePackage(file) : rootDir);
                 }
@@ -262,7 +261,7 @@ public class ClassScanner {
      * @param className 类名
      */
     private void addIfAccept(String className) {
-        if (StringUtil.isEmpty(className)) {
+        if (Strings.isEmpty(className)) {
             return;
         }
         final int classLength = className.length();
@@ -301,7 +300,7 @@ public class ClassScanner {
      */
     private Class<?> loadClass(String className) {
         if (classLoader == null) {
-            classLoader = ClassLoaderUtil.getDefaultClassLoader();
+            classLoader = ClassLoaders.getDefaultClassLoader();
         }
         Class<?> clazz = null;
         try {
@@ -324,10 +323,10 @@ public class ClassScanner {
      */
     private String subPathBeforePackage(File file) {
         String absolutePath = file.getAbsolutePath();
-        if (StringUtil.hasLength(packageDirName)) {
-            absolutePath = StringUtil.substrBefore(absolutePath, packageDirName, true);
+        if (Strings.hasLength(packageDirName)) {
+            absolutePath = Strings.substrBefore(absolutePath, packageDirName, true);
         }
-        return StringUtil.addSuffixIfNot(absolutePath, File.separator);
+        return Strings.addSuffixIfNot(absolutePath, File.separator);
     }
 
 }

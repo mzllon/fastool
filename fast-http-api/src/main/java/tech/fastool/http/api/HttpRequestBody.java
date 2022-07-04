@@ -2,9 +2,9 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.FileUtil;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Charsets;
+import tech.fastool.core.lang.Files;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.core.utils.ContentType;
 
@@ -52,7 +52,7 @@ public class HttpRequestBody {
      * @return 编码，可能为{@code null}
      */
     public Charset getCharset() {
-        return contentType != null ? contentType.getCharset() : CharsetUtil.UTF_8;
+        return contentType != null ? contentType.getCharset() : Charsets.UTF_8;
     }
 
     public static HttpRequestBody create(@Nullable ContentType contentType, @NotNull String content) {
@@ -60,7 +60,7 @@ public class HttpRequestBody {
         if (contentType != null) {
             encoding = contentType.getCharset();
         }
-        byte[] data = content.getBytes(CharsetUtil.getCharset(encoding, CharsetUtil.UTF_8));
+        byte[] data = content.getBytes(Charsets.getCharset(encoding, Charsets.UTF_8));
         return new HttpRequestBody(contentType, data);
     }
 
@@ -70,11 +70,11 @@ public class HttpRequestBody {
 
     public static HttpRequestBody create(@Nullable ContentType contentType, @NotNull File file) {
         Objects.requireNonNull(file, "file == null");
-        return new HttpRequestBody(contentType, FileUtil.readBytes(file));
+        return new HttpRequestBody(contentType, Files.readBytes(file));
     }
 
     public static HttpRequestBody create(@Nullable ContentType contentType, InputStream in) {
-        return new HttpRequestBody(contentType, IoUtil.readBytes(Objects.requireNonNull(in, "in == null")));
+        return new HttpRequestBody(contentType, IOes.readBytes(Objects.requireNonNull(in, "in == null")));
     }
 
 }

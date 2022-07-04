@@ -2,10 +2,10 @@ package tech.fastool.core.digest;
 
 import tech.fastool.core.exceptions.IoRuntimeException;
 import tech.fastool.core.exceptions.NoSuchAlgorithmRuntimeException;
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.CharsetUtil;
-import tech.fastool.core.lang.FileUtil;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Charsets;
+import tech.fastool.core.lang.Files;
+import tech.fastool.core.lang.Strings;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,44 +58,44 @@ public class MessageDigestCreator {
     }
 
     public byte[] digest(String data) {
-        return digest(data, CharsetUtil.UTF_8);
+        return digest(data, Charsets.UTF_8);
     }
 
     public byte[] digest(String data, Charset encoding) {
-        return digest(StringUtil.bytes(data, encoding));
+        return digest(Strings.bytes(data, encoding));
     }
 
     public byte[] digest(File input) {
         InputStream in = null;
         try {
-            in = FileUtil.getBufferedInputStream(input);
+            in = Files.getBufferedInputStream(input);
             return digest(in);
         } finally {
-            IoUtil.closeQuietly(in);
+            IOes.closeQuietly(in);
         }
     }
 
     /**
-     * 生成摘要，使用默认缓存大小，见 {@link IoUtil#DEFAULT_BUFFER_SIZE}
+     * 生成摘要，使用默认缓存大小，见 {@link IOes#DEFAULT_BUFFER_SIZE}
      *
      * @param data {@link InputStream} 数据流
      * @return 摘要bytes
      */
     public byte[] digest(InputStream data) {
-        return digest(data, IoUtil.DEFAULT_BUFFER_SIZE);
+        return digest(data, IOes.DEFAULT_BUFFER_SIZE);
     }
 
     /**
      * 生成摘要
      *
      * @param data         {@link InputStream} 数据流
-     * @param bufferLength 缓存长度，不足1使用 {@link IoUtil#DEFAULT_BUFFER_SIZE} 做为默认值
+     * @param bufferLength 缓存长度，不足1使用 {@link IOes#DEFAULT_BUFFER_SIZE} 做为默认值
      * @return 摘要bytes
      * @throws IoRuntimeException IO异常
      */
     public byte[] digest(InputStream data, int bufferLength) throws IoRuntimeException {
         if (bufferLength < 1) {
-            bufferLength = IoUtil.DEFAULT_BUFFER_SIZE;
+            bufferLength = IOes.DEFAULT_BUFFER_SIZE;
         }
         byte[] buffer = new byte[bufferLength];
         int read;

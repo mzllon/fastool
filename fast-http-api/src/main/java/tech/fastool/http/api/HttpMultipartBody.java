@@ -2,9 +2,9 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.FileUtil;
+import tech.fastool.core.lang.Files;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 import tech.fastool.core.utils.ContentType;
 
 import java.io.File;
@@ -117,7 +117,7 @@ public class HttpMultipartBody extends HttpRequestBody {
 
         public static Part create(String name, String filename, @NotNull File file) {
             Objects.requireNonNull(file, "file == null");
-            Part part = new Part(name, filename, ContentType.parseByFileExt(FileUtil.getFileExt(file)));
+            Part part = new Part(name, filename, ContentType.parseByFileExt(Files.getFileExt(file)));
             part.file = file;
             return part;
         }
@@ -173,21 +173,21 @@ public class HttpMultipartBody extends HttpRequestBody {
         }
 
         public Builder add(@Nullable String name, @Nullable String value, @Nullable ContentType contentType) {
-            if (StringUtil.hasLength(name)) {
+            if (Strings.hasLength(name)) {
                 parts.add(Part.create(name, value, contentType));
             }
             return this;
         }
 
         public Builder add(@Nullable String name, @Nullable File file) {
-            if (StringUtil.hasLength(name) && file != null) {
+            if (Strings.hasLength(name) && file != null) {
                 parts.add(Part.create(name, file));
             }
             return this;
         }
 
         public Builder add(@Nullable String name, @Nullable String filename, @Nullable HttpRequestBody body) {
-            if (StringUtil.isAllNotBlank(name, filename) && body != null) {
+            if (Strings.isAllNotBlank(name, filename) && body != null) {
                 parts.add(Part.create(name, filename, body));
             }
             return this;

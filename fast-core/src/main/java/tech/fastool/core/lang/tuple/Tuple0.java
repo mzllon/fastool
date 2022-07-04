@@ -1,6 +1,6 @@
 package tech.fastool.core.lang.tuple;
 
-import tech.fastool.core.lang.ArrayUtil;
+import tech.fastool.core.lang.Arrays;
 
 /**
  * 空元组
@@ -21,7 +21,7 @@ public class Tuple0 extends BaseTuple {
      */
     @Override
     public Object[] elements() {
-        return ArrayUtil.EMPTY_OBJECT_ARRAY;
+        return Arrays.EMPTY_OBJECT_ARRAY;
     }
 
     /**

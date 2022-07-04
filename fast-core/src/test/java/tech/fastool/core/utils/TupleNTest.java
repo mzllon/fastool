@@ -17,14 +17,14 @@ public class TupleNTest {
     @Test
     public void getElements() {
         TupleN tuple = new TupleN(null, 1, "A");
-        assertArrayEquals(new Object[]{null, 1, "A"}, tuple.getElements());
+        assertArrayEquals(new Object[]{null, 1, "A"}, tuple.elements());
     }
 
     @Test
     public void get() {
         TupleN tupleN = new TupleN(null, 1, "A", new Object());
-        assertNull(tupleN.get(0));
-        assertEquals("A", tupleN.get(2));
+        assertNull(tupleN.element(0));
+        assertEquals("A", tupleN.element(2));
     }
 
     @Test

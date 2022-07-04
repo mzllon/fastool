@@ -3,10 +3,10 @@ package tech.fastool.http.api;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.io.IoUtil;
-import tech.fastool.core.lang.MapUtil;
-import tech.fastool.core.lang.StringUtil;
-import tech.fastool.core.lang.UrlUtil;
+import tech.fastool.core.io.IOes;
+import tech.fastool.core.lang.Maps;
+import tech.fastool.core.lang.Strings;
+import tech.fastool.core.lang.Urls;
 import tech.fastool.core.utils.MultiValueMap;
 import tech.fastool.http.api.constants.HeaderName;
 
@@ -123,19 +123,19 @@ public interface HttpClient {
                 try {
                     out.write(request.body().getData());
                 } finally {
-                    IoUtil.closeQuietly(out);
+                    IOes.closeQuietly(out);
                 }
             }
             return connection;
         }
 
         private String encodeUrl(String url, MultiValueMap<String, String> queryParamMap) {
-            if (MapUtil.isNotEmpty(queryParamMap)) {
+            if (Maps.isNotEmpty(queryParamMap)) {
                 StringBuilder buffer = new StringBuilder(url);
                 buffer.append("?");
                 queryParamMap.forEach((name, values) ->
                         values.forEach(value ->
-                                buffer.append(name).append(StringUtil.EQUALS).append(UrlUtil.encode(value)).append(StringUtil.AMP)
+                                buffer.append(name).append(Strings.EQUALS).append(Urls.encode(value)).append(Strings.AMP)
                         )
                 );
                 buffer.deleteCharAt(buffer.length() - 1);
@@ -163,7 +163,7 @@ public interface HttpClient {
             String reason = connection.getResponseMessage();
 
             if (status < 0) {
-                throw new IOException(StringUtil.format("Invalid status({}) executing {} {}", status,
+                throw new IOException(Strings.format("Invalid status({}) executing {} {}", status,
                         connection.getRequestMethod(), connection.getURL()));
             }
 

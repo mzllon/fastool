@@ -2,9 +2,9 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.MapUtil;
+import tech.fastool.core.lang.Maps;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.UrlUtil;
+import tech.fastool.core.lang.Urls;
 import tech.fastool.core.utils.LinkedMultiValueMap;
 import tech.fastool.core.utils.MultiValueMap;
 import tech.fastool.http.api.constants.HttpMethod;
@@ -57,7 +57,7 @@ public final class HttpRequest {
         int index = builder.url.indexOf('?');
         if (index > 0) {
             String paramStr = builder.url.substring(index + 1);
-            this.queryParams.addAll(UrlUtil.parseByUrlQueryString(paramStr));
+            this.queryParams.addAll(Urls.parseByUrlQueryString(paramStr));
             this.url = builder.url.substring(0, index);
         } else {
             this.url = builder.url;
@@ -177,7 +177,7 @@ public final class HttpRequest {
         }
 
         public Builder headers(HttpHeaders headers) {
-            if (MapUtil.isNotEmpty(headers)) {
+            if (Maps.isNotEmpty(headers)) {
                 headers.forEach((BiConsumer<String, Object>) (name, values) -> {
                     if (Objects.isAnyNull(name, values)) {
                         return;
@@ -199,7 +199,7 @@ public final class HttpRequest {
         }
 
         public Builder queryParams(Map<String, ?> queryParamMap) {
-            if (MapUtil.isNotEmpty(queryParamMap)) {
+            if (Maps.isNotEmpty(queryParamMap)) {
                 queryParamMap.forEach((BiConsumer<String, Object>) (name, values) -> {
                     if (Objects.isAnyNull(name, values)) {
                         return;

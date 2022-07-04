@@ -1,7 +1,7 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.BeanUtil;
-import tech.fastool.core.lang.reflect.ReflectUtil;
+import tech.fastool.core.lang.Beans;
+import tech.fastool.core.lang.reflect.Reflects;
 
 /**
  * Bean Converter
@@ -22,8 +22,8 @@ public class BeanConverter<R> extends AbstractConverter< R> {
 
     @Override
     protected R handleInternal(Object value) {
-        R result = ReflectUtil.newInstance(beanClass);
-        BeanUtil.copyProperties(value, result);
+        R result = Reflects.newInstance(beanClass);
+        Beans.copyProperties(value, result);
         return result;
     }
 

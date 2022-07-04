@@ -1,11 +1,11 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.exceptions.ConverterRuntimeException;
-import tech.fastool.core.lang.BeanUtil;
+import tech.fastool.core.lang.Beans;
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
-import tech.fastool.core.lang.reflect.ReflectUtil;
-import tech.fastool.core.lang.reflect.TypeUtil;
+import tech.fastool.core.lang.Strings;
+import tech.fastool.core.lang.reflect.Reflects;
+import tech.fastool.core.lang.reflect.Types;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -77,7 +77,7 @@ public class ConverterRegistry {
      * @param converterClass 对应的转换器
      */
     public <T> ConverterRegistry register(Class<T> clazz, Class<? extends Converter<T>> converterClass) {
-        return register(clazz, ReflectUtil.newInstance(converterClass));
+        return register(clazz, Reflects.newInstance(converterClass));
     }
 
     /**
@@ -162,13 +162,13 @@ public class ConverterRegistry {
      */
     @SuppressWarnings("unchecked")
     public <T> T convert(Object value, Class<T> targetClass, T defaultValue, boolean customFirst) throws ConverterRuntimeException {
-        if (TypeUtil.isUnknown(targetClass) && null == defaultValue) {
+        if (Types.isUnknown(targetClass) && null == defaultValue) {
             return (T) value;
         }
         if (value == null) {
             return defaultValue;
         }
-        if (TypeUtil.isUnknown(targetClass)) {
+        if (Types.isUnknown(targetClass)) {
             targetClass = (Class<T>) defaultValue.getClass();
         }
 
@@ -178,12 +178,12 @@ public class ConverterRegistry {
         }
 
         // 尝试转Bean
-        if (BeanUtil.isBeanType(targetClass)) {
+        if (Beans.isBeanType(targetClass)) {
             return new BeanConverter<>(targetClass).handle(value, defaultValue);
         }
 
         //
-        throw new ConverterRuntimeException(StringUtil.format("Can not Converter from [{}] to [{}]", value.getClass(), targetClass));
+        throw new ConverterRuntimeException(Strings.format("Can not Converter from [{}] to [{}]", value.getClass(), targetClass));
     }
 
     /**

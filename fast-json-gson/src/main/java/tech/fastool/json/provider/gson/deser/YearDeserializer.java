@@ -2,7 +2,7 @@ package tech.fastool.json.provider.gson.deser;
 
 import com.google.gson.*;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.lang.reflect.Type;
 import java.time.Year;
@@ -32,7 +32,7 @@ public class YearDeserializer implements JsonDeserializer<Year> {
         JsonPrimitive primitive = element.getAsJsonPrimitive();
         if (primitive.isString()) {
             String value = primitive.getAsString();
-            if (StringUtil.isEmpty(value)) {
+            if (Strings.isEmpty(value)) {
                 return null;
             }
             if (formatter == null) {

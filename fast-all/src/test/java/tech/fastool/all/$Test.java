@@ -2,7 +2,7 @@ package tech.fastool.all;
 
 import org.junit.jupiter.api.Test;
 import tech.fastool.all.dto.EmployeeDto;
-import tech.fastool.core.lang.ListUtil;
+import tech.fastool.core.lang.Lists;
 import tech.fastool.json.api.BaseTypeRef;
 
 import java.util.List;
@@ -259,7 +259,7 @@ public class $Test {
         EmployeeDto dto = EmployeeDto.builder()
                 .no("11")
                 .name("张三")
-                .positions(ListUtil.newArrayList("开发", "运维"))
+                .positions(Lists.newArrayList("开发", "运维"))
                 .build();
         System.out.println($.toJson(dto));
     }

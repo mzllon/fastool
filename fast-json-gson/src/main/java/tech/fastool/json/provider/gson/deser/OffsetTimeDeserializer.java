@@ -4,7 +4,7 @@ import com.google.gson.*;
 import tech.fastool.core.date.DatePattern;
 import tech.fastool.core.date.ZoneConstant;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.lang.reflect.Type;
 import java.time.OffsetTime;
@@ -38,7 +38,7 @@ public class OffsetTimeDeserializer implements JsonDeserializer<OffsetTime> {
             JsonPrimitive primitive = element.getAsJsonPrimitive();
             if (primitive.isString()) {
                 String value = primitive.getAsString();
-                if (StringUtil.isEmpty(value)) {
+                if (Strings.isEmpty(value)) {
                     return null;
                 }
                 return OffsetTime.parse(value, formatter);

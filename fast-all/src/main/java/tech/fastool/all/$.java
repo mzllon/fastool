@@ -3,14 +3,16 @@ package tech.fastool.all;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.digest.Md5Util;
+import tech.fastool.core.digest.MD5s;
+import tech.fastool.core.lang.Arrays;
+import tech.fastool.core.lang.Collections;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.*;
-import tech.fastool.core.lang.reflect.ReflectUtil;
-import tech.fastool.core.lang.regex.PatternUtil;
+import tech.fastool.core.lang.reflect.Reflects;
+import tech.fastool.core.lang.regex.Patterns;
 import tech.fastool.http.api.convenient.*;
 import tech.fastool.json.api.BaseTypeRef;
-import tech.fastool.json.api.JsonUtil;
+import tech.fastool.json.api.Jsons;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -120,11 +122,11 @@ public class $ {
      * @param array 待检测的数组
      * @param <T>   泛型
      * @return 如果不为空则返回原数组
-     * @see ArrayUtil#requireNotEmpty(Object[])
+     * @see Arrays#requireNotEmpty(Object[])
      */
     @SafeVarargs
     public static <T> T[] requireNotEmpty(final T... array) {
-        return ArrayUtil.requireNotEmpty(array);
+        return Arrays.requireNotEmpty(array);
     }
 
 
@@ -134,11 +136,11 @@ public class $ {
      * @param array 数组
      * @param <T>   泛型类
      * @return 当数组为空或{@code null}时返回{@code true}
-     * @see ArrayUtil#isEmpty(Object[])
+     * @see Arrays#isEmpty(Object[])
      */
     @SafeVarargs
     public static <T> boolean isEmpty(final T... array) {
-        return ArrayUtil.isEmpty(array);
+        return Arrays.isEmpty(array);
     }
 
     /**
@@ -360,10 +362,10 @@ public class $ {
      *
      * @param obj 对象
      * @return 如果是数组类型则返回{@code true},否则返回{@code false}
-     * @see ArrayUtil#isArray(Object)
+     * @see Arrays#isArray(Object)
      */
     public static boolean isArray(@Nullable final Object obj) {
-        return ArrayUtil.isArray(obj);
+        return Arrays.isArray(obj);
     }
 
     /**
@@ -380,10 +382,10 @@ public class $ {
      *
      * @param obj 对象实例
      * @return 如果是原生数组类型则返回{@code true},否则返回{@code false}
-     * @see ArrayUtil#isPrimitiveArray(Object)
+     * @see Arrays#isPrimitiveArray(Object)
      */
     public static boolean isPrimitiveArray(@Nullable final Object obj) {
-        return ArrayUtil.isPrimitiveArray(obj);
+        return Arrays.isPrimitiveArray(obj);
     }
 
     //endregion
@@ -397,10 +399,10 @@ public class $ {
      * @param array 数组对象
      * @return 数组的长度
      * @throws IllegalArgumentException 如果参数不是数组，则抛出该异常
-     * @see ArrayUtil#getLength(Object)
+     * @see Arrays#getLength(Object)
      */
     public static int getLength(@Nullable final Object array) throws IllegalArgumentException {
-        return ArrayUtil.getLength(array);
+        return Arrays.getLength(array);
     }
 
     /**
@@ -410,11 +412,11 @@ public class $ {
      * @param newSize       数组大小
      * @param <T>           数组元素类型
      * @return 空数组
-     * @see ArrayUtil#newArray(Class, int)
+     * @see Arrays#newArray(Class, int)
      */
     @NotNull
     public static <T> T[] newArray(@NotNull Class<?> componentType, int newSize) {
-        return ArrayUtil.newArray(componentType, newSize);
+        return Arrays.newArray(componentType, newSize);
     }
 
     /**
@@ -422,11 +424,11 @@ public class $ {
      *
      * @param array 数组
      * @return 元素类型
-     * @see ArrayUtil#getComponentType(Object)
+     * @see Arrays#getComponentType(Object)
      */
     @Nullable
     public static Class<?> getComponentType(@Nullable Object array) {
-        return ArrayUtil.getComponentType(array);
+        return Arrays.getComponentType(array);
     }
 
     /**
@@ -434,11 +436,11 @@ public class $ {
      *
      * @param arrayClass 数组类
      * @return 元素类型
-     * @see ArrayUtil#getComponentType(Class)
+     * @see Arrays#getComponentType(Class)
      */
     @Nullable
     public static Class<?> getComponentType(@Nullable Class<?> arrayClass) {
-        return ArrayUtil.getComponentType(arrayClass);
+        return Arrays.getComponentType(arrayClass);
     }
 
     /**
@@ -446,11 +448,11 @@ public class $ {
      *
      * @param obj 数组对象
      * @return 数组字符串
-     * @see ArrayUtil#toString(Object)
+     * @see Arrays#toString(Object)
      */
     @Nullable
     public static String toString(@Nullable Object obj) {
-        return ArrayUtil.toString(obj);
+        return Arrays.toString(obj);
     }
 
     // endregion
@@ -460,16 +462,16 @@ public class $ {
 
 
     /**
-     * 返回数组中指定元素所在位置，未找到返回{@link ArrayUtil#INDEX_NOT_FOUND}
+     * 返回数组中指定元素所在位置，未找到返回{@link Arrays#INDEX_NOT_FOUND}
      *
      * @param <T>     数组类型
      * @param array   数组
      * @param element 被检查的元素
-     * @return 数组中指定元素所在位置，未找到返回{@link ArrayUtil#INDEX_NOT_FOUND}
-     * @see ArrayUtil#indexOf(Object[], Object)
+     * @return 数组中指定元素所在位置，未找到返回{@link Arrays#INDEX_NOT_FOUND}
+     * @see Arrays#indexOf(Object[], Object)
      */
     public static <T> int indexOf(@Nullable T[] array, @Nullable T element) {
-        return ArrayUtil.indexOf(array, element);
+        return Arrays.indexOf(array, element);
     }
 
     // endregion
@@ -489,10 +491,10 @@ public class $ {
      * @param element 检查的元素对象
      * @param <T>     泛型类型声明
      * @return 如果数组中存在则返回{@code true},否则返回{@code false}
-     * @see ArrayUtil#contains(Object[], Object)
+     * @see Arrays#contains(Object[], Object)
      */
     public static <T> boolean contains(final T[] array, T element) {
-        return ArrayUtil.contains(array, element);
+        return Arrays.contains(array, element);
     }
 
     // endregion
@@ -506,10 +508,10 @@ public class $ {
      *
      * @param c 集合
      * @return 如果集合为{@code null}或为空是则返回{@code true}，否则返回{@code false}
-     * @see CollectionUtil#isEmpty(Collection)
+     * @see Collections#isEmpty(Collection)
      */
     public static boolean isEmpty(Collection<?> c) {
-        return CollectionUtil.isEmpty(c);
+        return Collections.isEmpty(c);
     }
 
     /**
@@ -560,7 +562,7 @@ public class $ {
      * @return 字符串
      */
     public static String join(final Collection<String> src, final boolean ignoreNull) {
-        return join(src, StringUtil.COMMA, ignoreNull);
+        return join(src, Strings.COMMA, ignoreNull);
     }
 
     /**
@@ -586,10 +588,10 @@ public class $ {
      * @param ignoreNull 值为{@code null}忽略
      * @param sortable   值为{@code true}则正序排序，否则默认
      * @return 字符串
-     * @see CollectionUtil#join(Collection, String, boolean, boolean)
+     * @see Collections#join(Collection, String, boolean, boolean)
      */
     public static String join(final Collection<String> src, String separator, final boolean ignoreNull, final boolean sortable) {
-        return CollectionUtil.join(src, separator, ignoreNull, sortable);
+        return Collections.join(src, separator, ignoreNull, sortable);
     }
 
     /**
@@ -599,11 +601,11 @@ public class $ {
      * @param elements 待添加的元素
      * @param <E>      元的类型
      * @return 如果集合有变化则返回{@code true}
-     * @see CollectionUtil#addAll(Collection, Object[])
+     * @see Collections#addAll(Collection, Object[])
      */
     @SafeVarargs
     public static <E> boolean addAll(Collection<? super E> coll, E... elements) {
-        return CollectionUtil.addAll(coll, elements);
+        return Collections.addAll(coll, elements);
     }
 
     /**
@@ -617,7 +619,7 @@ public class $ {
      */
     @SafeVarargs
     public static <E> Collection<? extends E> merge(Collection<? extends E> coll, E... elements) {
-        return CollectionUtil.merge(coll, elements);
+        return Collections.merge(coll, elements);
     }
 
     /**
@@ -626,11 +628,11 @@ public class $ {
      * @param <T>    集合元素类型
      * @param values 数组
      * @return ArrayList对象
-     * @see ListUtil#newArrayList(Object[])
+     * @see Lists#newArrayList(Object[])
      */
     @SafeVarargs
     public static <T> ArrayList<T> newArrayList(T... values) {
-        return ListUtil.newArrayList(values);
+        return Lists.newArrayList(values);
     }
 
     // endregion
@@ -644,10 +646,10 @@ public class $ {
      *
      * @param map map集合
      * @return 如果map为{@code null}或为空是则返回{@code true}，否则返回{@code false}
-     * @see MapUtil#isEmpty(Map)
+     * @see Maps#isEmpty(Map)
      */
     public static boolean isEmpty(Map<?, ?> map) {
-        return MapUtil.isEmpty(map);
+        return Maps.isEmpty(map);
     }
 
     /**
@@ -673,10 +675,10 @@ public class $ {
      *
      * @param cse 被检测的字符串
      * @return 是否为空
-     * @see StringUtil#isBlank(CharSequence)
+     * @see Strings#isBlank(CharSequence)
      */
     public static boolean isBlank(CharSequence cse) {
-        return StringUtil.isBlank(cse);
+        return Strings.isBlank(cse);
     }
 
     /**
@@ -701,10 +703,10 @@ public class $ {
      *
      * @param cse 字符粗
      * @return 是否不为空
-     * @see StringUtil#isNotBlankInWebEnv(CharSequence)
+     * @see Strings#isNotBlankInWebEnv(CharSequence)
      */
     public static boolean isNotBlankInWebEnv(CharSequence cse) {
-        return StringUtil.isNotBlankInWebEnv(cse);
+        return Strings.isNotBlankInWebEnv(cse);
     }
 
     /**
@@ -712,10 +714,10 @@ public class $ {
      *
      * @param array 数组
      * @return 如果数组为空或元素中为空白则返回{@code true}，否则返回{@code  false}
-     * @see StringUtil#isAnyBlank(CharSequence...)
+     * @see Strings#isAnyBlank(CharSequence...)
      */
     public static boolean isAnyBlank(CharSequence... array) {
-        return StringUtil.isAnyBlank(array);
+        return Strings.isAnyBlank(array);
     }
 
     /**
@@ -723,10 +725,10 @@ public class $ {
      *
      * @param array 数组
      * @return 数组是否都为空
-     * @see StringUtil#isAllBlank(CharSequence...)
+     * @see Strings#isAllBlank(CharSequence...)
      */
     public static boolean isAllBlank(CharSequence... array) {
-        return StringUtil.isAllBlank(array);
+        return Strings.isAllBlank(array);
     }
 
     /**
@@ -734,10 +736,10 @@ public class $ {
      *
      * @param array 数组
      * @return true / false
-     * @see StringUtil#isAnyNotBlank(CharSequence...)
+     * @see Strings#isAnyNotBlank(CharSequence...)
      */
     public static boolean isAnyNotBlank(CharSequence... array) {
-        return StringUtil.isAnyNotBlank(array);
+        return Strings.isAnyNotBlank(array);
     }
 
     /**
@@ -745,10 +747,10 @@ public class $ {
      *
      * @param array 数组
      * @return true / false
-     * @see StringUtil#isAllNotBlank(CharSequence...)
+     * @see Strings#isAllNotBlank(CharSequence...)
      */
     public static boolean isAllNotBlank(CharSequence... array) {
-        return StringUtil.isAllNotBlank(array);
+        return Strings.isAllNotBlank(array);
     }
 
     /**
@@ -760,10 +762,10 @@ public class $ {
      *
      * @param strColl 字符串列表
      * @return 当且仅当字符串列表均非空则返回{@code true},反之则返回{@code false}.
-     * @see StringUtil#isAnyNotBlank(Collection)
+     * @see Strings#isAnyNotBlank(Collection)
      */
     public static boolean isAnyNotBlank(Collection<CharSequence> strColl) {
-        return StringUtil.isAnyNotBlank(strColl);
+        return Strings.isAnyNotBlank(strColl);
     }
 
     /**
@@ -775,10 +777,10 @@ public class $ {
      *
      * @param strColl 字符串列表
      * @return 当且仅当字符串列表均非空则返回{@code true},反之则返回{@code false}.
-     * @see StringUtil#isAllNotBlank(Collection)
+     * @see Strings#isAllNotBlank(Collection)
      */
     public static boolean isAllNotBlank(Collection<CharSequence> strColl) {
-        return StringUtil.isAllNotBlank(strColl);
+        return Strings.isAllNotBlank(strColl);
     }
 
     // endregion
@@ -793,10 +795,10 @@ public class $ {
      * @param data     字节数组
      * @param encoding 编码，可以为空
      * @return 字符串
-     * @see StringUtil#str(byte[], Charset)
+     * @see Strings#str(byte[], Charset)
      */
     public static String str(byte[] data, Charset encoding) {
-        return StringUtil.str(data, encoding);
+        return Strings.str(data, encoding);
     }
 
     /**
@@ -804,10 +806,10 @@ public class $ {
      *
      * @param cse {@link CharSequence}
      * @return 字符串
-     * @see StringUtil#str(CharSequence)
+     * @see Strings#str(CharSequence)
      */
     public static String str(CharSequence cse) {
-        return StringUtil.str(cse);
+        return Strings.str(cse);
     }
 
     /**
@@ -816,10 +818,10 @@ public class $ {
      * @param regex 正则表达式
      * @param cse   字符串
      * @return 正则为null或者""则不检查，返回true，内容为null返回false
-     * @see PatternUtil#isMatch(String, CharSequence)
+     * @see Patterns#isMatch(String, CharSequence)
      */
     public static boolean isMatch(String regex, CharSequence cse) {
-        return PatternUtil.isMatch(regex, cse);
+        return Patterns.isMatch(regex, cse);
     }
 
     // endregion
@@ -838,10 +840,10 @@ public class $ {
      *
      * @param cse 字符串
      * @return 返回已经去除左右两边的空白的字符串
-     * @see StringUtil#trim(CharSequence)
+     * @see Strings#trim(CharSequence)
      */
     public static String trim(CharSequence cse) {
-        return StringUtil.trim(cse);
+        return Strings.trim(cse);
     }
 
     // endregion
@@ -853,8 +855,8 @@ public class $ {
         if (Objects.isAnyNull(bean)) {
             return null;
         }
-        Map<String, Object> target = new HashMap<>(MapUtil.DEFAULT_INITIAL_CAPACITY);
-        BeanUtil.copyProperties(bean, target);
+        Map<String, Object> target = new HashMap<>(Maps.DEFAULT_INITIAL_CAPACITY);
+        Beans.copyProperties(bean, target);
         return target;
     }
 
@@ -871,8 +873,8 @@ public class $ {
         if (Objects.isAnyNull(map, beanClass)) {
             return null;
         }
-        T target = ReflectUtil.newInstance(beanClass);
-        BeanUtil.mapToBean(map, target, null);
+        T target = Reflects.newInstance(beanClass);
+        Beans.mapToBean(map, target, null);
         return target;
     }
 
@@ -886,7 +888,7 @@ public class $ {
      */
     @Nullable
     public static <E> List<E> copyProperties(@Nullable Collection<?> src, Class<E> targetClass) {
-        return copyProperties(src, targetClass, ArrayUtil.EMPTY_STRING_ARRAY);
+        return copyProperties(src, targetClass, Arrays.EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -904,7 +906,7 @@ public class $ {
         if (Objects.isAnyNull(src, targetClass)) {
             return null;
         }
-        List<E> list = ListUtil.newArrayList();
+        List<E> list = Lists.newArrayList();
         for (Object obj : src) {
             list.add(copyProperties(obj, targetClass, ignoreProperties));
         }
@@ -921,7 +923,7 @@ public class $ {
      */
     @Nullable
     public static <E> E copyProperties(@Nullable Object src, Class<E> targetClass) {
-        return copyProperties(src, targetClass, ArrayUtil.EMPTY_STRING_ARRAY);
+        return copyProperties(src, targetClass, Arrays.EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -939,8 +941,8 @@ public class $ {
         if (Objects.isAnyNull(src, targetClass)) {
             return null;
         }
-        E target = ReflectUtil.newInstance(targetClass);
-        BeanUtil.copyProperties(src, target, ignoreProperties);
+        E target = Reflects.newInstance(targetClass);
+        Beans.copyProperties(src, target, ignoreProperties);
         return target;
     }
 
@@ -956,7 +958,7 @@ public class $ {
      * @return JSON字符串
      */
     public static String toJson(@Nullable Object obj) {
-        return JsonUtil.toJson(obj);
+        return Jsons.toJson(obj);
     }
 
     /**
@@ -967,7 +969,7 @@ public class $ {
      * @return JSON字符串
      */
     public static String toJson(@Nullable Object obj, String... ignorePropertyNames) {
-        return JsonUtil.toJson(obj, ignorePropertyNames);
+        return Jsons.toJson(obj, ignorePropertyNames);
     }
 
     /**
@@ -979,7 +981,7 @@ public class $ {
      * @return Java对象
      */
     public static <T> T fromJson(@Nullable String json, @NotNull Class<T> clazz) {
-        return JsonUtil.fromJson(json, clazz);
+        return Jsons.fromJson(json, clazz);
     }
 
     /**
@@ -991,7 +993,7 @@ public class $ {
      * @return Java对象
      */
     public static <T> T fromJson(@Nullable String json, @NotNull BaseTypeRef<T> typeRef) {
-        return JsonUtil.fromJson(json, typeRef);
+        return Jsons.fromJson(json, typeRef);
     }
 
     // endregion
@@ -1049,10 +1051,10 @@ public class $ {
      *
      * @param fen 金额，单位分
      * @return 金额元
-     * @see NumberUtil#fen2YuanString(String)
+     * @see Numbers#fen2YuanString(String)
      */
     public static String fen2YuanString(String fen) {
-        return NumberUtil.fen2YuanString(fen);
+        return Numbers.fen2YuanString(fen);
     }
 
     /**
@@ -1060,10 +1062,10 @@ public class $ {
      *
      * @param fen 金额，单位分
      * @return 金额元
-     * @see NumberUtil#fen2YuanString(long)
+     * @see Numbers#fen2YuanString(long)
      */
     public static String fen2YuanString(long fen) {
-        return NumberUtil.fen2YuanString(fen);
+        return Numbers.fen2YuanString(fen);
     }
 
     /**
@@ -1071,10 +1073,10 @@ public class $ {
      *
      * @param fen 金额，单位分
      * @return 金额元
-     * @see NumberUtil#fen2YuanString(long)
+     * @see Numbers#fen2YuanString(long)
      */
     public static String fen2YuanString(Long fen) {
-        return NumberUtil.fen2YuanString(fen);
+        return Numbers.fen2YuanString(fen);
     }
 
     /**
@@ -1107,7 +1109,7 @@ public class $ {
      * @return 金额分
      */
     public static long yuan2Fen(String yuan, boolean round) {
-        return NumberUtil.yuan2Fen(yuan, round);
+        return Numbers.yuan2Fen(yuan, round);
     }
 
     // endregion
@@ -1344,10 +1346,10 @@ public class $ {
      * @param <T>          目标值类型
      * @param defaultValue 默认值
      * @return 值
-     * @see MapUtil#get(Map, Object, Class, Object)
+     * @see Maps#get(Map, Object, Class, Object)
      */
     public static <T> T get(Map<?, ?> map, Object key, Class<T> type, T defaultValue) {
-        return MapUtil.get(map, key, type, defaultValue);
+        return Maps.get(map, key, type, defaultValue);
     }
 
     // endregion
@@ -1359,70 +1361,70 @@ public class $ {
      * 返回UUID
      *
      * @return UUID
-     * @see IdUtil#uuid()
+     * @see Ids#uuid()
      */
     public static String uuid() {
-        return IdUtil.uuid();
+        return Ids.uuid();
     }
 
     /**
      * 返回不带-的UUID
      *
      * @return UUID No Dash
-     * @see IdUtil#uuidNoDash()
+     * @see Ids#uuidNoDash()
      */
     public static String uuidNoDash() {
-        return IdUtil.uuidNoDash();
+        return Ids.uuidNoDash();
     }
 
     /**
      * 返回UUID
      *
      * @return UUID
-     * @see IdUtil#secureUuid()
+     * @see Ids#secureUuid()
      */
     public static String secureUuid() {
-        return IdUtil.secureUuid();
+        return Ids.secureUuid();
     }
 
     /**
      * 返回不带-的UUID
      *
      * @return UUID No Dash
-     * @see IdUtil#secureUuidNoDash()
+     * @see Ids#secureUuidNoDash()
      */
     public static String secureUuidNoDash() {
-        return IdUtil.secureUuidNoDash();
+        return Ids.secureUuidNoDash();
     }
 
     /**
      * 返回带有日期标识的随机ID
      *
      * @return id contains date
-     * @see IdUtil#dateId()
+     * @see Ids#dateId()
      */
     public static String dateId() {
-        return IdUtil.dateId();
+        return Ids.dateId();
     }
 
     /**
      * 返回一个BASE64的ID
      *
      * @return id With BASE64
-     * @see IdUtil#base64Id()
+     * @see Ids#base64Id()
      */
     public static String base64Id() {
-        return IdUtil.base64Id();
+        return Ids.base64Id();
     }
 
     /**
      * 返回一个雪花算法生成的ID
      *
      * @return id with snowflake
-     * @see IdUtil#snowflakeId()
+     * @see Ids#snowflakeId()
      */
     public static long snowflakeId() {
-        return IdUtil.snowflakeId();
+        return Ids.snowflakeId();
     }
 
     /**
@@ -1445,10 +1447,10 @@ public class $ {
      *
      * @param data 待计算的数据
      * @return 16进制的字符串
-     * @see Md5Util#digestHex(String)
+     * @see MD5s#digestHex(String)
      */
     public static String md5Hex(final String data) {
-        return Md5Util.digestHex(data);
+        return MD5s.digestHex(data);
     }
 
     /**
@@ -1456,10 +1458,10 @@ public class $ {
      *
      * @param data 待计算的数据
      * @return 16进制的字符串
-     * @see Md5Util#digest(InputStream)
+     * @see MD5s#digest(InputStream)
      */
     public static String md5Hex(final InputStream data) {
-        return Md5Util.digestHex(data);
+        return MD5s.digestHex(data);
     }
 
     /**
@@ -1467,10 +1469,10 @@ public class $ {
      *
      * @param data 待计算的数据
      * @return 16进制的字符串
-     * @see Md5Util#digestUpperHex(String)
+     * @see MD5s#digestUpperHex(String)
      */
     public static String md5UpperHex(final String data) {
-        return Md5Util.digestUpperHex(data, null);
+        return MD5s.digestUpperHex(data, null);
     }
 
     /**
@@ -1478,10 +1480,10 @@ public class $ {
      *
      * @param data 待计算的数据
      * @return BASE64的字符串
-     * @see Md5Util#digestBase64(String)
+     * @see MD5s#digestBase64(String)
      */
     public static String md5Base64(final String data) {
-        return Md5Util.digestBase64(data, null);
+        return MD5s.digestBase64(data, null);
     }
 
     // endregion

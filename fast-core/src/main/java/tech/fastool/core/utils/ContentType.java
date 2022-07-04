@@ -1,8 +1,8 @@
 package tech.fastool.core.utils;
 
-import tech.fastool.core.lang.CharsetUtil;
+import tech.fastool.core.lang.Charsets;
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
@@ -74,17 +74,17 @@ public class ContentType implements java.io.Serializable {
     static {
         ALL = new ContentType("*", "*", null);
 
-        TEXT_PLAIN = new ContentType("text", "plain", CharsetUtil.UTF_8);
-        TEXT_XML = new ContentType("text", "xml", CharsetUtil.UTF_8);
-        TEXT_HTML = new ContentType("text", "html", CharsetUtil.UTF_8);
-        TEXT_MARKDOWN = new ContentType("text", "markdown", CharsetUtil.UTF_8);
+        TEXT_PLAIN = new ContentType("text", "plain", Charsets.UTF_8);
+        TEXT_XML = new ContentType("text", "xml", Charsets.UTF_8);
+        TEXT_HTML = new ContentType("text", "html", Charsets.UTF_8);
+        TEXT_MARKDOWN = new ContentType("text", "markdown", Charsets.UTF_8);
 
-        MULTIPART_FORM_DATA = new ContentType("multipart", "form-data", CharsetUtil.UTF_8);
-        MULTIPART_MIXED = new ContentType("multipart", "mixed", CharsetUtil.UTF_8);
-        APPLICATION_FORM_URLENCODED = new ContentType("application", "x-www-form-urlencoded", CharsetUtil.UTF_8);
+        MULTIPART_FORM_DATA = new ContentType("multipart", "form-data", Charsets.UTF_8);
+        MULTIPART_MIXED = new ContentType("multipart", "mixed", Charsets.UTF_8);
+        APPLICATION_FORM_URLENCODED = new ContentType("application", "x-www-form-urlencoded", Charsets.UTF_8);
 
         APPLICATION_OCTET_STREAM = new ContentType("application", "octet-stream", null);
-        APPLICATION_JSON = new ContentType("application", "json", CharsetUtil.UTF_8);
+        APPLICATION_JSON = new ContentType("application", "json", Charsets.UTF_8);
         APPLICATION_XML = new ContentType("application", "xml", null);
         APPLICATION_HTML = new ContentType("application", "html", null);
         APPLICATION_JAVASCRIPT = new ContentType("application", "javascript", null);
@@ -161,9 +161,9 @@ public class ContentType implements java.io.Serializable {
     @Override
     public String toString() {
         if (charset == null) {
-            return StringUtil.format("{}/{}", type, subtype);
+            return Strings.format("{}/{}", type, subtype);
         }
-        return StringUtil.format("{}/{}; charset={}", type, subtype, charset.name());
+        return Strings.format("{}/{}; charset={}", type, subtype, charset.name());
     }
 
     /**
@@ -173,7 +173,7 @@ public class ContentType implements java.io.Serializable {
      * @return {@link ContentType}
      */
     public static ContentType parseByFileExt(String fileExt) {
-        if (StringUtil.isEmpty(fileExt)) {
+        if (Strings.isEmpty(fileExt)) {
             return DEFAULT_BINARY;
         }
         fileExt = fileExt.toLowerCase();
@@ -246,7 +246,7 @@ public class ContentType implements java.io.Serializable {
         try {
             Charset charset = null;
             if (parameters != null) {
-                charset = CharsetUtil.forName(parameters.get(PARAM_CHARSET), null);
+                charset = Charsets.forName(parameters.get(PARAM_CHARSET), null);
             }
             return new ContentType(type, subtype, charset);
         } catch (UnsupportedCharsetException ex) {

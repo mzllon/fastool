@@ -1,6 +1,6 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
 
 /**
@@ -29,7 +29,7 @@ public class ByteConverter extends AbstractConverter<Byte> {
         if (output == null) {
             return null;
         }
-        return NumberUtil.convert(output, Byte.class);
+        return Numbers.convert(output, Byte.class);
     }
 
     /**

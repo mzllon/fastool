@@ -1,7 +1,7 @@
 package tech.fastool.core.id.snowflake;
 
 import tech.fastool.core.exceptions.IdGeneratorException;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 /**
  * Twitter提供的雪花算法，该实现算法性能很一般
@@ -41,7 +41,7 @@ public class TwitterSnowflake extends FastSnowflake {
             }
 
             if (currentTimeTick < this.lastTimeTick) {
-                throw new IdGeneratorException(StringUtil.format("Time error for {} milliseconds", this.lastTimeTick - currentTimeTick));
+                throw new IdGeneratorException(Strings.format("Time error for {} milliseconds", this.lastTimeTick - currentTimeTick));
             }
 
             this.lastTimeTick = currentTimeTick;

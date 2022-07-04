@@ -1,9 +1,9 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.exceptions.ConverterRuntimeException;
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 /**
  * {@linkplain Double} 转换器
@@ -31,11 +31,11 @@ public class DoubleConverter extends AbstractConverter<Double> {
         if (input instanceof Boolean) {
             return ((Boolean) input) ? 1D : 0D;
         } else if (input instanceof Number) {
-            return NumberUtil.convert((Number) input, Double.class);
+            return Numbers.convert((Number) input, Double.class);
         } else if (input instanceof String) {
-            return NumberUtil.convert(NumberUtil.createNumber(input.toString()), Double.class);
+            return Numbers.convert(Numbers.createNumber(input.toString()), Double.class);
         }
-        throw new ConverterRuntimeException(StringUtil.format("Can't cast {} to java.lang.Double", input));
+        throw new ConverterRuntimeException(Strings.format("Can't cast {} to java.lang.Double", input));
     }
 
     /**

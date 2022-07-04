@@ -1,7 +1,7 @@
 package tech.fastool.http.api;
 
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.MapUtil;
+import tech.fastool.core.lang.Maps;
 import tech.fastool.core.utils.LinkedMultiValueMap;
 import tech.fastool.http.api.constants.HeaderName;
 
@@ -23,7 +23,7 @@ public class HttpHeaders extends LinkedMultiValueMap<String, String> {
 
     public HttpHeaders(@Nullable Map<String, ?> headerMap) {
         super();
-        if (MapUtil.isNotEmpty(headerMap)) {
+        if (Maps.isNotEmpty(headerMap)) {
             headerMap.forEach((BiConsumer<String, Object>) this::append);
         }
     }

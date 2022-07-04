@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.filter.SimplePropertyPreFilter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.fastool.core.lang.ArrayUtil;
+import tech.fastool.core.lang.Arrays;
 import tech.fastool.json.api.BaseJsonHandler;
 import tech.fastool.json.api.JsonRuntimeException;
 import tech.fastool.json.api.annotation.JsonProviderName;
@@ -32,7 +32,7 @@ public class FastJsonHandler extends BaseJsonHandler {
     @Override
     public String doSerialize(@NotNull Object src, @Nullable String[] ignorePropertyNames) throws JsonRuntimeException {
         SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
-        if (ArrayUtil.isNotEmpty(ignorePropertyNames)) {
+        if (Arrays.isNotEmpty(ignorePropertyNames)) {
             for (String ignorePropertyName : ignorePropertyNames) {
                 filter.getExcludes().add(ignorePropertyName);
             }

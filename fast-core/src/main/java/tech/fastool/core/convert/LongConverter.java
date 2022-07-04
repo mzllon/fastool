@@ -1,9 +1,9 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.exceptions.ConverterRuntimeException;
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.util.Date;
 
@@ -30,13 +30,13 @@ public class LongConverter extends AbstractConverter<Long> {
         } else if (input instanceof Boolean) {
             return ((Boolean) input) ? 1L : 0L;
         } else if (input instanceof Number) {
-            return NumberUtil.convert((Number) input, Long.class);
+            return Numbers.convert((Number) input, Long.class);
         } else if (input instanceof String) {
-            return NumberUtil.convert(NumberUtil.createNumber(input.toString()), Long.class);
+            return Numbers.convert(Numbers.createNumber(input.toString()), Long.class);
         } else if (input instanceof Date) {
             return ((Date) input).getTime();
         }
-        throw new ConverterRuntimeException(StringUtil.format("Can't cast {} to java.lang.Long", input));
+        throw new ConverterRuntimeException(Strings.format("Can't cast {} to java.lang.Long", input));
     }
 
     /**

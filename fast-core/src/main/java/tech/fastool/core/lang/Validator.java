@@ -1,9 +1,9 @@
 package tech.fastool.core.lang;
 
 import lombok.experimental.UtilityClass;
-import tech.fastool.core.date.DateUtil;
-import tech.fastool.core.lang.regex.Patterns;
-import tech.fastool.core.lang.regex.RegexUtil;
+import tech.fastool.core.date.Dates;
+import tech.fastool.core.lang.regex.PatternPool;
+import tech.fastool.core.lang.regex.Regexes;
 
 import java.util.regex.Matcher;
 
@@ -43,10 +43,10 @@ public class Validator {
      *
      * @param value 数值字符串
      * @return {@link boolean}
-     * @see NumberUtil#isDigits(CharSequence)
+     * @see Numbers#isDigits(CharSequence)
      */
     public static boolean isDigits(CharSequence value) {
-        return NumberUtil.isDigits(value);
+        return Numbers.isDigits(value);
     }
 
     /**
@@ -54,10 +54,10 @@ public class Validator {
      *
      * @param value 数值字符串
      * @return {@linkplain boolean}
-     * @see NumberUtil#isNumeric(CharSequence)
+     * @see Numbers#isNumeric(CharSequence)
      */
     public static boolean isDecimal(CharSequence value) {
-        return NumberUtil.isNumeric(value);
+        return Numbers.isNumeric(value);
     }
 
     /**
@@ -67,7 +67,7 @@ public class Validator {
      * @return {@linkplain boolean}
      */
     public static boolean isGeneral(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.GENERAL, value);
+        return Regexes.isMatch(PatternPool.GENERAL, value);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Validator {
      * @return 是否为手机号码（中国）
      */
     public static boolean isMobile(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.MOBILE_PHONE, value);
+        return Regexes.isMatch(PatternPool.MOBILE_PHONE, value);
     }
 
     /**
@@ -87,10 +87,10 @@ public class Validator {
      * @return 是否为生日
      */
     public static boolean isBirthday(CharSequence value) {
-        if (StringUtil.isEmpty(value)) {
+        if (Strings.isEmpty(value)) {
             return false;
         }
-        Matcher matcher = Patterns.BIRTHDAY.matcher(value);
+        Matcher matcher = PatternPool.BIRTHDAY.matcher(value);
         if (matcher.find()) {
             int year = Integer.parseInt(matcher.group(1)),
                     month = Integer.parseInt(matcher.group(3)),
@@ -124,7 +124,7 @@ public class Validator {
             return false;
         }
         if (month == 2) {
-            if (DateUtil.isLeapYear(year)) {
+            if (Dates.isLeapYear(year)) {
                 return day <= 29;
             } else {
                 return day <= 28;
@@ -142,7 +142,7 @@ public class Validator {
      * @return {@link boolean}
      */
     public static boolean isEmail(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.EMAIL, value);
+        return Regexes.isMatch(PatternPool.EMAIL, value);
     }
 
     /**
@@ -152,7 +152,7 @@ public class Validator {
      * @return {@link boolean}
      */
     public static boolean isPlateCode(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.PLATE_CODE, value);
+        return Regexes.isMatch(PatternPool.PLATE_CODE, value);
     }
 
     /**
@@ -163,7 +163,7 @@ public class Validator {
      * @return {@link boolean}
      */
     public static boolean isIdCardNumber(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.ID_CARD_NUMBER, value);
+        return Regexes.isMatch(PatternPool.ID_CARD_NUMBER, value);
     }
 
     /**
@@ -173,7 +173,7 @@ public class Validator {
      * @return 是否为IPV4地址
      */
     public static boolean isIpv4(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.IPV4, value);
+        return Regexes.isMatch(PatternPool.IPV4, value);
     }
 
     /**
@@ -183,7 +183,7 @@ public class Validator {
      * @return 是否为IPV6地址
      */
     public static boolean isIpv6(CharSequence value) {
-        return RegexUtil.isMatch(Patterns.IPV6, value);
+        return Regexes.isMatch(PatternPool.IPV6, value);
     }
 
     /**
@@ -191,10 +191,10 @@ public class Validator {
      *
      * @param value 值
      * @return 是否为URL
-     * @see UrlUtil#isUrl(CharSequence)
+     * @see Urls#isUrl(CharSequence)
      */
     public static boolean isUrl(CharSequence value) {
-        return UrlUtil.isUrl(value);
+        return Urls.isUrl(value);
     }
 
 }

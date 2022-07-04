@@ -1,7 +1,7 @@
 package tech.fastool.core.id;
 
 import tech.fastool.core.lang.Singletons;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Strings;
 
 import java.util.UUID;
 
@@ -35,7 +35,7 @@ public class UuidGenerator implements IdGenerator<String> {
     @Override
     public String get() {
         String id = UUID.randomUUID().toString();
-        return ignoreDash ? StringUtil.replace(id, StringUtil.DASH, StringUtil.EMPTY_STRING) : id;
+        return ignoreDash ? Strings.replace(id, Strings.DASH, Strings.EMPTY_STRING) : id;
     }
 
     /**

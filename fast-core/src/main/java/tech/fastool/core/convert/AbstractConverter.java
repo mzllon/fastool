@@ -1,9 +1,9 @@
 package tech.fastool.core.convert;
 
 import tech.fastool.core.exceptions.ConverterRuntimeException;
-import tech.fastool.core.lang.ArrayUtil;
-import tech.fastool.core.lang.CharUtil;
-import tech.fastool.core.lang.StringUtil;
+import tech.fastool.core.lang.Arrays;
+import tech.fastool.core.lang.Chars;
+import tech.fastool.core.lang.Strings;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -45,7 +45,7 @@ public abstract class AbstractConverter<R> implements Converter<R>, Serializable
             R result = handleInternal(src);
             return (result == null) ? defaultValue : result;
         } else {
-            throw new ConverterRuntimeException(StringUtil.format("Default value [{}]({}) is not the instance of [{}]",
+            throw new ConverterRuntimeException(Strings.format("Default value [{}]({}) is not the instance of [{}]",
                     defaultValue, defaultValue.getClass(), targetClass));
         }
     }
@@ -89,11 +89,11 @@ public abstract class AbstractConverter<R> implements Converter<R>, Serializable
             return null;
         } else if (value instanceof CharSequence) {
             return value.toString();
-        } else if (ArrayUtil.isArray(value)) {
-            return ArrayUtil.toString(value);
-        } else if (CharUtil.isChar(value)) {
+        } else if (Arrays.isArray(value)) {
+            return Arrays.toString(value);
+        } else if (Chars.isChar(value)) {
             //对于ASCII字符使用缓存加速转换，减少空间创建
-            return CharUtil.toString((char) value);
+            return Chars.toString((char) value);
         }
         return value.toString();
     }

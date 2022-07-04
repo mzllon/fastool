@@ -1,6 +1,6 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
 
 import java.math.BigInteger;
@@ -23,7 +23,7 @@ public class BigIntegerConverter extends AbstractConverter< BigInteger> {
         } else if (value instanceof Boolean) {
             return BigInteger.valueOf(((Boolean) value) ? 1 : 0);
         } else {
-            return NumberUtil.createBigInteger(execToStr(value));
+            return Numbers.createBigInteger(execToStr(value));
         }
     }
 

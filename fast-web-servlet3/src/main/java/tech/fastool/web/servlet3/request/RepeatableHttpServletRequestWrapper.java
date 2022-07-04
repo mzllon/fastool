@@ -1,7 +1,7 @@
 package tech.fastool.web.servlet3.request;
 
 import tech.fastool.core.exceptions.IoRuntimeException;
-import tech.fastool.core.io.IoUtil;
+import tech.fastool.core.io.IOes;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -25,7 +25,7 @@ public class RepeatableHttpServletRequestWrapper extends HttpServletRequestWrapp
     public RepeatableHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
         try {
-            this.content = IoUtil.readBytes(request.getInputStream());
+            this.content = IOes.readBytes(request.getInputStream());
         } catch (IOException e) {
             throw new IoRuntimeException(e);
         }
@@ -33,7 +33,7 @@ public class RepeatableHttpServletRequestWrapper extends HttpServletRequestWrapp
 
     @Override
     public BufferedReader getReader() {
-        return IoUtil.getBufferedReader(getInputStream(), getCharacterEncoding());
+        return IOes.getBufferedReader(getInputStream(), getCharacterEncoding());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package tech.fastool.core.convert;
 
-import tech.fastool.core.lang.NumberUtil;
+import tech.fastool.core.lang.Numbers;
 import tech.fastool.core.lang.Singletons;
 
 /**
@@ -24,7 +24,7 @@ public class FloatConverter extends AbstractConverter<Float> {
     @Override
     protected Float handleInternal(Object input) {
         Double output = DoubleConverter.getInstance().handleInternal(input);
-        return NumberUtil.convert(output, Float.class);
+        return Numbers.convert(output, Float.class);
     }
 
     /**

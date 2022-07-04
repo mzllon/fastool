@@ -1,8 +1,8 @@
 package tech.fastool.core.date;
 
 import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.StringUtil;
-import tech.fastool.core.lang.regex.RegexUtil;
+import tech.fastool.core.lang.Strings;
+import tech.fastool.core.lang.regex.Regexes;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -141,7 +141,7 @@ public class Jdk8DateUtil {
      * @return {@link LocalDateTime}
      */
     public static LocalDateTime parse(CharSequence text, DateTimeFormatter formatter) {
-        if (StringUtil.isBlank(text)) {
+        if (Strings.isBlank(text)) {
             return null;
         }
         if (formatter == null) {
@@ -170,18 +170,18 @@ public class Jdk8DateUtil {
      * @return {@link LocalDateTime}
      */
     public static LocalDateTime parse(CharSequence text, String pattern) {
-        if (StringUtil.isBlank(text)) {
+        if (Strings.isBlank(text)) {
             return null;
         }
         DateTimeFormatter formatter = null;
-        if (StringUtil.hasText(pattern)) {
+        if (Strings.hasText(pattern)) {
             // 修复yyyyMMddHHmmssSSS格式不能解析的问题
             //see https://stackoverflow.com/questions/22588051/is-java-time-failing-to-parse-fraction-of-second
-            if (StringUtil.startsWithIgnoreCase(pattern, DatePattern.PURE_DATETIME_PATTERN)) {
-                String fraction = StringUtil.deletePrefix(pattern, DatePattern.PURE_DATETIME_PATTERN);
-                if (RegexUtil.isMatch("[S]{1,2}", fraction)) {
+            if (Strings.startsWithIgnoreCase(pattern, DatePattern.PURE_DATETIME_PATTERN)) {
+                String fraction = Strings.deletePrefix(pattern, DatePattern.PURE_DATETIME_PATTERN);
+                if (Regexes.isMatch("[S]{1,2}", fraction)) {
                     //将yyyyMMddHHmmssS、yyyyMMddHHmmssSS的日期统一替换为yyyyMMddHHmmssSSS格式，用0补
-                    text += StringUtil.repeat('0', 3 - fraction.length());
+                    text += Strings.repeat('0', 3 - fraction.length());
                 }
                 formatter = new DateTimeFormatterBuilder()
                         .append(DatePattern.PURE_DATETIME_FORMATTER)
@@ -262,7 +262,7 @@ public class Jdk8DateUtil {
         if (localDateTime == null) {
             return null;
         }
-        return format(localDateTime, StringUtil.isBlank(pattern) ? DatePattern.NORMAL_DATETIME_FORMATTER : DatePattern.ofPattern(pattern));
+        return format(localDateTime, Strings.isBlank(pattern) ? DatePattern.NORMAL_DATETIME_FORMATTER : DatePattern.ofPattern(pattern));
     }
 
     /**
@@ -300,7 +300,7 @@ public class Jdk8DateUtil {
         if (localDate == null) {
             return null;
         }
-        return format(localDate, StringUtil.isBlank(pattern) ? DatePattern.NORMAL_DATE_FORMATTER : DatePattern.ofPattern(pattern));
+        return format(localDate, Strings.isBlank(pattern) ? DatePattern.NORMAL_DATE_FORMATTER : DatePattern.ofPattern(pattern));
     }
 
     /**

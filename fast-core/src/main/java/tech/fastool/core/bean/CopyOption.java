@@ -1,9 +1,8 @@
 package tech.fastool.core.bean;
 
-import tech.fastool.core.lang.ArrayUtil;
+import tech.fastool.core.lang.Arrays;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -68,8 +67,8 @@ public class CopyOption implements java.io.Serializable {
      */
     public CopyOption(String... ignoreProperties) {
         this();
-        if (ArrayUtil.isNotEmpty(ignoreProperties)) {
-            this.ignoreProperties.addAll(Arrays.asList(ignoreProperties));
+        if (Arrays.isNotEmpty(ignoreProperties)) {
+            this.ignoreProperties.addAll(java.util.Arrays.asList(ignoreProperties));
         }
     }
 

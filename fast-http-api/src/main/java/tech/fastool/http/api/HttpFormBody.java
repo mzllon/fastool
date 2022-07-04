@@ -1,7 +1,7 @@
 package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
-import tech.fastool.core.lang.CharsetUtil;
+import tech.fastool.core.lang.Charsets;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.core.utils.ContentType;
 
@@ -52,7 +52,7 @@ public final class HttpFormBody extends HttpRequestBody {
         }
 
         public Builder(Charset charset) {
-            this.charset = CharsetUtil.getCharset(charset, CharsetUtil.UTF_8);
+            this.charset = Charsets.getCharset(charset, Charsets.UTF_8);
         }
 
         public Builder add(@NotNull String name, @NotNull String value) {
