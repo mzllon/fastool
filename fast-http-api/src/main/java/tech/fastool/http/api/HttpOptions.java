@@ -2,8 +2,10 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.lang.Lists;
 import tech.fastool.core.lang.Objects;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,6 +49,8 @@ public class HttpOptions {
      */
     private final ProxyInfo proxyInfo;
 
+    private final List<HttpStatus> decodeStatusCodes;
+
     private SSLConfig sslConfig;
 
     HttpOptions(Builder builder) {
@@ -56,6 +60,7 @@ public class HttpOptions {
         this.followRedirects = builder.followRedirects;
         this.retryCount = builder.retryCount;
         this.proxyInfo = builder.proxyInfo;
+        this.decodeStatusCodes = builder.decodeStatusCodes;
     }
 
     public int connectTimeoutMillis() {
@@ -80,6 +85,10 @@ public class HttpOptions {
 
     public ProxyInfo proxyInfo() {
         return proxyInfo;
+    }
+
+    public List<HttpStatus> decodeStatusCodes() {
+        return decodeStatusCodes;
     }
 
     public Builder newBuilder() {
@@ -127,11 +136,14 @@ public class HttpOptions {
          */
         private ProxyInfo proxyInfo;
 
+        private List<HttpStatus> decodeStatusCodes;
+
         Builder() {
             this.connectTimeoutMillis = 1000 * 10;
             this.readTimeoutMillis = 1000 * 10;
             this.writeTimeoutMillis = 1000 * 60;
             this.followRedirects = true;
+            this.decodeStatusCodes = Lists.newArrayList(HttpStatus.values());
         }
 
         Builder(@NotNull HttpOptions source) {
@@ -333,6 +345,11 @@ public class HttpOptions {
             return this;
         }
 
+        public Builder decodeStatusCodes(List<HttpStatus> decodeStatusCodes) {
+            this.decodeStatusCodes = decodeStatusCodes;
+            return this;
+        }
+
         public HttpOptions build() {
             return new HttpOptions(this);
         }
@@ -340,12 +357,12 @@ public class HttpOptions {
     }
 
     /**
-     * 默认的配置，连接、读取，写入为10s超时
+     * 默认的配置，连接、读取，写入为60s超时
      */
     public static HttpOptions DEFAULT_OPTIONS = new Builder()
-            .connectTimeoutMillis(10000)
-            .readTimeoutMillis(10000)
-            .writeTimeoutMillis(10000)
+            .connectTimeoutMillis(60000)
+            .readTimeoutMillis(60000)
+            .writeTimeoutMillis(60000)
             .followRedirects(true)
             .retryCount(0)
             .build();

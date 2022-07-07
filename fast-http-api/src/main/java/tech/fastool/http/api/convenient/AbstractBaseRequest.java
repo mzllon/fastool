@@ -2,10 +2,7 @@ package tech.fastool.http.api.convenient;
 
 import tech.fastool.core.convert.Converts;
 import tech.fastool.core.io.IOes;
-import tech.fastool.core.lang.Files;
-import tech.fastool.core.lang.Maps;
-import tech.fastool.core.lang.Objects;
-import tech.fastool.core.lang.Strings;
+import tech.fastool.core.lang.*;
 import tech.fastool.http.api.*;
 import tech.fastool.http.api.constants.HeaderName;
 import tech.fastool.http.api.constants.HttpMethod;
@@ -16,10 +13,13 @@ import tech.fastool.json.api.Jsons;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * Abstract Base Request
@@ -39,11 +39,22 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
 
     protected HttpHeaders headers;
 
-    protected HttpOptions options;
+    protected HttpOptions.Builder optionsBuilder;
+
+    private boolean decodeStatusCodeAll = true;
+
+    private static final List<HttpStatus> DECODE_ALL_STATUS_CODES = Lists.newArrayList(HttpStatus.values());
+
+    /**
+     * 解码哪些HTTP状态码，默认解码所有
+     */
+    private List<HttpStatus> decodeStatusCodes;
 
     public AbstractBaseRequest() {
         this.queryParams = new LinkedHashMap<>();
         this.headers = new HttpHeaders();
+        this.decodeStatusCodes = new ArrayList<>();
+        this.decodeStatusCodes.add(HttpStatus.OK);
     }
 
     /**
@@ -203,10 +214,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     public Req connectTimeoutMillis(Integer connectTimeoutMillis) {
         if (connectTimeoutMillis != null) {
             Objects.isTrue(connectTimeoutMillis >= 0, "connectTimeoutMillis >= 0.");
-            if (this.options == null) {
-                this.options = HttpOptions.builder().build();
-            }
-            this.options = this.options.newBuilder().connectTimeoutMillis(connectTimeoutMillis).build();
+            optionsBuilder().connectTimeoutMillis(connectTimeoutMillis);
         }
         return (Req) this;
     }
@@ -236,10 +244,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     public Req readTimeoutMillis(Integer readTimeoutMillis) {
         if (readTimeoutMillis != null) {
             Objects.isTrue(readTimeoutMillis >= 0, "readTimeoutMillis >= 0.");
-            if (this.options == null) {
-                this.options = HttpOptions.builder().build();
-            }
-            this.options = this.options.newBuilder().readTimeoutMillis(readTimeoutMillis).build();
+            optionsBuilder().readTimeoutMillis(readTimeoutMillis);
         }
         return (Req) this;
     }
@@ -269,12 +274,45 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
     public Req writeTimeoutMillis(Integer writeTimeoutMillis) {
         if (writeTimeoutMillis != null) {
             Objects.isTrue(writeTimeoutMillis >= 0, "writeTimeoutMillis >= 0.");
-            if (this.options == null) {
-                this.options = HttpOptions.builder().build();
-            }
-            this.options = this.options.newBuilder().writeTimeoutMillis(writeTimeoutMillis).build();
+            optionsBuilder().writeTimeoutMillis(writeTimeoutMillis);
         }
         return (Req) this;
+    }
+
+    /**
+     * 定制解码HTTP状态码
+     *
+     * @param httpStatuses HTTP状态码
+     * @return 返回当前类{@linkplain Req}的对象自己
+     */
+    @Override
+    public Req decodeStatusCodes(List<HttpStatus> httpStatuses) {
+        if (Lists.isNotEmpty(httpStatuses)) {
+            this.decodeStatusCodes.addAll(httpStatuses);
+            this.decodeStatusCodeAll = false;
+        }
+        return (Req) this;
+    }
+
+    /**
+     * 解析{@code http status code 2xx}HTTP状态码
+     *
+     * @return 返回当前类{@linkplain Req}的对象自己
+     */
+    @Override
+    public Req decodeStatusCode2xx() {
+        List<HttpStatus> httpStatuses = Arrays.stream(HttpStatus.values())
+                .filter(element -> element.series() == HttpStatus.Series.SUCCESSFUL)
+                .collect(Collectors.toList());
+        return decodeStatusCodes(httpStatuses);
+    }
+
+    public Req decodeStatusCode2xxAnd4xx() {
+        List<HttpStatus> httpStatuses = Arrays.stream(HttpStatus.values())
+                .filter(element -> element.series() == HttpStatus.Series.CLIENT_ERROR ||
+                        element.series() == HttpStatus.Series.SUCCESSFUL)
+                .collect(Collectors.toList());
+        return decodeStatusCodes(httpStatuses);
     }
 
     /**
@@ -284,8 +322,8 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      * @return 返回当前类{@linkplain Req}的对象自己
      */
     @Override
-    public Req options(HttpOptions options) {
-        this.options = options;
+    public Req options(HttpOptions.Builder options) {
+        this.optionsBuilder = options;
         return (Req) this;
     }
 
@@ -416,7 +454,11 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
      */
     @Override
     public HttpResponse execute() {
-        return HttpClients.httpClient.execute(generateRequest(), this.options);
+        return HttpClients.httpClient.execute(generateRequest(), optionsBuilder == null ? null : optionsBuilder.build());
+    }
+
+    private HttpOptions.Builder optionsBuilder() {
+        return optionsBuilder == null ? HttpOptions.DEFAULT_OPTIONS.newBuilder() : optionsBuilder;
     }
 
     /**
@@ -433,6 +475,7 @@ public abstract class AbstractBaseRequest<Req extends BaseRequest<Req>> implemen
                 .headers(this.headers)
                 .queryParams(this.queryParams)
                 .body(generateRequestBody())
+                .decodeStatusCodes(decodeStatusCodeAll ? DECODE_ALL_STATUS_CODES : decodeStatusCodes)
                 .build();
     }
 

@@ -4,12 +4,14 @@ import org.jetbrains.annotations.Nullable;
 import tech.fastool.http.api.HttpHeaders;
 import tech.fastool.http.api.HttpOptions;
 import tech.fastool.http.api.HttpResponse;
+import tech.fastool.http.api.HttpStatus;
 import tech.fastool.http.api.constants.HeaderName;
 import tech.fastool.http.api.exceptions.HttpClientException;
 import tech.fastool.json.api.BaseTypeRef;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -150,12 +152,30 @@ public interface BaseRequest<Req extends BaseRequest<Req>> {
     Req writeTimeoutMillis(Integer writeTimeoutMilliseconds);
 
     /**
+     * 定制解码HTTP状态码
+     *
+     * @param httpStatuses HTTP状态码
+     * @return 返回当前类{@linkplain Req}的对象自己
+     */
+    Req decodeStatusCodes(List<HttpStatus> httpStatuses);
+
+    /**
+     * 解析{@code http status code 2xx}HTTP状态码
+     *
+     * @return 返回当前类{@linkplain Req}的对象自己
+     */
+    Req decodeStatusCode2xx();
+
+
+    Req decodeStatusCode2xxAnd4xx();
+
+    /**
      * 为构建本次{@linkplain Req}设置HTTP的配置。
      *
      * @param options 选项配置
      * @return 返回当前类{@linkplain Req}的对象自己
      */
-    Req options(HttpOptions options);
+    Req options(HttpOptions.Builder options);
 
     /**
      * 同步执行HTTP请求并返回原始响应对象

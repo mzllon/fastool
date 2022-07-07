@@ -2,6 +2,7 @@ package tech.fastool.http.api;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.fastool.core.lang.Lists;
 import tech.fastool.core.lang.Maps;
 import tech.fastool.core.lang.Objects;
 import tech.fastool.core.lang.Urls;
@@ -9,10 +10,7 @@ import tech.fastool.core.utils.LinkedMultiValueMap;
 import tech.fastool.core.utils.MultiValueMap;
 import tech.fastool.http.api.constants.HttpMethod;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -50,6 +48,11 @@ public final class HttpRequest {
      */
     private final HttpRequestBody body;
 
+    /**
+     * 解码的HTTP状态码
+     */
+    private final List<HttpStatus> decodeStatusCodes;
+
     HttpRequest(Builder builder) {
         this.method = builder.method;
         this.headers = new LinkedMultiValueMap<>(builder.headerMap);
@@ -63,6 +66,7 @@ public final class HttpRequest {
             this.url = builder.url;
         }
         this.body = builder.body;
+        this.decodeStatusCodes = new ArrayList<>(builder.decodeStatusCodes);
     }
 
     /**
@@ -96,6 +100,12 @@ public final class HttpRequest {
         return body;
     }
 
+    @NotNull
+    public List<HttpStatus> decodeStatusCodes() {
+        return decodeStatusCodes;
+    }
+
+
     public Builder newBuilder() {
         return new Builder(this);
     }
@@ -128,10 +138,17 @@ public final class HttpRequest {
          */
         private HttpRequestBody body;
 
+        /**
+         * 解码的HTTP状态码
+         */
+        private Set<HttpStatus> decodeStatusCodes;
+
         public Builder() {
             this.method = HttpMethod.GET;
             this.headerMap = new LinkedMultiValueMap<>();
             this.queryParams = new LinkedMultiValueMap<>();
+            this.decodeStatusCodes = new HashSet<>();
+            this.decodeStatusCodes.add(HttpStatus.OK);
         }
 
         public Builder(HttpRequest request) {
@@ -238,6 +255,14 @@ public final class HttpRequest {
             this.body = body;
             return this;
         }
+
+        public Builder decodeStatusCodes(List<HttpStatus> decodeStatusCodes) {
+            if (Lists.isNotEmpty(decodeStatusCodes)) {
+                this.decodeStatusCodes.addAll(decodeStatusCodes);
+            }
+            return this;
+        }
+
 
         public HttpRequest build() {
             return new HttpRequest(this);

@@ -163,8 +163,7 @@ public class HttpResponse implements Closeable {
      * @return {@code true}/{@code false}
      */
     public boolean hasError() {
-        HttpStatus statusCode = status();
-        return (statusCode.series() == HttpStatus.Series.CLIENT_ERROR || statusCode.series() == HttpStatus.Series.SERVER_ERROR);
+        return request.decodeStatusCodes().stream().noneMatch(item -> item == status());
     }
 
     /**
